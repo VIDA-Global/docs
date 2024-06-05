@@ -8,13 +8,6 @@
       "destination": "/docs/*"
     }
   ],
-  "api": {
-    "baseUrl":"https://api.vida.dev",
-    "auth":{
-      "method":"key",
-      "name":"Vida Token"
-    }
-  },
   "logo": {
     "dark": "logos/dark.svg",
     "light": "logos/light.svg"
