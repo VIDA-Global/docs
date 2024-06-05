@@ -49,19 +49,19 @@
           ]
       },
       {
+            "group": "API Documentation",
+            "pages": [
+            "docs/api-reference/authentication"
+            ]
+      },
+      {
           "group": "Authorization",
           "pages": [
             "docs/api-reference/authorization/list-tokens",
             "docs/api-reference/authorization/create-a-token",
             "docs/api-reference/authorization/delete-a-token"
           ]
-        },
-        {
-          "group": "API Documentation",
-          "pages": [
-            "docs/api-reference/authentication"
-          ]
-        },
+        },        
         {
           "group": "SIP",
           "pages": [
