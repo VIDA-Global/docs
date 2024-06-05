@@ -1,6 +1,6 @@
 {
     "$schema": "https://mintlify.com/schema.json",
-    "name": "Vida",
+    "name": "Vida Docs",
     "isWhiteLabeled": true,
     "logo": {
       "dark": "dark.svg",
@@ -30,97 +30,81 @@
     "tabs": [
       {
         "name": "API Reference",
-        "url": "api-reference"
+        "url": "docs/api-reference"
       }
     ],
-    "anchors": [
-      {
-        "name": "Documentation",
-        "icon": "book-open-cover",
-        "url": "https://mintlify.com/docs"
-      },
-      {
-        "name": "Community",
-        "icon": "slack",
-        "url": "https://mintlify.com/community"
-      },
-      {
-        "name": "Blog",
-        "icon": "newspaper",
-        "url": "https://mintlify.com/blog"
-      }
-    ],
+    "anchors": [],
     "navigation": [
         {
             "group": "Get Started",
             "pages": [
-              "quickstart"
+              "docs/quickstart"
             ]
         },
         {
             "group": "Authorization",
             "pages": [
-              "authorization/list-tokens",
-              "authorization/create-a-token",
-              "authorization/delete-a-token"
+              "docs/authorization/list-tokens",
+              "docs/authorization/create-a-token",
+              "docs/authorization/delete-a-token"
             ]
           },
           {
             "group": "SIP",
             "pages": [
-              "sip/list-sip-ip-whitelist",
-              "sip/add-ip-to-sip-ip-whitelist",
-              "sip/remove-ip-from-sip-ip-whitelist"
+              "docs/sip/list-sip-ip-whitelist",
+              "docs/sip/add-ip-to-sip-ip-whitelist",
+              "docs/sip/remove-ip-from-sip-ip-whitelist"
             ]
           },
           {
             "group": "Phone Numbers",
             "pages": [
-              "phone-numbers/disconnect-a-phone-number",
-              "phone-numbers/assign-phone-number-to-your-account",
-              "phone-numbers/search-for-local-numbers-by-locality",
-              "phone-numbers/search-for-local-numbers-by-prefix",
-              "phone-numbers/search-for-local-numbers-by-phrase"
+              "docs/phone-numbers/disconnect-a-phone-number",
+              "docs/phone-numbers/assign-phone-number-to-your-account",
+              "docs/phone-numbers/search-for-local-numbers-by-locality",
+              "docs/phone-numbers/search-for-local-numbers-by-prefix",
+              "docs/phone-numbers/search-for-local-numbers-by-phrase"
             ]
           },
           {
             "group": "Messaging",
             "pages": [
-              "messaging/list-priority-inbox",
-              "messaging/list-agent-inbox",
-              "messaging/fetch-room-messages",
-              "messaging/retrieve-inbound-callback-url",
-              "messaging/configure-inbound-callback-url",
-              "messaging/remove-inbound-callback-url",
-              "messaging/send-message-to-a-vida-user",
-              "messaging/create-messaging-brand"
+              "docs/messaging/list-priority-inbox",
+              "docs/messaging/list-agent-inbox",
+              "docs/messaging/fetch-room-messages",
+              "docs/messaging/retrieve-inbound-callback-url",
+              "docs/messaging/configure-inbound-callback-url",
+              "docs/messaging/remove-inbound-callback-url",
+              "docs/messaging/send-message-to-a-vida-user",
+              "docs/messaging/create-messaging-brand"
             ]
           },
           {
             "group": "Agents",
             "pages": [
-              "agents/publish-an-agent",
-              "agents/revert-an-agent",
-              "agents/update-agent",
-              "agents/fetch-staging-agent",
-              "agents/fetch-live-agent",
-              "agents/get-agent",
-              "agents/outbound-call-from-agent"
+              "docs/agents/publish-an-agent",
+              "docs/agents/revert-an-agent",
+              "docs/agents/update-agent",
+              "docs/agents/fetch-staging-agent",
+              "docs/agents/fetch-live-agent",
+              "docs/agents/get-agent",
+              "docs/agents/outbound-call-from-agent"
             ]
           },
           {
             "group": "Agent URLs",
             "pages": [
-              "agent-urls/check-agent-url-availability",
-              "agent-urls/fetch-existing-agent-url",
-              "agent-urls/create-agent-url"
+              "docs/agent-urls/check-agent-url-availability",
+              "docs/agent-urls/fetch-existing-agent-url",
+              "docs/agent-urls/create-agent-url"
             ]
           }
           
     ],
     "footerSocials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://www.linkedin.com/company/mintsearch"
+      "x": "https://x.com/vidaislive",
+      "github": "https://github.com/VIDA-Global",
+      "linkedin": "https://www.linkedin.com/company/86956543"
     }
   }
