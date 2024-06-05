@@ -3,8 +3,8 @@
     "name": "Vida",
     "redirects": [
       {
-        "source": "/docs",
-        "destination": "/"
+        "source": "/*",
+        "destination": "/docs/*"
       }
     ],
     "logo": {
