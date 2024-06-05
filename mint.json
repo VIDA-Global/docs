@@ -5,7 +5,7 @@
   "redirects": [
     {
       "source": "/*",
-      "destination": "/docs/*"
+      "destination": "/*"
     }
   ],
   "logo": {
@@ -36,7 +36,7 @@
   "tabs": [
     {
       "name": "API Reference",
-      "url": "docs/api-reference"
+      "url": "api-reference"
     }
   ],
   "anchors": [
@@ -51,67 +51,67 @@
       {
             "group": "API Documentation",
             "pages": [
-            "docs/api-reference/authentication"
+            "api-reference/authentication"
             ]
       },
       {
           "group": "Authorization",
           "pages": [
-            "docs/api-reference/authorization/list-tokens",
-            "docs/api-reference/authorization/create-a-token",
-            "docs/api-reference/authorization/delete-a-token"
+            "api-reference/authorization/list-tokens",
+            "api-reference/authorization/create-a-token",
+            "api-reference/authorization/delete-a-token"
           ]
         },
         {
           "group": "Agents",
           "pages": [
-            "docs/api-reference/agents/publish-an-agent",
-            "docs/api-reference/agents/revert-an-agent",
-            "docs/api-reference/agents/update-agent",
-            "docs/api-reference/agents/fetch-staging-agent",
-            "docs/api-reference/agents/fetch-live-agent",
-            "docs/api-reference/agents/get-agent",
-            "docs/api-reference/agents/outbound-call-from-agent"
+            "api-reference/agents/publish-an-agent",
+            "api-reference/agents/revert-an-agent",
+            "api-reference/agents/update-agent",
+            "api-reference/agents/fetch-staging-agent",
+            "api-reference/agents/fetch-live-agent",
+            "api-reference/agents/get-agent",
+            "api-reference/agents/outbound-call-from-agent"
 
           ]
         },
         {
           "group": "Phone Numbers",
           "pages": [
-            "docs/api-reference/phone-numbers/disconnect-a-phone-number",
-            "docs/api-reference/phone-numbers/assign-phone-number-to-your-account",
-            "docs/api-reference/phone-numbers/search-for-local-numbers-by-locality",
-            "docs/api-reference/phone-numbers/search-for-local-numbers-by-prefix",
-            "docs/api-reference/phone-numbers/search-for-local-numbers-by-phrase"
+            "api-reference/phone-numbers/disconnect-a-phone-number",
+            "api-reference/phone-numbers/assign-phone-number-to-your-account",
+            "api-reference/phone-numbers/search-for-local-numbers-by-locality",
+            "api-reference/phone-numbers/search-for-local-numbers-by-prefix",
+            "api-reference/phone-numbers/search-for-local-numbers-by-phrase"
           ]
         },
         {
           "group": "SIP",
           "pages": [
-            "docs/api-reference/sip/list-sip-ip-whitelist",
-            "docs/api-reference/sip/add-ip-to-sip-ip-whitelist",
-            "docs/api-reference/sip/remove-ip-from-sip-ip-whitelist"
+            "api-reference/sip/list-sip-ip-whitelist",
+            "api-reference/sip/add-ip-to-sip-ip-whitelist",
+            "api-reference/sip/remove-ip-from-sip-ip-whitelist"
           ]
         },
         {
           "group": "Messaging",
           "pages": [
-            "docs/api-reference/messaging/list-priority-inbox",
-            "docs/api-reference/messaging/list-agent-inbox",
-            "docs/api-reference/messaging/fetch-room-messages",
-            "docs/api-reference/messaging/retrieve-inbound-callback-url",
-            "docs/api-reference/messaging/configure-inbound-callback-url",
-            "docs/api-reference/messaging/remove-inbound-callback-url",
-            "docs/api-reference/messaging/send-message-to-a-vida-user",
-            "docs/api-reference/messaging/create-messaging-brand"
+            "api-reference/messaging/list-priority-inbox",
+            "api-reference/messaging/list-agent-inbox",
+            "api-reference/messaging/fetch-room-messages",
+            "api-reference/messaging/retrieve-inbound-callback-url",
+            "api-reference/messaging/configure-inbound-callback-url",
+            "api-reference/messaging/remove-inbound-callback-url",
+            "api-reference/messaging/send-message-to-a-vida-user",
+            "api-reference/messaging/create-messaging-brand"
           ]
         },
         {
           "group": "Agent URLs",
           "pages": [
-            "docs/api-reference/agent-urls/check-agent-url-availability",
-            "docs/api-reference/agent-urls/fetch-existing-agent-url",
-            "docs/api-reference/agent-urls/create-agent-url"
+            "api-reference/agent-urls/check-agent-url-availability",
+            "api-reference/agent-urls/fetch-existing-agent-url",
+            "api-reference/agent-urls/create-agent-url"
           ]
         }
         
