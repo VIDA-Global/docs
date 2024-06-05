@@ -1,20 +1,11 @@
 ---
-title: "API Overview & Authentication"
+title: "Authentication"
 description: "Access all the data on Vida through our RESTful API."
 ---
+To use the Vida API you need an API token. Get your token by going to Settings -> API in your Vida account. Note that using the Vida API requires a paid account, so you might need to upgrade first.
 
-Welcome to the Vida API. We provide a RESTful API that allows you to access all the features and functionality of Vida. You can use our API to integrate your applications, services, and workflows with our platform.
+![API Token Management](https://vidapublic.s3.us-east-2.amazonaws.com/vida-api-access.png "This is an image of the API page in settings.")
 
-# Authentication
+Once you have a paid account you can use the API page in Settings to create and manage your API tokens. You can also manage your SIP IP access lists.
 
-To authenticate with the Vida API, you will need an API key. This key is a unique identifier for your account and is used to ensure that only authorized users have access to the data. 
-
-## Obtaining Your API Key
-
-Get one in Account -> Settings -> Developers. Requires a Paid account!
-
-Once you have your API key, you can use it to authenticate your requests to the Vida API. Include it in requests to our API as a URL parameter like so:
-
-```http
-?token={{your token}}
-```
+For additional help, email [help@vida.inc](mailto:help@vida.inc).
