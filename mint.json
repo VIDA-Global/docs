@@ -63,6 +63,7 @@
             "group": "API Documentation",
             "pages": [
             "api-reference/overview",
+            "api-reference/getting-started",
             "api-reference/authentication"
             ]
       },
