@@ -1,0 +1,24 @@
+---
+title: "API Overview & Authentication"
+description: "Access all the data on Vida through our RESTful API."
+---
+
+Welcome to the CookieChimp API. We provide a RESTful API that allows you to access all the data on CookieChimp. You can use our API to integrate your applications, services, and workflows with our platform.
+
+# Authentication
+
+To authenticate with the CookieChimp API, you will need an API key. This key is a unique identifier for your account and is used to ensure that only authorized users have access to the data.
+
+## Obtaining Your API Key
+
+Currently, you cannot generate the API key yourself. To request an API key, please [contact our support](mailto:support@cookiechimp.com?subject=Access%20to%20API) team.
+
+Once you have your API key, you can use it to authenticate your requests to the CookieChimp API. Include it in the header of your HTTP requests like so:
+
+```http
+X-API-Key: YOUR_API_KEY
+```
+
+# Rate Limits
+
+To ensure fair usage of the API, we limit the number of requests you can make to the API. The rate limit is 100 requests per minute. If you exceed this limit, you will receive a `429 Too Many Requests` response.

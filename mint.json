@@ -1,125 +1,137 @@
 {
-    "$schema": "https://mintlify.com/schema.json",
-    "name": "Vida",
-    "logo": {
-      "dark": "dark.svg",
-      "light": "light.svg"
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Vida",
+  "redirects": [
+    {
+      "source": "/*",
+      "destination": "/docs/*"
+    }
+  ],
+  "logo": {
+    "dark": "logos/dark.svg",
+    "light": "logos/light.svg"
+  },
+  "favicon": "logos/favicon.png",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373",
+    "anchors": {
+      "from": "#0D9373",
+      "to": "#07C983"
+    }
+  },
+  "openapi": ["apiv2.json"],
+  "topbarLinks": [
+    {
+      "name": "Get Help",
+      "url": "mailto:help@vida.inc"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Login",
+    "url": "https://vida.io/?login=true"
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "docs/api-reference"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Documentation",
+      "icon": "book-open-cover",
+      "url": "https://mintlify.com/docs"
     },
-    "favicon": "favicon.png",
-    "colors": {
-      "primary": "#0D9373",
-      "light": "#07C983",
-      "dark": "#0D9373",
-      "anchors": {
-        "from": "#0D9373",
-        "to": "#07C983"
-      }
+    {
+      "name": "Community",
+      "icon": "slack",
+      "url": "https://mintlify.com/community"
     },
-    "openapi": ["apiv2.json"],
-    "topbarLinks": [
+    {
+      "name": "Blog",
+      "icon": "newspaper",
+      "url": "https://mintlify.com/blog"
+    }
+  ],
+  "navigation": [
       {
-        "name": "Get Help",
-        "url": "mailto:help@vida.inc"
-      }
-    ],
-    "topbarCtaButton": {
-      "name": "Login",
-      "url": "https://vida.io/?login=true"
-    },
-    "tabs": [
-      {
-        "name": "API Reference",
-        "url": "api-reference"
-      }
-    ],
-    "anchors": [
-      {
-        "name": "Documentation",
-        "icon": "book-open-cover",
-        "url": "https://mintlify.com/docs"
+          "group": "Get Started",
+          "pages": [
+            "docs/quickstart"
+          ]
       },
       {
-        "name": "Community",
-        "icon": "slack",
-        "url": "https://mintlify.com/community"
-      },
-      {
-        "name": "Blog",
-        "icon": "newspaper",
-        "url": "https://mintlify.com/blog"
-      }
-    ],
-    "navigation": [
-        {
-            "group": "Get Started",
-            "pages": [
-              "quickstart"
-            ]
+          "group": "Authorization",
+          "pages": [
+            "docs/api-reference/authorization/list-tokens",
+            "docs/api-reference/authorization/create-a-token",
+            "docs/api-reference/authorization/delete-a-token"
+          ]
         },
         {
-            "group": "Authorization",
-            "pages": [
-              "authorization/list-tokens",
-              "authorization/create-a-token",
-              "authorization/delete-a-token"
-            ]
-          },
-          {
-            "group": "SIP",
-            "pages": [
-              "sip/list-sip-ip-whitelist",
-              "sip/add-ip-to-sip-ip-whitelist",
-              "sip/remove-ip-from-sip-ip-whitelist"
-            ]
-          },
-          {
-            "group": "Phone Numbers",
-            "pages": [
-              "phone-numbers/disconnect-a-phone-number",
-              "phone-numbers/assign-phone-number-to-your-account",
-              "phone-numbers/search-for-local-numbers-by-locality",
-              "phone-numbers/search-for-local-numbers-by-prefix",
-              "phone-numbers/search-for-local-numbers-by-phrase"
-            ]
-          },
-          {
-            "group": "Messaging",
-            "pages": [
-              "messaging/list-priority-inbox",
-              "messaging/list-agent-inbox",
-              "messaging/fetch-room-messages",
-              "messaging/retrieve-inbound-callback-url",
-              "messaging/configure-inbound-callback-url",
-              "messaging/remove-inbound-callback-url",
-              "messaging/send-message-to-a-vida-user",
-              "messaging/create-messaging-brand"
-            ]
-          },
-          {
-            "group": "Agents",
-            "pages": [
-              "agents/publish-an-agent",
-              "agents/revert-an-agent",
-              "agents/update-agent",
-              "agents/fetch-staging-agent",
-              "agents/fetch-live-agent",
-              "agents/get-agent",
-              "agents/outbound-call-from-agent"
-            ]
-          },
-          {
-            "group": "Agent URLs",
-            "pages": [
-              "agent-urls/check-agent-url-availability",
-              "agent-urls/fetch-existing-agent-url",
-              "agent-urls/create-agent-url"
-            ]
-          }
-          
-    ],
-    "footerSocials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://www.linkedin.com/company/mintsearch"
-    }
+          "group": "API Documentation",
+          "pages": [
+            "docs/api-reference/authentication"
+          ]
+        },
+        {
+          "group": "SIP",
+          "pages": [
+            "docs/api-reference/sip/list-sip-ip-whitelist",
+            "docs/api-reference/sip/add-ip-to-sip-ip-whitelist",
+            "docs/api-reference/sip/remove-ip-from-sip-ip-whitelist"
+          ]
+        },
+        {
+          "group": "Phone Numbers",
+          "pages": [
+            "docs/api-reference/phone-numbers/disconnect-a-phone-number",
+            "docs/api-reference/phone-numbers/assign-phone-number-to-your-account",
+            "docs/api-reference/phone-numbers/search-for-local-numbers-by-locality",
+            "docs/api-reference/phone-numbers/search-for-local-numbers-by-prefix",
+            "docs/api-reference/phone-numbers/search-for-local-numbers-by-phrase"
+          ]
+        },
+        {
+          "group": "Messaging",
+          "pages": [
+            "docs/api-reference/messaging/list-priority-inbox",
+            "docs/api-reference/messaging/list-agent-inbox",
+            "docs/api-reference/messaging/fetch-room-messages",
+            "docs/api-reference/messaging/retrieve-inbound-callback-url",
+            "docs/api-reference/messaging/configure-inbound-callback-url",
+            "docs/api-reference/messaging/remove-inbound-callback-url",
+            "docs/api-reference/messaging/send-message-to-a-vida-user",
+            "docs/api-reference/messaging/create-messaging-brand"
+          ]
+        },
+        {
+          "group": "Agents",
+          "pages": [
+            "docs/api-reference/agents/publish-an-agent",
+            "docs/api-reference/agents/revert-an-agent",
+            "docs/api-reference/agents/update-agent",
+            "docs/api-reference/agents/fetch-staging-agent",
+            "docs/api-reference/agents/fetch-live-agent",
+            "docs/api-reference/agents/get-agent",
+            "docs/api-reference/agents/outbound-call-from-agent"
+          ]
+        },
+        {
+          "group": "Agent URLs",
+          "pages": [
+            "docs/api-reference/agent-urls/check-agent-url-availability",
+            "docs/api-reference/agent-urls/fetch-existing-agent-url",
+            "docs/api-reference/agent-urls/create-agent-url"
+          ]
+        }
+        
+  ],
+  "footerSocials": {
+    "x": "https://x.com/VIDAislive",
+    "github": "https://github.com/VIDA-Global",
+    "linkedin": "https://www.linkedin.com/company/86956543/admin/dashboard/"
   }
+}
