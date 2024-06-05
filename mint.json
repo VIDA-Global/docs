@@ -1,12 +1,6 @@
 {
     "$schema": "https://mintlify.com/schema.json",
     "name": "Vida",
-    "redirects": [
-      {
-        "source": "/*",
-        "destination": "/docs/*"
-      }
-    ],
     "logo": {
       "dark": "dark.svg",
       "light": "light.svg"
