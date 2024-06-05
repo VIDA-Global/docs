@@ -1,11 +1,11 @@
 {
     "$schema": "https://mintlify.com/schema.json",
-    "name": "Starter Kit",
+    "name": "Vida",
     "logo": {
-      "dark": "/logo/dark.svg",
-      "light": "/logo/light.svg"
+      "dark": "dark.svg",
+      "light": "light.svg"
     },
-    "favicon": "/favicon.png",
+    "favicon": "favicon.png",
     "colors": {
       "primary": "#0D9373",
       "light": "#07C983",
@@ -18,13 +18,13 @@
     "openapi": ["apiv2.json"],
     "topbarLinks": [
       {
-        "name": "Support",
-        "url": "mailto:hi@mintlify.com"
+        "name": "Get Help",
+        "url": "mailto:help@vida.inc"
       }
     ],
     "topbarCtaButton": {
-      "name": "Dashboard",
-      "url": "https://dashboard.mintlify.com"
+      "name": "Login",
+      "url": "https://vida.io/?login=true"
     },
     "tabs": [
       {
