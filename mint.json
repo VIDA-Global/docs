@@ -1,6 +1,12 @@
 {
     "$schema": "https://mintlify.com/schema.json",
     "name": "Vida",
+    "redirects": [
+      {
+        "source": "/docs",
+        "destination": "/"
+      }
+    ],
     "logo": {
       "dark": "dark.svg",
       "light": "light.svg"
@@ -53,7 +59,7 @@
         {
             "group": "Get Started",
             "pages": [
-              "docs/quickstart"
+              "quickstart"
             ]
         },
         {
