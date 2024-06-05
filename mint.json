@@ -56,6 +56,12 @@
           ]
       },
       {
+            "group": "API Documentation",
+            "pages": [
+            "docs/api-reference/authentication"
+            ]
+      },
+      {
           "group": "Authorization",
           "pages": [
             "docs/api-reference/authorization/list-tokens",
@@ -73,6 +79,7 @@
             "docs/api-reference/agents/fetch-live-agent",
             "docs/api-reference/agents/get-agent",
             "docs/api-reference/agents/outbound-call-from-agent"
+
           ]
         },
         {
