@@ -8,6 +8,13 @@
       "destination": "/docs/*"
     }
   ],
+  "api": {
+    "baseUrl":"https://api.vida.dev",
+    "auth":{
+      "method":"key",
+      "name":"Vida Token"
+    }
+  },
   "logo": {
     "dark": "logos/dark.svg",
     "light": "logos/light.svg"
@@ -57,17 +64,15 @@
           ]
         },
         {
-          "group": "API Documentation",
+          "group": "Agents",
           "pages": [
-            "docs/api-reference/authentication"
-          ]
-        },
-        {
-          "group": "SIP",
-          "pages": [
-            "docs/api-reference/sip/list-sip-ip-whitelist",
-            "docs/api-reference/sip/add-ip-to-sip-ip-whitelist",
-            "docs/api-reference/sip/remove-ip-from-sip-ip-whitelist"
+            "docs/api-reference/agents/publish-an-agent",
+            "docs/api-reference/agents/revert-an-agent",
+            "docs/api-reference/agents/update-agent",
+            "docs/api-reference/agents/fetch-staging-agent",
+            "docs/api-reference/agents/fetch-live-agent",
+            "docs/api-reference/agents/get-agent",
+            "docs/api-reference/agents/outbound-call-from-agent"
           ]
         },
         {
@@ -81,6 +86,14 @@
           ]
         },
         {
+          "group": "SIP",
+          "pages": [
+            "docs/api-reference/sip/list-sip-ip-whitelist",
+            "docs/api-reference/sip/add-ip-to-sip-ip-whitelist",
+            "docs/api-reference/sip/remove-ip-from-sip-ip-whitelist"
+          ]
+        },
+        {
           "group": "Messaging",
           "pages": [
             "docs/api-reference/messaging/list-priority-inbox",
@@ -91,18 +104,6 @@
             "docs/api-reference/messaging/remove-inbound-callback-url",
             "docs/api-reference/messaging/send-message-to-a-vida-user",
             "docs/api-reference/messaging/create-messaging-brand"
-          ]
-        },
-        {
-          "group": "Agents",
-          "pages": [
-            "docs/api-reference/agents/publish-an-agent",
-            "docs/api-reference/agents/revert-an-agent",
-            "docs/api-reference/agents/update-agent",
-            "docs/api-reference/agents/fetch-staging-agent",
-            "docs/api-reference/agents/fetch-live-agent",
-            "docs/api-reference/agents/get-agent",
-            "docs/api-reference/agents/outbound-call-from-agent"
           ]
         },
         {

@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://{baseUrl}",
+      "url": "https://api.vida.dev",
       "description": "Vida Production",
       "variables": {
         "baseUrl": {
