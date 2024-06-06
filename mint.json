@@ -41,10 +41,6 @@
   "openapi": ["apiv2.json"],
   "topbarLinks": [
     {
-      "name": "Overview",
-      "url": "https://vida.io"
-    },
-    {
       "name": "Examples",
       "url": "https://vida.io/examples"
     },
