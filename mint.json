@@ -64,74 +64,64 @@
           ]
       },
       {
-            "group": "API Documentation",
-            "pages": [
-            "api-reference/overview",
-            "api-reference/getting-started",
-            "api-reference/authentication"
-            ]
+        "group": "Authorization",
+        "pages": [
+          "api-reference/authorization/list-tokens",
+          "api-reference/authorization/create-a-token",
+          "api-reference/authorization/delete-a-token"
+        ]
       },
       {
-          "group": "Authorization",
-          "pages": [
-            "api-reference/authorization/list-tokens",
-            "api-reference/authorization/create-a-token",
-            "api-reference/authorization/delete-a-token"
-          ]
-        },
-        {
-          "group": "Agents",
-          "pages": [
-            "api-reference/agents/publish-an-agent",
-            "api-reference/agents/revert-an-agent",
-            "api-reference/agents/update-agent",
-            "api-reference/agents/fetch-staging-agent",
-            "api-reference/agents/fetch-live-agent",
-            "api-reference/agents/get-agent",
-            "api-reference/agents/outbound-call-from-agent"
-
-          ]
-        },
-        {
-          "group": "Phone Numbers",
-          "pages": [
-            "api-reference/phone-numbers/disconnect-a-phone-number",
-            "api-reference/phone-numbers/assign-phone-number-to-your-account",
-            "api-reference/phone-numbers/search-for-local-numbers-by-locality",
-            "api-reference/phone-numbers/search-for-local-numbers-by-prefix",
-            "api-reference/phone-numbers/search-for-local-numbers-by-phrase"
-          ]
-        },
-        {
-          "group": "SIP",
-          "pages": [
-            "api-reference/sip/list-sip-ip-whitelist",
-            "api-reference/sip/add-ip-to-sip-ip-whitelist",
-            "api-reference/sip/remove-ip-from-sip-ip-whitelist"
-          ]
-        },
-        {
-          "group": "Messaging",
-          "pages": [
-            "api-reference/messaging/list-priority-inbox",
-            "api-reference/messaging/list-agent-inbox",
-            "api-reference/messaging/fetch-room-messages",
-            "api-reference/messaging/retrieve-inbound-callback-url",
-            "api-reference/messaging/configure-inbound-callback-url",
-            "api-reference/messaging/remove-inbound-callback-url",
-            "api-reference/messaging/send-message-to-a-vida-user",
-            "api-reference/messaging/create-messaging-brand"
-          ]
-        },
-        {
-          "group": "Agent URLs",
-          "pages": [
-            "api-reference/agent-urls/check-agent-url-availability",
-            "api-reference/agent-urls/fetch-existing-agent-url",
-            "api-reference/agent-urls/create-agent-url"
-          ]
-        }
-        
+        "group": "Agents",
+        "pages": [
+          "api-reference/agents/publish-an-agent",
+          "api-reference/agents/revert-an-agent",
+          "api-reference/agents/update-agent",
+          "api-reference/agents/fetch-staging-agent",
+          "api-reference/agents/fetch-live-agent",
+          "api-reference/agents/get-agent",
+          "api-reference/agents/outbound-call-from-agent"
+        ]
+      },
+      {
+        "group": "Phone Numbers",
+        "pages": [
+          "api-reference/phone-numbers/disconnect-a-phone-number",
+          "api-reference/phone-numbers/assign-phone-number-to-your-account",
+          "api-reference/phone-numbers/search-for-local-numbers-by-locality",
+          "api-reference/phone-numbers/search-for-local-numbers-by-prefix",
+          "api-reference/phone-numbers/search-for-local-numbers-by-phrase"
+        ]
+      },
+      {
+        "group": "SIP",
+        "pages": [
+          "api-reference/sip/list-sip-ip-whitelist",
+          "api-reference/sip/add-ip-to-sip-ip-whitelist",
+          "api-reference/sip/remove-ip-from-sip-ip-whitelist"
+        ]
+      },
+      {
+        "group": "Messaging",
+        "pages": [
+          "api-reference/messaging/list-priority-inbox",
+          "api-reference/messaging/list-agent-inbox",
+          "api-reference/messaging/fetch-room-messages",
+          "api-reference/messaging/retrieve-inbound-callback-url",
+          "api-reference/messaging/configure-inbound-callback-url",
+          "api-reference/messaging/remove-inbound-callback-url",
+          "api-reference/messaging/send-message-to-a-vida-user",
+          "api-reference/messaging/create-messaging-brand"
+        ]
+      },
+      {
+        "group": "Agent URLs",
+        "pages": [
+          "api-reference/agent-urls/check-agent-url-availability",
+          "api-reference/agent-urls/fetch-existing-agent-url",
+          "api-reference/agent-urls/create-agent-url"
+        ]
+      }
   ],
   "footerSocials": {
     "x": "https://x.com/VIDAislive",
