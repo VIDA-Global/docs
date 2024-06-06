@@ -35,7 +35,7 @@
     "dark": "#0075FF",
     "anchors": {
       "from": "#0075FF",
-      "to": "#07C983"
+      "to": "#0075FF"
     }
   },
   "openapi": ["apiv2.json"],
