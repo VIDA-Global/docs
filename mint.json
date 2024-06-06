@@ -31,7 +31,7 @@
   "favicon": "logos/favicon.png",
   "colors": {
     "primary": "#0075FF",
-    "light": "#07C983",
+    "light": "#0075FF",
     "dark": "#0075FF",
     "anchors": {
       "from": "#0075FF",
