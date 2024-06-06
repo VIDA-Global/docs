@@ -41,8 +41,20 @@
   "openapi": ["apiv2.json"],
   "topbarLinks": [
     {
-      "name": "Get Help",
-      "url": "mailto:help@vida.inc"
+      "name": "Overview",
+      "url": "https://vida.io"
+    },
+    {
+      "name": "Examples",
+      "url": "https://vida.io/examples"
+    },
+    {
+      "name": "FAQs",
+      "url": "https://vida.io/faq"
+    },
+    {
+      "name": "Pricing",
+      "url": "https://vida.io/pricing"
     }
   ],
   "topbarCtaButton": {
