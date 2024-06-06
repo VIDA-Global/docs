@@ -77,6 +77,17 @@
           ]
       },
       {
+          "group": "Agent Functions",
+          "pages": [
+            "functions/intro",
+            "functions/webhooks",
+            "functions/transfer",
+            "functions/take-message",
+            "functions/send-email",
+            "functions/schedule"
+          ]
+      },
+      {
         "group": "API Documentation",
         "pages": [
           "api-reference/overview",
