@@ -65,7 +65,7 @@
           ]
       },
       {
-          "group": "Examples",
+          "group": "Agent Examples",
           "pages": [
             "examples/intro",
             "examples/restaurants",
