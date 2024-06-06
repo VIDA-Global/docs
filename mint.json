@@ -61,8 +61,19 @@
       {
           "group": "Get Started",
           "pages": [
-            "welcome",
-            "examples/intro"
+            "welcome"
+          ]
+      },
+      {
+          "group": "Examples",
+          "pages": [
+            "examples/intro",
+            "examples/restaurants",
+            "examples/retail",
+            "examples/home-services",
+            "examples/professional-services",
+            "examples/salon",
+            "examples/logistics"
           ]
       },
       {
