@@ -1,0 +1,65 @@
+---
+title: 'Webhook Actions'
+description: 'How to configure and use Webhook actions in Vida agents.'
+---
+
+# Webhook Actions
+
+Webhook actions allow your Vida AI phone agents to interact with external systems dynamically. By configuring webhook actions, you can fetch and send data to various endpoints, enabling your agent to provide up-to-date and context-specific information to callers.
+
+## Adding a Webhook Action
+
+To add a webhook action to your agent:
+1. Log into your account and navigate to the agent editor.
+2. Click the (+) button and select the "Webhooks" action.
+
+## Configuring the Webhook Action
+
+Once added, you need to provide instructions to the agent on how and when to use the webhook. You will specify:
+- **Conditions**: Describe under what conditions the agent should send the HTTP request.
+- **HTTP Method**: Specify whether it should be a GET or POST request.
+- **URL**: The endpoint the request will be sent to.
+- **Parameters**: For POST requests, define the JSON payload to be sent.
+
+### Example Instructions
+
+Here is an example of how you might configure a webhook action:
+
+```plaintext
+- **Condition**: When the caller asks for the latest news headlines.
+- **HTTP Method**: GET
+- **URL**: https://api.news.com/v1/latest-headlines
+- **Parameters**: None for GET requests.
+
+- **Condition**: When the caller wants to book an appointment.
+- **HTTP Method**: POST
+- **URL**: https://api.scheduler.com/v2/appointments
+- **Parameters**: {
+    "name": "[Caller Name]",
+    "phone": "[Caller Phone Number]",
+    "date": "[Preferred Date]",
+    "time": "[Preferred Time]"
+  }
+
+- **Condition**: When the caller requests product availability.
+- **HTTP Method**: GET
+- **URL**: https://api.store.com/v1/check-availability?product_id=[Product ID]
+- **Parameters**: None for GET requests.
+```
+
+## Use Cases
+
+Webhook actions can be used in various scenarios:
+- **Fetching Real-Time Data**: Get the latest information such as weather updates, stock prices, or product availability.
+- **Submitting Data**: Send customer information or booking details to your CRM or scheduling system.
+- **Dynamic Responses**: Provide context-specific responses based on data fetched from external systems.
+
+## Setting Up The Webhook Function
+
+You can edit your agent's functions by logging into your account and clicking the "Edit agent" button on the left-side navigation, then clicking the (+) icon in the Functions section to add the Webhook function.
+
+![Webhook function](https://vidapublic.s3.us-east-2.amazonaws.com/vida-edit-agent-functions-webhook.png "Webhook function")
+
+The Webhook function can be configured to meet your specific needs, providing a seamless and efficient experience for your customers.
+
+Explore our functions to see how Vida can transform your business interactions!
