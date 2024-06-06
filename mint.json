@@ -61,7 +61,8 @@
       {
           "group": "Get Started",
           "pages": [
-            "quickstart"
+            "welcome",
+            "examples/intro"
           ]
       },
       {
