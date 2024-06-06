@@ -1,0 +1,49 @@
+---
+title: 'Schedule'
+description: 'How to configure and use Schedule function in Vida agents.'
+---
+
+The Schedule function allows your Vida AI phone agents to book appointments and meetings, ensuring they align with your availability and avoid conflicts on your Google Calendar.
+
+## Adding a Schedule Function
+
+To add a scheduling action to your agent:
+1. Log into your account and navigate to the agent editor.
+2. Click the (+) button in the Functions section and select the "Schedule" function.
+
+![Schedule function](https://vidapublic.s3.us-east-2.amazonaws.com/vida-edit-agent-functions-schedule.png "Schedule function")
+
+## Configuring the Schedule Function
+
+Once added, you need to provide instructions to the agent on how and when to use the scheduling function. You will specify:
+- **Conditions**: Describe under what conditions the agent should offer to schedule an appointment.
+- **Rules**: Define any specific rules about when appointments can be scheduled.
+
+### Example Instructions
+
+Here is an example of how you might configure a scheduling action:
+
+```plaintext
+- **Condition**: When the caller requests a consultation.
+- **Rules**: Schedule appointments only on weekdays between 10 AM and 4 PM.
+
+- **Condition**: When the caller wants to book a follow-up meeting.
+- **Rules**: Check Google Calendar for conflicts before booking.
+```
+
+## Use Cases
+
+Scheduling actions can be used in various scenarios:
+- **Consultations**: Book consultation appointments, ensuring they do not conflict with existing calendar events.
+- **Follow-Up Meetings**: Schedule follow-up meetings, taking into account your configured availability and calendar conflicts.
+- **Service Appointments**: Book service appointments within specified time frames, ensuring efficient scheduling.
+
+## Availability Configuration
+
+The agent will take into account the Availability configured on your account. To configure availability, go to Settings -> Availability and set the days of the week and times during which booking is available.
+
+## Enabling Google Calendar Integration
+
+To enable Google Calendar integration for conflict checking, go to Settings -> Integrations and enable Google Calendar. This allows the agent to check for calendar conflicts before booking appointments.
+
+Explore our functions to see how Vida can transform your business interactions!
