@@ -19,6 +19,10 @@
     "twitter:creator": "@VidaIsLive",
     "twitter:card": "summary_large_image"      
   },
+  "modeToggle": {
+    "default": "light",
+    "isHidden": true
+  },
   "logo": {
     "dark": "logos/dark.svg",
     "light": "logos/light.svg"
