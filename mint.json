@@ -79,17 +79,6 @@
           ]
       },
       {
-          "group": "Agent Examples",
-          "pages": [            
-            "examples/restaurants",
-            "examples/retail",
-            "examples/home-services",
-            "examples/professional-services",
-            "examples/salon",
-            "examples/logistics"
-          ]
-      },
-      {
           "group": "Agent Functions",
           "pages": [
             "functions/intro",
@@ -100,6 +89,17 @@
             "functions/schedule"
           ]
       },
+      {
+          "group": "Agent Examples",
+          "pages": [            
+            "examples/restaurants",
+            "examples/retail",
+            "examples/home-services",
+            "examples/professional-services",
+            "examples/salon",
+            "examples/logistics"
+          ]
+      },      
       {
         "group": "API Documentation",
         "pages": [
