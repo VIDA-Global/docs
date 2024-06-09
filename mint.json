@@ -73,9 +73,14 @@
           ]
       },
       {
-          "group": "Agent Examples",
+          "group": "Agents",
           "pages": [
-            "examples/intro",
+            "agents/intro",
+          ]
+      },
+      {
+          "group": "Agent Examples",
+          "pages": [            
             "examples/restaurants",
             "examples/retail",
             "examples/home-services",
@@ -89,7 +94,7 @@
           "pages": [
             "functions/intro",
             "functions/webhooks",
-            "functions/transfer",
+            "functions/call-transfer",
             "functions/take-message",
             "functions/send-email",
             "functions/schedule"
