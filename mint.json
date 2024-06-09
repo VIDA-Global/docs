@@ -76,6 +76,7 @@
           "group": "Agents",
           "pages": [
             "agents/intro",
+            "agents/instructions",
             "agents/functions",
             "agents/links",
             "agents/voice",
