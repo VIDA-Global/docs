@@ -76,12 +76,12 @@
           "group": "Agents",
           "pages": [
             "agents/intro"
+            "agents/functions"
           ]
       },
       {
           "group": "Agent Functions",
           "pages": [
-            "functions/intro",
             "functions/webhooks",
             "functions/call-transfer",
             "functions/take-message",
