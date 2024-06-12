@@ -17,7 +17,8 @@ To add a scheduling action to your agent:
 
 Once added, you need to provide instructions to the agent on how and when to use the scheduling function. You will specify:
 - **Conditions**: Describe under what conditions the agent should offer to schedule an appointment.
-- **Rules**: Define any specific rules about when appointments can be scheduled.
+- **Email Recipients**: You can define additional emails (beyond the one associated with your account) that should receive the Calendar invitation event.
+- **Rules**: Define any specific rules about when appointments can be scheduled. 
 
 ### Example Instructions
 
@@ -25,9 +26,11 @@ Here is an example of how you might configure a scheduling action:
 
 ```plaintext
 - **Condition**: When the caller requests a consultation.
+- **Email Recipients**: test@apple.come, fest@fun.org
 - **Rules**: Schedule appointments only on weekdays between 10 AM and 4 PM.
 
 - **Condition**: When the caller wants to book a follow-up meeting.
+- **Email Recipients**: None.
 - **Rules**: Check Google Calendar for conflicts before booking.
 ```
 
