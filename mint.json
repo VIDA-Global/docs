@@ -175,7 +175,7 @@
         ]
       },
       {
-        "group": "Context",
+        "group": "Knowledge",
         "pages": [
           "api-reference/context/fetch-context",
           "api-reference/context/add-context"
