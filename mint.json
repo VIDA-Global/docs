@@ -156,13 +156,29 @@
         "group": "Messaging",
         "pages": [
           "api-reference/messaging/list-priority-inbox",
-          "api-reference/messaging/list-agent-inbox",
+          "api-reference/messaging/list-junk-inbox",
+          "api-reference/messaging/fetch-recent-messages",
           "api-reference/messaging/fetch-room-messages",
           "api-reference/messaging/retrieve-inbound-callback-url",
           "api-reference/messaging/configure-inbound-callback-url",
           "api-reference/messaging/remove-inbound-callback-url",
           "api-reference/messaging/send-message-to-a-vida-user",
           "api-reference/messaging/create-messaging-brand"
+        ]
+      },
+      {
+        "group": "Webhooks",
+        "pages": [
+          "api-reference/webhooks/list-webhooks",
+          "api-reference/webhooks/add-webhook",
+          "api-reference/webhooks/remove-webhook"
+        ]
+      },
+      {
+        "group": "Context",
+        "pages": [
+          "api-reference/context/fetch-context",
+          "api-reference/context/add-context"
         ]
       },
       {

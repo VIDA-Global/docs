@@ -1068,13 +1068,13 @@
         ]
       }
     },
-    "/api/v2/agentConversations": {
+    "/api/v2/junkConversations": {
       "get": {
         "tags": [
           "Messaging"
         ],
-        "summary": "List Agent Inbox",
-        "description": "Fetch rooms in agents inbox",
+        "summary": "List Junk Inbox",
+        "description": "Fetch rooms in junk inbox",
         "parameters": [
           {
             "name": "pagination",
@@ -1197,6 +1197,294 @@
                             "example": "campa....."
                           }
                         }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/messages/recent": {
+      "get": {
+        "tags": [
+          "Messaging"
+        ],
+        "summary": "Fetch Recent Messages",
+        "description": "Fetch recent messages across all inboxes.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "from": {
+                        "description": "From User Id",
+                        "type": "number",
+                        "example": 1234567890
+                      },
+                      "fromUser": {
+                        "description": "From User Name",
+                        "type": "string",
+                        "example": "user_test"
+                      },
+                      "to": {
+                        "description": "To User Id",
+                        "type": "number",
+                        "example": 878589
+                      },
+                      "toUser": {
+                        "description": "To User Name",
+                        "type": "string",
+                        "example": "support2"
+                      },
+                      "rate": {
+                        "description": "Rate associated with the message",
+                        "type": "number",
+                        "example": 0
+                      },
+                      "usdRate": {
+                        "description": "USD rate associated with the message",
+                        "type": "number",
+                        "example": 0
+                      },
+                      "timestamp": {
+                        "description": "Epoch of the last message's timestamp",
+                        "type": "number",
+                        "example": 1718463395
+                      },
+                      "date": {
+                        "description": "Friendly Date",
+                        "type": "string",
+                        "example": "2024-06-15T14:56:35.000Z"
+                      },
+                      "message": {
+                        "description": "Message text",
+                        "type": "string",
+                        "example": "Hi there! Lyle is currently unavailable. Could you please let me know the nature of your call or message and any specific details you'd like me to pass on to him? Thanks!"
+                      },
+                      "content-type": {
+                        "description": "Content type of the message",
+                        "type": "string",
+                        "example": "text/plain"
+                      },
+                      "disposition-notification": {
+                        "description": "Disposition notification status",
+                        "type": "string",
+                        "example": null
+                      },
+                      "roomId": {
+                        "description": "Room Id",
+                        "type": "string",
+                        "example": "1:878589"
+                      },
+                      "status": {
+                        "description": "Status of the message",
+                        "type": "string",
+                        "example": "success"
+                      },
+                      "attachments": {
+                        "description": "Array of media attachment URLs",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "content-type": {
+                              "type": "string",
+                              "example": "audio/mp3"
+                            },
+                            "filename": {
+                              "type": "string",
+                              "example": "mp3"
+                            },
+                            "content-url": {
+                              "type": "string",
+                              "example": "https://example.com/media/recording.mp3"
+                            },
+                            "attachmentType": {
+                              "type": "string",
+                              "example": "call"
+                            }
+                          }
+                        }
+                      },
+                      "isLive": {
+                        "description": "Whether the message is live",
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "aiAgent": {
+                        "description": "Whether an AI agent is involved",
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "aiReward": {
+                        "description": "AI reward status",
+                        "type": "string",
+                        "example": null
+                      },
+                      "aiRewardUsd": {
+                        "description": "AI reward in USD",
+                        "type": "number",
+                        "example": null
+                      },
+                      "aiLeadRating": {
+                        "description": "AI lead rating",
+                        "type": "number",
+                        "example": null
+                      },
+                      "aiLeadRatingReason": {
+                        "description": "Reason for AI lead rating",
+                        "type": "string",
+                        "example": null
+                      },
+                      "aiAgentOverride": {
+                        "description": "AI agent override status",
+                        "type": "string",
+                        "example": null
+                      },
+                      "gift": {
+                        "description": "If this message included a monetary gift",
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "source": {
+                        "description": "Source medium for the message",
+                        "type": "string",
+                        "example": "email"
+                      },
+                      "uuid": {
+                        "description": "Unique ID for message",
+                        "type": "string",
+                        "example": "a4977f49-80a6-41f0-9add-93a270cdd781"
+                      },
+                      "campaignId": {
+                        "description": "Campaign ID associated with the message",
+                        "type": "string",
+                        "example": "campa25290ee54602fbcb545d033c1a15ba12"
+                      },
+                      "fromNumber": {
+                        "description": "Phone number of the sender",
+                        "type": "string",
+                        "example": "+15125551234"
+                      },
+                      "toNumber": {
+                        "description": "Phone number of the recipient",
+                        "type": "string",
+                        "example": "+15125559876"
+                      },
+                      "notify": {
+                        "description": "Notification flag",
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "targetInbox": {
+                        "description": "Target inbox",
+                        "type": "string",
+                        "example": "inbox"
+                      },
+                      "type": {
+                        "description": "Type of message",
+                        "type": "string",
+                        "example": "call"
+                      },
+                      "duration": {
+                        "description": "Duration of the call",
+                        "type": "number",
+                        "example": 9
+                      },
+                      "direction": {
+                        "description": "Direction of the call",
+                        "type": "string",
+                        "example": "inbound"
+                      },
+                      "missedCall": {
+                        "description": "Whether it was a missed call",
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "bypassAgent": {
+                        "description": "Whether the agent was bypassed",
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "cnamSpam": {
+                        "description": "Whether the call was marked as spam by CNAM",
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "selfCall": {
+                        "description": "Whether the call was self-initiated",
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "callingUserIsContact": {
+                        "description": "Whether the calling user is a contact",
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "agentOutcome": {
+                        "description": "Outcome from the agent",
+                        "type": "string",
+                        "example": null
+                      },
+                      "summary": {
+                        "description": "Summary of the message",
+                        "type": "string",
+                        "example": null
+                      },
+                      "callDialog": {
+                        "description": "Array of dialog entries with roles and contents",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "role": {
+                              "type": "string",
+                              "example": "assistant"
+                            },
+                            "content": {
+                              "type": "string",
+                              "example": "Hello! This is the answering assistant. How can I help you?"
+                            }
+                          }
+                        }
+                      },
+                      "campaign": {
+                        "description": "Campaign status",
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "diversion": {
+                        "description": "Diversion status",
+                        "type": "string",
+                        "example": null
+                      },
+                      "voicemailRecording": {
+                        "description": "Voicemail recording details",
+                        "type": "string",
+                        "example": null
+                      },
+                      "eventType": {
+                        "description": "Type of event",
+                        "type": "string",
+                        "example": "inbound-call"
+                      },
+                      "forcedCampaign": {
+                        "description": "Forced campaign flag",
+                        "type": "boolean",
+                        "example": true
                       }
                     }
                   }
@@ -1821,6 +2109,379 @@
                     "description": "Phone Number",
                     "type": "string",
                     "example": "5558675309"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/webhooks": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "List Webhooks",
+        "description": "List all your existing webhook destinations.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "webhooks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "userId": {
+                            "description": "User Id",
+                            "type": "number",
+                            "example": 3
+                          },
+                          "label": {
+                            "description": "Friendly label for webhook",
+                            "type": "string",
+                            "example": "Zapier Hook"
+                          },
+                          "timestamp": {
+                            "description": "Timestamp when created",
+                            "type": "number",
+                            "example": 1678829072
+                          },
+                          "url": {
+                            "description": "Webhook URL",
+                            "type": "string",
+                            "example": "https://hooks.zapier.com/hooks/catch/123456/abcdef"
+                          },
+                          "type": {
+                            "description": "Webhook type",
+                            "type": "string",
+                            "example": "call"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Add Webhook",
+        "description": "Add a new webhook destination.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook created successfully"
+                    },
+                    "webhooks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "userId": {
+                            "description": "User Id",
+                            "type": "number",
+                            "example": 3
+                          },
+                          "label": {
+                            "description": "Friendly label for webhook",
+                            "type": "string",
+                            "example": "Zapier Hook"
+                          },
+                          "timestamp": {
+                            "description": "Timestamp when created",
+                            "type": "number",
+                            "example": 1678829072
+                          },
+                          "url": {
+                            "description": "Webhook URL",
+                            "type": "string",
+                            "example": "https://hooks.zapier.com/hooks/catch/123456/abcdef"
+                          },
+                          "type": {
+                            "description": "Webhook type",
+                            "type": "string",
+                            "example": "conversation"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url",
+                  "label",
+                  "type"
+                ],
+                "properties": {
+                  "url": {
+                    "description": "Webhook URL",
+                    "type": "string",
+                    "example": "https://hooks.zapier.com/hooks/catch/123456/abcdef"
+                  },
+                  "label": {
+                    "description": "Friendly label for webhook",
+                    "type": "string",
+                    "example": "Zapier Hook"
+                  },
+                  "type": {
+                    "description": "Webhook type",
+                    "type": "string",
+                    "example": "conversation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Remove Webhook",
+        "description": "Remove an existing webhook destination.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "description": "Webhook URL to remove",
+                    "type": "string",
+                    "example": "https://hooks.zapier.com/hooks/catch/123456/abcdef"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/context": {
+      "get": {
+        "tags": [
+          "Context"
+        ],
+        "summary": "Fetch Context",
+        "description": "Fetch additional information context stored for in conversation room.",
+        "parameters": [
+          {
+            "name": "target",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Phone number in E.164 format or VIDA username of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "context": {
+                      "type": "string",
+                      "example": "Customer Name: John Doe, Car Model: Toyota Camry, Last Oil Change: 2023-05-15"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Context"
+        ],
+        "summary": "Add Context",
+        "description": "Injects additional information context your agent can use in conversations.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Context added successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "context"
+                ],
+                "properties": {
+                  "target": {
+                    "description": "Phone number in E.164 format or VIDA username of the user",
+                    "type": "string",
+                    "example": "+1234567890 or john_doe"
+                  },
+                  "context": {
+                    "description": "Context information to inject",
+                    "type": "string",
+                    "example": "Customer Name: John Doe, Car Model: Toyota Camry, Last Oil Change: 2023-05-15"
                   }
                 }
               }
