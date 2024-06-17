@@ -73,7 +73,7 @@
           ]
       },
       {
-          "group": "Agents",
+          "group": "Agent Setup",
           "pages": [
             "agents/intro",
             "agents/instructions",
