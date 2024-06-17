@@ -105,7 +105,15 @@
             "examples/salon",
             "examples/logistics"
           ]
-      },      
+      },
+      {
+          "group": "Publish your Agent",
+          "pages": [            
+            "sharing/publish",
+            "sharing/profile",
+            "sharing/embed",
+          ]
+      },
       {
         "group": "API Documentation",
         "pages": [
