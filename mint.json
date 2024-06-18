@@ -115,6 +115,12 @@
           ]
       },
       {
+          "group": "Integrations",
+          "pages": [            
+            "integrations/intro"
+          ]
+      },
+      {
         "group": "API Documentation",
         "pages": [
           "api-reference/overview",
