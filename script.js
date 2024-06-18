@@ -60,9 +60,9 @@ function initializeZapierEmbed() {
 
             // Create and display zapier-full-experience
             const element = document.createElement("zapier-full-experience");
-            // element.signUpEmail = "email_of_your_user@example.com";
-            // element.signUpFirstName = "first_name_of_your_user";
-            // element.signUpLastName = "last_name_of_your_user";
+            element.signUpEmail = "email_of_your_user@example.com";
+            element.signUpFirstName = "first_name_of_your_user";
+            element.signUpLastName = "last_name_of_your_user";
             element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
             element.theme = "light";
             element.appSearchBarDisplay = "show";
