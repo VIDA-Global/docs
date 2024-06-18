@@ -30,3 +30,35 @@ loadCSS('https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.
     	console.log("Loaded Vida Widget JS")
     });
 });
+
+/*
+* Zapier Embed
+*/
+const container = document.querySelector("#zapier-container");
+
+if (container === null) {
+    console.log("Zapier element does not exist.");
+} else {
+    console.log("Zapier element exists.");
+    // Load JS
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js";
+    document.head.appendChild(script);
+
+    // Load CSS
+    const stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css";
+    document.head.appendChild(stylesheet);
+
+    // Create and display zapier-full-experience
+    const element = document.createElement("zapier-full-experience");
+    //element.signUpEmail = "email_of_your_user@example.com";
+    //element.signUpFirstName = "first_name_of_your_user";
+    //element.signUpLastName = "last_name_of_your_user";
+    element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
+    element.theme = "light";
+    element.appSearchBarDisplay = "show";
+    container.appendChild(element);    
+}
