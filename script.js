@@ -34,31 +34,59 @@ loadCSS('https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.
 /*
 * Zapier Embed
 */
-const container = document.querySelector("#zapier-container");
 
-if (container === null) {
-    console.log("Zapier element does not exist.");
-} else {
-    console.log("Zapier element exists.");
-    // Load JS
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js";
-    document.head.appendChild(script);
+// Function to initialize the Zapier embed
+function initializeZapierEmbed() {
+    const container = document.querySelector("#zapier-container");
 
-    // Load CSS
-    const stylesheet = document.createElement("link");
-    stylesheet.rel = "stylesheet";
-    stylesheet.href = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css";
-    document.head.appendChild(stylesheet);
+    if (container === null) {
+        console.log("Zapier element does not exist.");
+    } else {
+        // Check if zapier-full-experience is already appended
+        if (!container.querySelector("zapier-full-experience")) {
+            console.log("Zapier element exists and will be initialized.");
+            
+            // Load JS
+            const script = document.createElement("script");
+            script.type = "module";
+            script.src = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js";
+            document.head.appendChild(script);
 
-    // Create and display zapier-full-experience
-    const element = document.createElement("zapier-full-experience");
-    //element.signUpEmail = "email_of_your_user@example.com";
-    //element.signUpFirstName = "first_name_of_your_user";
-    //element.signUpLastName = "last_name_of_your_user";
-    element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
-    element.theme = "light";
-    element.appSearchBarDisplay = "show";
-    container.appendChild(element);    
+            // Load CSS
+            const stylesheet = document.createElement("link");
+            stylesheet.rel = "stylesheet";
+            stylesheet.href = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css";
+            document.head.appendChild(stylesheet);
+
+            // Create and display zapier-full-experience
+            const element = document.createElement("zapier-full-experience");
+            // element.signUpEmail = "email_of_your_user@example.com";
+            // element.signUpFirstName = "first_name_of_your_user";
+            // element.signUpLastName = "last_name_of_your_user";
+            element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
+            element.theme = "light";
+            element.appSearchBarDisplay = "show";
+            container.appendChild(element);
+        } else {
+            console.log("Zapier embed already initialized.");
+        }
+    }
 }
+
+// Create an observer instance linked to the callback function
+const observer = new MutationObserver((mutationsList, observer) => {
+    for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+            // Check if the zapier-container element has been added
+            if (document.querySelector("#zapier-container")) {
+                initializeZapierEmbed();
+                // Once the element is found and initialized, disconnect the observer
+                observer.disconnect();
+                break;
+            }
+        }
+    }
+});
+
+// Start observing the document body for childList changes
+observer.observe(document.body, { childList: true, subtree: true });
