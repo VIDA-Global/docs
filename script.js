@@ -65,10 +65,8 @@ function initializeZapierEmbed() {
             element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
             element.theme = "light";
             element.appSearchBarDisplay = "show";
-            //setTimeout(function() {
-                console.log("Appending Zapier element after delay.")
-                container.appendChild(element);
-            //}, 500);
+            console.log("Appending Zapier element after delay.")
+            container.appendChild(element);
         } else {
             console.log("Zapier embed already initialized.");
         }
@@ -84,8 +82,6 @@ function observeAndInitialize() {
                 if (document.querySelector("#zapier-container")) {
                     console.log("Initializing Zapier via observer.")
                     initializeZapierEmbed();
-                    // Once the element is found and initialized, disconnect the observer
-                    //observer.disconnect();
                     break;
                 }
             }
@@ -100,7 +96,7 @@ function observeAndInitialize() {
 setTimeout(function() {
     console.log("Initializing Zapier after delay.")
     initializeZapierEmbed();
-}, 500);
+}, 200);
 
 // Observe changes for dynamic navigation
 observeAndInitialize();
