@@ -65,10 +65,10 @@ function initializeZapierEmbed() {
             element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
             element.theme = "light";
             element.appSearchBarDisplay = "show";
-            setTimeout(function() {
+            //setTimeout(function() {
                 console.log("Appending Zapier element after delay.")
                 container.appendChild(element);
-            }, 500);
+            //}, 500);
         } else {
             console.log("Zapier embed already initialized.");
         }
@@ -85,7 +85,7 @@ function observeAndInitialize() {
                     console.log("Initializing Zapier via observer.")
                     initializeZapierEmbed();
                     // Once the element is found and initialized, disconnect the observer
-                    observer.disconnect();
+                    //observer.disconnect();
                     break;
                 }
             }
