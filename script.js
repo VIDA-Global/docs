@@ -35,7 +35,6 @@ loadCSS('https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.
 * Zapier Embed
 */
 
-// Function to initialize the Zapier embed
 function initializeZapierEmbed() {
     const container = document.querySelector("#zapier-container");
 
@@ -60,9 +59,9 @@ function initializeZapierEmbed() {
 
             // Create and display zapier-full-experience
             const element = document.createElement("zapier-full-experience");
-            element.signUpEmail = "email_of_your_user@example.com";
-            element.signUpFirstName = "first_name_of_your_user";
-            element.signUpLastName = "last_name_of_your_user";
+            // element.signUpEmail = "email_of_your_user@example.com";
+            // element.signUpFirstName = "first_name_of_your_user";
+            // element.signUpLastName = "last_name_of_your_user";
             element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
             element.theme = "light";
             element.appSearchBarDisplay = "show";
@@ -73,20 +72,28 @@ function initializeZapierEmbed() {
     }
 }
 
-// Create an observer instance linked to the callback function
-const observer = new MutationObserver((mutationsList, observer) => {
-    for (const mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-            // Check if the zapier-container element has been added
-            if (document.querySelector("#zapier-container")) {
-                initializeZapierEmbed();
-                // Once the element is found and initialized, disconnect the observer
-                observer.disconnect();
-                break;
+// Function to observe and initialize the Zapier embed
+function observeAndInitialize() {
+    const observer = new MutationObserver((mutationsList, observer) => {
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                // Check if the zapier-container element has been added
+                if (document.querySelector("#zapier-container")) {
+                    initializeZapierEmbed();
+                    // Once the element is found and initialized, disconnect the observer
+                    observer.disconnect();
+                    break;
+                }
             }
         }
-    }
-});
+    });
 
-// Start observing the document body for childList changes
-observer.observe(document.body, { childList: true, subtree: true });
+    // Start observing the document body for childList changes
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+// Initialize on initial load
+initializeZapierEmbed();
+
+// Observe changes for dynamic navigation
+observeAndInitialize();
