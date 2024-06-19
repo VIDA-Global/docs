@@ -79,6 +79,7 @@ function observeAndInitialize() {
             if (mutation.type === 'childList') {
                 // Check if the zapier-container element has been added
                 if (document.querySelector("#zapier-container")) {
+                    console.log("Initializing Zapier via observer.")
                     initializeZapierEmbed();
                     // Once the element is found and initialized, disconnect the observer
                     observer.disconnect();
@@ -93,7 +94,10 @@ function observeAndInitialize() {
 }
 
 // Initialize on initial load
-initializeZapierEmbed();
+setTimeout(function() {
+    console.log("Initializing Zapier after delay.")
+    initializeZapierEmbed();
+}, 500);
 
 // Observe changes for dynamic navigation
 observeAndInitialize();
