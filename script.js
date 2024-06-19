@@ -92,11 +92,5 @@ function observeAndInitialize() {
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-// Initialize on initial load
-setTimeout(function() {
-    //console.log("Initializing Zapier after delay.")
-    //initializeZapierEmbed();
-}, 200);
-
 // Observe changes for dynamic navigation
 observeAndInitialize();
