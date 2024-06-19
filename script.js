@@ -65,7 +65,10 @@ function initializeZapierEmbed() {
             element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
             element.theme = "light";
             element.appSearchBarDisplay = "show";
-            container.appendChild(element);
+            setTimeout(function() {
+                console.log("Appending Zapier element after delay.")
+                container.appendChild(element);
+            }, 500);
         } else {
             console.log("Zapier embed already initialized.");
         }
