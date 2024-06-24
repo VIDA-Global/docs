@@ -111,7 +111,8 @@
           "pages": [            
             "sharing/publish",
             "sharing/profile",
-            "sharing/embed"
+            "sharing/embed",
+            "sharing/sip-inbound"
           ]
       },
       {
