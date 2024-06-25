@@ -1618,304 +1618,6 @@
         ]
       }
     },
-    "/api/v2/messaging/settings/inboundCallbackUrl": {
-      "post": {
-        "tags": [
-          "Messaging"
-        ],
-        "summary": "Configure Inbound Callback URL",
-        "description": "Configure url for where Vida should send messages to your account",
-        "responses": {
-          "200": {
-            "description": "Successfully set your inbound Messaging Callback URL",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Success"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Setting Failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": false
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "A descriptive error message"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "method",
-                  "url"
-                ],
-                "properties": {
-                  "method": {
-                    "description": "HTTP Method to use when sending to your web service",
-                    "type": "string",
-                    "default": "POST"
-                  },
-                  "url": {
-                    "description": "Full URL path where Vida will send your message.",
-                    "type": "string",
-                    "example": "https://yourdomain/endpoint"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Messaging"
-        ],
-        "summary": "Retrieve Inbound Callback URL",
-        "description": "Retrieve currently configured inbound callback url",
-        "responses": {
-          "200": {
-            "description": "Successfully retrieve your settings",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Success"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Setting Failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": false
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "A descriptive error message"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Messaging"
-        ],
-        "summary": "Remove Inbound Callback Url",
-        "description": "Remove Inbound Callback Url.",
-        "responses": {
-          "200": {
-            "description": "Successfully removed callback url",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Success"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Setting Failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": false
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "A descriptive error message"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v2/messaging/send": {
-      "post": {
-        "tags": [
-          "Messaging"
-        ],
-        "summary": "Send Message to a Vida User",
-        "description": "Send a private message to a Vida User/Account",
-        "responses": {
-          "200": {
-            "description": "Successfully sent message",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Success"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Message failed to send",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": false
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "A descriptive error message"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "toUsername"
-                ],
-                "properties": {
-                  "toUsername": {
-                    "description": "Vida username to send message to",
-                    "type": "string",
-                    "example": "brandon"
-                  },
-                  "message": {
-                    "description": "Message text",
-                    "type": "string",
-                    "example": "See you in Miami!"
-                  },
-                  "zapAmount": {
-                    "description": "Send a Zap to a Vida user. In Sats",
-                    "type": "number",
-                    "example": 21
-                  },
-                  "mediaUrls": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "example": [
-                      "https://path/to/your/media/file1",
-                      "https://path/to/your/media/file2"
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v2/agent/publish": {
       "post": {
         "tags": [
@@ -1986,135 +1688,6 @@
             "apiKeyAuth": []
           }
         ]
-      }
-    },
-    "/api/v2/messaging/createBrand": {
-      "post": {
-        "tags": [
-          "Messaging"
-        ],
-        "summary": "Create Messaging Brand",
-        "description": "Create a messaging brand needed for A2P Messaging Campaigns",
-        "responses": {
-          "200": {
-            "description": "Brand Order Created Successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Brand Order Created Successfully"
-                    },
-                    "internalOrderId": {
-                      "type": "string",
-                      "example": "msgBrandOrder16892837723"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "displayName",
-                  "companyName",
-                  "ein",
-                  "entityType",
-                  "website",
-                  "street",
-                  "city",
-                  "country",
-                  "state",
-                  "postalCode",
-                  "phone"
-                ],
-                "properties": {
-                  "displayName": {
-                    "description": "Display Name for Brand",
-                    "type": "string",
-                    "example": "Wolf Cola"
-                  },
-                  "companyName": {
-                    "description": "Company Full Name",
-                    "type": "string",
-                    "example": "Wolf Cola Global"
-                  },
-                  "ein": {
-                    "description": "Business EIN",
-                    "type": "string",
-                    "example": "123456789"
-                  },
-                  "entityType": {
-                    "description": "Entity Type ",
-                    "type": "string",
-                    "enum": [
-                      "PRIVATE_PROFIT",
-                      "PUBLIC_PROFIT"
-                    ]
-                  },
-                  "website": {
-                    "description": "Company Main Website. This is reviewed. ",
-                    "type": "string",
-                    "example": "https://vida.live"
-                  },
-                  "street": {
-                    "description": "Street Address",
-                    "type": "string",
-                    "example": "555 East Street Suite 420"
-                  },
-                  "city": {
-                    "description": "City",
-                    "type": "string",
-                    "example": "Cedar Park"
-                  },
-                  "country": {
-                    "description": "Country",
-                    "type": "string",
-                    "example": "US"
-                  },
-                  "state": {
-                    "description": "State Abbreviation",
-                    "type": "string",
-                    "example": "TX"
-                  },
-                  "postalCode": {
-                    "description": "Postal Code",
-                    "type": "string",
-                    "example": "78613"
-                  },
-                  "phone": {
-                    "description": "Phone Number",
-                    "type": "string",
-                    "example": "5558675309"
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/api/v2/webhooks": {
@@ -2360,10 +1933,10 @@
     "/api/v2/context": {
       "get": {
         "tags": [
-          "Context"
+          "Knowledge"
         ],
         "summary": "Fetch Context",
-        "description": "Fetch additional information context stored for in conversation room.",
+        "description": "Fetch additional information context stored for conversations with a particular person.",
         "parameters": [
           {
             "name": "target",
@@ -2417,10 +1990,10 @@
       },
       "post": {
         "tags": [
-          "Context"
+          "Knowledge"
         ],
         "summary": "Add Context",
-        "description": "Injects additional information context your agent can use in conversations.",
+        "description": "Injects additional information context your agent can use in conversations with a specific person.",
         "responses": {
           "200": {
             "description": "OK"
@@ -2947,7 +2520,7 @@
           "Agents"
         ],
         "summary": "Outbound Call from Agent",
-        "description": "Use this endpoint to initiate an outbound call from an active Vida Business agent to a destination number. The agent will handle the call.",
+        "description": "Use this endpoint to initiate an outbound call from your Vida agent to a destination number or user. Your agent will handle the call.",
         "responses": {
           "200": {
             "description": "Success",
@@ -2982,19 +2555,18 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "campaignId",
-                  "toNumber"
+                  "target"
                 ],
                 "properties": {
-                  "campaignId": {
-                    "description": "The ID of the agent that will be making the call.",
+                  "context": {
+                    "description": "Additional context you want your Agent to be aware of when handling the call.",
                     "type": "string",
-                    "example": "campa931829b5857f"
+                    "example": "Name: Lyle Pratt. Interest: Completed a call back form on our website for more information about our products."
                   },
-                  "toNumber": {
-                    "description": "The destination number your campaign agent is calling.",
+                  "target": {
+                    "description": "Phone number in E.164 format or VIDA username of the user",
                     "type": "string",
-                    "example": "+15125558278"
+                    "example": "+1234567890 or john_doe"
                   }
                 }
               }
