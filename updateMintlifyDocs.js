@@ -39,6 +39,7 @@ function updateNavigation(oldNavigation, newNavigation) {
     oldGroup => 
       !oldGroup.pages.length || 
       !oldGroup.pages[0].startsWith("api-reference/") ||
+      !oldGroup.pages[0].slice("api-reference/".length).includes('/') || //Don't include any groups that have pages direct in api-reference folder, like overviews,etc
       existingGroups.has(oldGroup.group)
   );
 }
