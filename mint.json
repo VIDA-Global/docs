@@ -121,6 +121,14 @@
       ]
     },
     {
+      "group": "API Documentation",
+      "pages": [
+        "api-reference/overview",
+        "api-reference/getting-started",
+        "api-reference/authentication"
+      ]
+    },
+    {
       "group": "Authorization",
       "pages": [
         "api-reference/authorization/list-tokens",
