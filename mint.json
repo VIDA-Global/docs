@@ -114,7 +114,9 @@
           "group": "Integrations",
           "pages": [            
             "integrations/intro",
-            "integrations/zapier"
+            "integrations/zapier",
+            "integrations/athena",
+            "integrations/coxauto"
           ]
       },
       {
