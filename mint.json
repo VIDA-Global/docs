@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Vida Docs",
-  "isWhiteLabeled": true,  
+  "isWhiteLabeled": true,
   "metadata": {
     "apple-itunes-app": "app-id=1521523628",
     "description": "The AI phone agent for small business. Answer calls and texts with an AI phone agent that always works and is never busy.",
@@ -16,7 +16,7 @@
     "twitter:image": "https://vida.io/images/openGraphImage.png",
     "twitter:site:": "@VIDAisAI",
     "twitter:creator": "@VIDAisAI",
-    "twitter:card": "summary_large_image"      
+    "twitter:card": "summary_large_image"
   },
   "modeToggle": {
     "default": "light",
@@ -37,7 +37,9 @@
       "to": "#0075FF"
     }
   },
-  "openapi": ["apiv2.json"],
+  "openapi": [
+    "apiv2.json"
+  ],
   "topbarLinks": [
     {
       "name": "Examples",
@@ -58,144 +60,136 @@
       "url": "api-reference"
     }
   ],
-  "anchors": [
-  ],
+  "anchors": [],
   "navigation": [
-      {
-          "group": "Get Started",
-          "pages": [
-            "welcome"
-          ]
-      },
-      {
-          "group": "Agent Setup",
-          "pages": [
-            "agents/intro",
-            "agents/instructions",
-            "agents/functions",
-            "agents/links",
-            "agents/voice",
-            "agents/greeting",
-            "agents/language",
-            "agents/contacts"
-          ]
-      },
-      {
-          "group": "Agent Functions",
-          "pages": [
-            "functions/webhooks",
-            "functions/call-transfer",
-            "functions/take-message",
-            "functions/send-email",
-            "functions/schedule"
-          ]
-      },
-      {
-          "group": "Agent Examples",
-          "pages": [            
-            "examples/restaurants",
-            "examples/retail",
-            "examples/home-services",
-            "examples/professional-services",
-            "examples/salon",
-            "examples/logistics"
-          ]
-      },
-      {
-          "group": "Sharing and Publishing",
-          "pages": [            
-            "sharing/publish",
-            "sharing/profile",
-            "sharing/embed",
-            "sharing/sip-inbound"
-          ]
-      },
-      {
-          "group": "Integrations",
-          "pages": [            
-            "integrations/intro",
-            "integrations/zapier",
-            "integrations/athena",
-            "integrations/coxauto"
-          ]
-      },
-      {
-        "group": "API Documentation",
-        "pages": [
-          "api-reference/overview",
-          "api-reference/getting-started",
-          "api-reference/authentication"
-        ]
-      },
-      {
-        "group": "Authorization",
-        "pages": [
-          "api-reference/authorization/list-tokens",
-          "api-reference/authorization/create-a-token",
-          "api-reference/authorization/delete-a-token"
-        ]
-      },
-      {
-        "group": "Agents",
-        "pages": [
-          "api-reference/agents/publish-an-agent",
-          "api-reference/agents/revert-an-agent",
-          "api-reference/agents/update-agent",
-          "api-reference/agents/fetch-staging-agent",
-          "api-reference/agents/fetch-live-agent",
-          "api-reference/agents/get-agent",
-          "api-reference/agents/outbound-call-from-agent"
-        ]
-      },
-      {
-        "group": "Phone Numbers",
-        "pages": [
-          "api-reference/phone-numbers/assign-phone-number-to-your-account",
-          "api-reference/phone-numbers/search-for-local-numbers-by-locality",
-          "api-reference/phone-numbers/search-for-local-numbers-by-prefix",
-          "api-reference/phone-numbers/search-for-local-numbers-by-phrase"
-        ]
-      },
-      {
-        "group": "SIP",
-        "pages": [
-          "api-reference/sip/list-sip-ip-whitelist",
-          "api-reference/sip/add-ip-to-sip-ip-whitelist",
-          "api-reference/sip/remove-ip-from-sip-ip-whitelist"
-        ]
-      },
-      {
-        "group": "Messaging",
-        "pages": [
-          "api-reference/messaging/list-priority-inbox",
-          "api-reference/messaging/list-junk-inbox",
-          "api-reference/messaging/fetch-recent-messages",
-          "api-reference/messaging/fetch-room-messages"
-        ]
-      },
-      {
-        "group": "Webhooks",
-        "pages": [
-          "api-reference/webhooks/list-webhooks",
-          "api-reference/webhooks/add-webhook",
-          "api-reference/webhooks/remove-webhook"
-        ]
-      },
-      {
-        "group": "Knowledge",
-        "pages": [
-          "api-reference/context/fetch-context",
-          "api-reference/context/add-context"
-        ]
-      },
-      {
-        "group": "Agent URLs",
-        "pages": [
-          "api-reference/agent-urls/check-agent-url-availability",
-          "api-reference/agent-urls/fetch-existing-agent-url",
-          "api-reference/agent-urls/create-agent-url"
-        ]
-      }
+    {
+      "group": "Get Started",
+      "pages": [
+        "welcome"
+      ]
+    },
+    {
+      "group": "Agent Setup",
+      "pages": [
+        "agents/intro",
+        "agents/instructions",
+        "agents/functions",
+        "agents/links",
+        "agents/voice",
+        "agents/greeting",
+        "agents/language",
+        "agents/contacts"
+      ]
+    },
+    {
+      "group": "Agent Functions",
+      "pages": [
+        "functions/webhooks",
+        "functions/call-transfer",
+        "functions/take-message",
+        "functions/send-email",
+        "functions/schedule"
+      ]
+    },
+    {
+      "group": "Agent Examples",
+      "pages": [
+        "examples/restaurants",
+        "examples/retail",
+        "examples/home-services",
+        "examples/professional-services",
+        "examples/salon",
+        "examples/logistics"
+      ]
+    },
+    {
+      "group": "Sharing and Publishing",
+      "pages": [
+        "sharing/publish",
+        "sharing/profile",
+        "sharing/embed",
+        "sharing/sip-inbound"
+      ]
+    },
+    {
+      "group": "Integrations",
+      "pages": [
+        "integrations/intro",
+        "integrations/zapier",
+        "integrations/athena",
+        "integrations/coxauto"
+      ]
+    },
+    {
+      "group": "Authorization",
+      "pages": [
+        "api-reference/authorization/list-tokens",
+        "api-reference/authorization/create-a-token",
+        "api-reference/authorization/delete-a-token"
+      ]
+    },
+    {
+      "group": "Agents",
+      "pages": [
+        "api-reference/agents/publish-an-agent",
+        "api-reference/agents/revert-an-agent",
+        "api-reference/agents/update-agent",
+        "api-reference/agents/fetch-staging-agent",
+        "api-reference/agents/fetch-live-agent",
+        "api-reference/agents/get-agent",
+        "api-reference/agents/outbound-call-from-agent"
+      ]
+    },
+    {
+      "group": "Phone Numbers",
+      "pages": [
+        "api-reference/phone-numbers/disconnect-a-phone-number",
+        "api-reference/phone-numbers/assign-phone-number-to-your-account",
+        "api-reference/phone-numbers/search-for-local-numbers-by-locality",
+        "api-reference/phone-numbers/search-for-local-numbers-by-prefix",
+        "api-reference/phone-numbers/search-for-local-numbers-by-phrase"
+      ]
+    },
+    {
+      "group": "SIP",
+      "pages": [
+        "api-reference/sip/list-sip-ip-whitelist",
+        "api-reference/sip/add-ip-to-sip-ip-whitelist",
+        "api-reference/sip/remove-ip-from-sip-ip-whitelist"
+      ]
+    },
+    {
+      "group": "Messaging",
+      "pages": [
+        "api-reference/messaging/list-priority-inbox",
+        "api-reference/messaging/list-junk-inbox",
+        "api-reference/messaging/fetch-recent-messages",
+        "api-reference/messaging/fetch-room-messages"
+      ]
+    },
+    {
+      "group": "Webhooks",
+      "pages": [
+        "api-reference/webhooks/list-webhooks",
+        "api-reference/webhooks/add-webhook",
+        "api-reference/webhooks/remove-webhook"
+      ]
+    },
+    {
+      "group": "Knowledge",
+      "pages": [
+        "api-reference/knowledge/fetch-context",
+        "api-reference/knowledge/add-context"
+      ]
+    },
+    {
+      "group": "Agent URLs",
+      "pages": [
+        "api-reference/agent-urls/check-agent-url-availability",
+        "api-reference/agent-urls/fetch-existing-agent-url",
+        "api-reference/agent-urls/create-agent-url"
+      ]
+    }
   ],
   "footerSocials": {
     "x": "https://x.com/VIDAisAI",
