@@ -19,6 +19,7 @@ Once added, you need to provide instructions to the agent on how and when to use
 - **Conditions**: Describe under what conditions the agent should offer to schedule an appointment.
 - **Email Recipients**: You can define additional emails (beyond the one associated with your account) that should receive the Calendar invitation event.
 - **Rules**: Define any specific rules about when appointments can be scheduled. 
+- **Where**: Where will the meeting take place? Include a link to a video conference here, or even a real world destination.
 
 ### Example Instructions
 
@@ -28,10 +29,12 @@ Here is an example of how you might configure a scheduling action:
 - **Condition**: When the caller requests a consultation.
 - **Email Recipients**: test@apple.come, fest@fun.org
 - **Rules**: Schedule appointments only on weekdays between 10 AM and 4 PM.
+- *Where**: Use my google room: meet.google.com/example/example
 
 - **Condition**: When the caller wants to book a follow-up meeting.
 - **Email Recipients**: None.
 - **Rules**: Check Google Calendar for conflicts before booking.
+- *Where**: Use my zoom link: zoom.us/example/example
 ```
 
 ## Use Cases
@@ -50,3 +53,7 @@ The agent will take into account the Availability configured on your account. To
 To enable Google Calendar integration for conflict checking, go to Settings -> Integrations and enable Google Calendar. This allows the agent to check for calendar conflicts before booking appointments.
 
 Explore our functions to see how Vida can transform your business interactions!
+
+## Paywall your schedule
+
+Your Vida AI phone agent can require payment before performing other actions. This is especially useful when combined with the Schedule action to facilitate paid consultations. Check out the [Request Payment](/functions/payments) function for more information.
