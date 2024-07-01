@@ -89,7 +89,7 @@
         "functions/take-message",
         "functions/send-email",
         "functions/schedule",
-        "functions/payments",
+        "functions/payments"
       ]
     },
     {
