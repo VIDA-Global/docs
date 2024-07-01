@@ -88,7 +88,8 @@
         "functions/call-transfer",
         "functions/take-message",
         "functions/send-email",
-        "functions/schedule"
+        "functions/schedule",
+        "functions/payments",
       ]
     },
     {
