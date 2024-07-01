@@ -17,7 +17,7 @@ To add a Request Payment action to your agent:
 
 Once added, you need to provide instructions to the agent on how and when to use the request payment function. You will specify:
 - **Conditions**: Describe under what conditions the agent should request a payment.
-- **Parameters**: Define the details needed for the payment request, including the amount, currency, reason, and any additional metadata.
+- **Parameters**: Define the details needed for the payment request, including the amount, currency (default, usd, or btc), reason, and any additional metadata.
 
 ### Example Instructions
 
@@ -61,6 +61,10 @@ The Request Payment action can be used in various scenarios:
 - **Premium Service Payments**: Collect payments for premium memberships, VIP services, or exclusive content.
 - **Outstanding Balances**: Request payments for any outstanding balances or overdue invoices.
 - **Event Registrations**: Charge for event registrations, bookings, or reservations.
+
+## Webhooks
+
+Vida can perform an HTTP POST request when payments to your agent occur. This is available via our [Zapier integration](/integrations/zapier) or by configuring your own [webhook via our API](/api-reference/webhooks/list-webhooks).
 
 ## Fees
 
