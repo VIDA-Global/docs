@@ -1,0 +1,75 @@
+---
+title: 'Request Payment'
+description: 'How to enable your Vida agent to request payment before it performs an action.'
+---
+
+## Introduction to Request Payment Action
+
+The Request Payment action allows your Vida AI phone agents to generate payment links during conversations with callers. This feature is essential for situations where a payment is required before a specific action or service can be performed. Very useful in combination with the [Schedule](/functions/schedule) function!
+
+## Adding a Request Payment Action
+
+To add a Request Payment action to your agent:
+1. Log into your account and navigate to the agent editor.
+2. Click the (+) button in the Functions section and select the "Request Payment" action.
+
+![Request Payment function](https://vidapublic.s3.us-east-2.amazonaws.com/vida-edit-agent-functions-payment.png "Request Payment function")
+
+## Configuring the Request Payment Action
+
+Once added, you need to provide instructions to the agent on how and when to use the request payment function. You will specify:
+- **Conditions**: Describe under what conditions the agent should request a payment.
+- **Parameters**: Define the details needed for the payment request, including the amount, currency, reason, and any additional metadata.
+
+### Example Instructions
+
+Here is an example of how you might configure a request payment action:
+
+```plaintext
+- **Condition**: When the caller requests to purchase a premium membership.
+- **Parameters**:
+  - **Amount**: "49.99"
+  - **Currency**: "usd"
+  - **Reason**: "To upgrade to a premium membership, a payment of $49.99 is required."
+  - **Meta**: {}
+
+- **Condition**: When the caller wants to book a VIP service.
+- **Parameters**:
+  - **Amount**: "150.00"
+  - **Currency**: "usd"
+  - **Reason**: "A payment of $150.00 is required to book the VIP service."
+  - **Meta**: 
+        {
+            "service_id": "vip123",
+            "item": "[Item Name]"
+        }
+
+- **Condition**: When the caller needs to pay an outstanding balance.
+- **Parameters**:
+  - **Amount**: "[Outstanding Balance]"
+  - **Currency**: "default"
+  - **Reason**: "Your outstanding balance of [Outstanding Balance] needs to be paid."
+  - **Meta**: 
+        {
+            "customer_id": "[Caller ID]",
+            "item": "[Item Name]"
+        }
+```
+
+## Use Cases
+
+The Request Payment action can be used in various scenarios:
+- **Paid Consultations**: Require payment before the agent uses the [Schedule](/functions/schedule) function to book a meeting with you.
+- **Premium Service Payments**: Collect payments for premium memberships, VIP services, or exclusive content.
+- **Outstanding Balances**: Request payments for any outstanding balances or overdue invoices.
+- **Event Registrations**: Charge for event registrations, bookings, or reservations.
+
+## Fees
+
+Vida charges a 15% fee to the receiver of the payment. Be sure to include this in your price calculation. Vida may sometimes charge payers fees for using various payment types.
+
+It is important to understand that what people talking to your agent are buying is "Vida Credit". Vida Credit can be used to pay other Vida agents. Once received as payment, Vida Credit can be withdrawn via Paypal, Venmo, ACH, or Bitcoin Lightning. All withdraws are subject to Vida's Terms of Service.
+
+## Terms
+
+It is important to note that all usage of Vida's AI agent payment functionality is subject to Vida's [Terms of Service](https://vida.io/terms). No illegal activity permitted. Vida reserves the right to deny withdrawal's of Vida Credit. Vida Credit is like Robux or other digital goods, but it is not like the cash in your wallet.
