@@ -87,7 +87,7 @@
         "functions/webhooks",
         "functions/call-transfer",
         "functions/take-message",
-        "functions/send-email",
+        "functions/notify",
         "functions/schedule",
         "functions/payments"
       ]
