@@ -1,0 +1,41 @@
+---
+title: 'Send Email'
+description: 'How to configure and use the Send Email function in Vida agents.'
+---
+
+The Send Email function allows your agent to send an email with any content to any destination email address. This allows your agent to send requested information to callers such as custom booking links. This function is different than the Notify function email in which the Send Email function can be used during agent conversation.
+
+Emails that are sent from your Vida agent will come from the address: alerts@vida.live. Your agent will generate a relevant Subject Line per the conversation as well as help generate the body of the email. These factors can be influenced by the instructions you provide.
+
+## Adding a Send Email Function
+
+To add a Send Email function to your agent:
+1. Log into your account and navigate to the agent editor.
+2. Click the (+) button in the Functions section and select the "Send Email" function.
+
+![Send Email function](https://vidapublic.s3.us-east-2.amazonaws.com/vida-edit-agent-functions-send-email.png "Send Email function")
+
+## Configuring the Send Email Function
+
+Once added, you need to provide instructions to the agent on how and when to use the Send Email function. You will specify:
+- **Conditions**: When you have captured and confirmed the caller's email address.
+- **Email Recipients**: The confirmed caller's email address.
+- **Content**: Any specific information you want added into the email including URLs and links.
+
+### Example Instructions
+
+Here is an example of how you might configure a Send Email function:
+
+```plaintext
+- **Condition**: After you have confirmed the caller's email address.
+- **Email Recipients**: Send the email to the caller's email address.
+- **Content**: Let the caller know to use this link https://square.site/book/test/test-tenant to book their requested consultation.
+```
+
+## Use Cases
+
+Send Email functions can be used in various scenarios:
+- **Custom Booking Links**: Email your custom booking links to callers. 
+- **Content Delivery**: A subscriber or fan calls requesting access to exclusive content.
+
+Explore our functions to see how Vida can transform your business interactions!
