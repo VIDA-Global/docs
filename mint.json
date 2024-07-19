@@ -88,6 +88,7 @@
         "functions/call-transfer",
         "functions/take-message",
         "functions/notify",
+        "functions/send-email",
         "functions/schedule",
         "functions/payments"
       ]
