@@ -78,7 +78,8 @@
         "agents/voice",
         "agents/greeting",
         "agents/language",
-        "agents/contacts"
+        "agents/contacts",
+        "agents/enable-sms"
       ]
     },
     {
