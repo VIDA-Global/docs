@@ -90,6 +90,7 @@
         "functions/take-message",
         "functions/notify",
         "functions/send-email",
+        "functions/send-sms",
         "functions/schedule",
         "functions/payments"
       ]

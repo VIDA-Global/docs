@@ -1,0 +1,41 @@
+---
+title: 'Send SMS'
+description: 'How to configure and use the Send SMS function in Vida agents.'
+---
+
+The Send SMS function allows your agent to send an sms with any content to any destination phone number. This allows your agent to send requested information to callers such as custom booking links. This function is different than the Notify function sms in which the Send SMS function can be used during agent conversation.
+
+Text messages that are sent from your Vida agent will come from your agent's Vida phone number. Note that a paid Vida account with a valid Vida phone number is required to use this function. You will also need to have an approved SMS Brand and Campaign. Head over to the [Enable SMS](/agents/enable-sms) section for more information on enabling SMS functionality on your Vida AI agent.
+
+## Adding a Send SMS Function
+
+To add a Send SMS function to your agent:
+1. Log into your account and navigate to the agent editor.
+2. Click the (+) button in the Functions section and select the "Send SMS" function.
+
+![Send SMS function](https://vidapublic.s3.us-east-2.amazonaws.com/vida-edit-agent-functions-send-sms.png "Send SMS function")
+
+## Configuring the Send SMS Function
+
+Once added, you need to provide instructions to the agent on how and when to use the Send SMS function. You will specify:
+- **Conditions**: When you have captured and confirmed the caller's phone number.
+- **Recipients**: The confirmed caller's phone number.
+- **Content**: Any specific information you want added into the sms.
+
+### Example Instructions
+
+Here is an example of how you might configure a Send SMS function:
+
+```plaintext
+- **Condition**: After you have confirmed the caller's phone number.
+- **Recipients**: Send the sms to the caller's phone number.
+- **Content**: Let the caller know to use this link https://square.site/book/test/test-tenant to book their requested consultation.
+```
+
+## Use Cases
+
+Send SMS functions can be used in various scenarios:
+- **Custom Booking Links**: Send your custom booking links to callers. 
+- **Content Delivery**: A subscriber or fan calls requesting access to exclusive content.
+
+Explore our functions to see how Vida can transform your business interactions!
