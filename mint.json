@@ -42,6 +42,10 @@
   ],
   "topbarLinks": [
     {
+      "name": "OpenAPI Definition",
+      "url": "https://raw.githubusercontent.com/VIDA-Global/docs/main/apiv2.json"
+    },
+    {
       "name": "Examples",
       "url": "https://vida.io/examples"
     },
