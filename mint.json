@@ -125,7 +125,8 @@
         "integrations/intro",
         "integrations/zapier",
         "integrations/athena",
-        "integrations/coxauto"
+        "integrations/coxauto",
+        "integrations/google-calendar"
       ]
     },
     {
