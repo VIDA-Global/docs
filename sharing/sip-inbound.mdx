@@ -23,4 +23,4 @@ Number example: `sip:+18335888432@sip.vida.dev`
 
 Replace `vidasales` with your actual agent's username or `+18335888432` with your agent's phone number.
 
-You can send SIP INVITEs to this URI from any VoIP PBX or softphone.
+You can send SIP INVITEs to this URI from any VoIP PBX or softphone. Important Note: the SIP `From` header needs to be a valid phone number at this time. Sending anything else other than a valid e164 phone nunmber in the `From` header will result in a SIP 404.
