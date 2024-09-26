@@ -2338,7 +2338,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [],
                 "properties": {
                   "accountName": {
                     "description": "Account Name",
@@ -2439,7 +2438,6 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [],
                 "properties": {
                   "targetUserId": {
                     "description": "User Id of the user you are removing from your account",
@@ -2496,7 +2494,31 @@
             "apiKeyAuth": []
           }
         ],
-        "requestBody": {}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "Email of the person you are inviting",
+                    "type": "string",
+                    "example": "admin@acmesolar.com"
+                  },
+                  "redirectUrl": {
+                    "description": "URL to redirect user to after they accept invite",
+                    "type": "string",
+                    "example": "https://vida.io/welcome"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v2/stats/usage": {
@@ -2545,10 +2567,7 @@
           {
             "apiKeyAuth": []
           }
-        ],
-        "requestBody": {
-          "required": false
-        }
+        ]
       }
     },
     "/api/v2/product/currentPlan": {
