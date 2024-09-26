@@ -40,4 +40,4 @@ jobs:
         with:
           file-path: mint.json
           commit-msg: Updating Mint.json
-          github-token: ${{ secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.DOCS_REPO_KEY}}
