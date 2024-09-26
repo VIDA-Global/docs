@@ -1981,6 +1981,652 @@
         }
       }
     },
+    "/api/v2/createReseller": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Create a new reseller",
+        "description": "Create a new reseller under your partner account. Partner account required.",
+        "parameters": [
+          {
+            "name": "targetPartnerId",
+            "in": "query",
+            "description": "Partner Id to create reseller in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Reseller created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Reseller created"
+                    },
+                    "organization": {
+                      "type": "string",
+                      "example": "New Reseller object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "resellerName"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "Admin user email for this account",
+                    "type": "string",
+                    "example": "admin@acmesolar.com"
+                  },
+                  "resellerName": {
+                    "description": "Reseller Name",
+                    "type": "string",
+                    "example": "Acme Solar"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/listResellers": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "List resellers",
+        "description": "List all of your resellers. Partner account required.",
+        "parameters": [
+          {
+            "name": "targetPartnerId",
+            "in": "query",
+            "description": "Partner Id to list resellers in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/createOrganization": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Create a new organization",
+        "description": "Create a new organization under your reseller account. Reseller account required.",
+        "parameters": [
+          {
+            "name": "targetResellerId",
+            "in": "query",
+            "description": "Reseller Id to create organization in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Organization created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Organization created"
+                    },
+                    "organization": {
+                      "type": "string",
+                      "example": "New Organization object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "orgName"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "Admin user email for this account",
+                    "type": "string",
+                    "example": "admin@acmesolar.com"
+                  },
+                  "orgName": {
+                    "description": "Organization Name",
+                    "type": "string",
+                    "example": "Acme Solar"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/listOrganizations": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "List organizations",
+        "description": "List all of your organizations. Reseller account required.",
+        "parameters": [
+          {
+            "name": "targetResellerId",
+            "in": "query",
+            "description": "Reseller Id to list organizations in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/listAccounts": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "List agent accounts",
+        "description": "List all of your agent accounts",
+        "parameters": [
+          {
+            "name": "targetOrganizationId",
+            "in": "query",
+            "description": "Organization Id to list accounts in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/createAccount": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Create a new account",
+        "description": "Create a new account under your organization",
+        "parameters": [
+          {
+            "name": "targetOrganizationId",
+            "in": "query",
+            "description": "Organization Id to create account in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Account created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Account created"
+                    },
+                    "account": {
+                      "type": "string",
+                      "example": "New Account object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                  "accountName": {
+                    "description": "Account Name",
+                    "type": "string",
+                    "example": "Acme Solar Bay Area Support Agent"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/listAdminUsers": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "List admin users",
+        "description": "List all admin users of your organization",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/deleteAdminUser": {
+      "delete": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Delete admin user",
+        "description": "Delete a user from your organization",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Invitation sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User successfully removed from your admin users"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                  "targetUserId": {
+                    "description": "User Id of the user you are removing from your account",
+                    "type": "number",
+                    "example": 3
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/inviteAdminUser": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Invite admin user",
+        "description": "Invite a user to join your organization as an admin",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Invitation sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invitation sent"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {}
+      }
+    },
+    "/api/v2/stats/usage": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "View Usage",
+        "description": "View statistics about account usage",
+        "parameters": [
+          {
+            "name": "giveCosts",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "default": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            },
+            "description": "Returns values for keys with cost: prefix."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stats Fetched Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": false
+        }
+      }
+    },
+    "/api/v2/product/currentPlan": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "View Current Product Plan",
+        "description": "View Your Current Product Plan",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/product/allAvailablePlans": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "View Available Product Plans",
+        "description": "View All Available Product Plans",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/agent": {
       "post": {
         "tags": [
@@ -2097,6 +2743,15 @@
                     ],
                     "default": "google"
                   },
+                  "agentSttEngine": {
+                    "description": "Speech to text engine for this agent",
+                    "type": "string",
+                    "enum": [
+                      "google",
+                      "deepgram"
+                    ],
+                    "default": "deepgram"
+                  },
                   "agentLang": {
                     "description": "Agent language to be used for voice and transcriptions",
                     "type": "string",
@@ -2133,6 +2788,31 @@
                     "description": "Agent instructions for user interaction. This is for chatAgents only",
                     "type": "string",
                     "example": "I want you to payout rewards for users that answer a few questions about this promotional video."
+                  },
+                  "interruptionWordCount": {
+                    "description": "how many words a caller needs to speak before it is treated as an interruption",
+                    "type": "integer",
+                    "default": 3
+                  },
+                  "interruptionMinimumSpeakingTime": {
+                    "description": "(in seconds) How long the agent needs to be speaking before it can be interrupted",
+                    "type": "integer",
+                    "default": 3
+                  },
+                  "speechProcessingDelay": {
+                    "description": "(in milliseconds) the default amount of delay before processed speech is sent to the LLM for a response. Increasing this can help prevent unintentional interruptions for slow talkers. Note that this delay automatically increases and decreases depending on the number of interruptions over a period of time.",
+                    "type": "integer",
+                    "default": 500
+                  },
+                  "speechProcessingDelayInterruptionStep": {
+                    "description": "(in milliseconds) how much speech processing delay is added per interruption.",
+                    "type": "integer",
+                    "default": 500
+                  },
+                  "speechProcessingDelayMaxMultiplier": {
+                    "description": "the maximum number of interruptions that will influence the speech processing delay.",
+                    "type": "integer",
+                    "default": 4
                   }
                 }
               }
@@ -2485,6 +3165,73 @@
                     "description": "Phone number in E.164 format or VIDA username of the user",
                     "type": "string",
                     "example": "+1234567890 or john_doe"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/agent/outboundSms": {
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Outbound SMS from Agent",
+        "description": "Use this endpoint to initiate an outbound SMS text message from your Vida agent to a destination number or user. Your agent will handle the conversation. Note: You must have an active SMS Brand and Campaign on your account for this endpoint to work.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Outbound sms initiated."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "target",
+                  "content"
+                ],
+                "properties": {
+                  "context": {
+                    "description": "Additional context you want your Agent to be aware of when handling the conversation.",
+                    "type": "string",
+                    "example": "Name: Lyle Pratt. Interest: Completed a call back form on our website for more information about our products."
+                  },
+                  "target": {
+                    "description": "Phone number in E.164 format or VIDA username of the user",
+                    "type": "string",
+                    "example": "+1234567890 or john_doe"
+                  },
+                  "content": {
+                    "description": "The content of the outbound message.",
+                    "type": "string",
+                    "example": "Hello this is Alice reaching out from Acme Inc with an appointment reminder. You have a scheduled appointment for tomorrow at 10AM."
                   }
                 }
               }
