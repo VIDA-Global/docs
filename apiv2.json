@@ -2413,7 +2413,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "User successfully removed from your admin users"
+                      "example": "Admin user successfully removed from your organization"
                     }
                   }
                 }
