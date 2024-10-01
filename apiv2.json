@@ -2718,16 +2718,6 @@
                     "type": "string",
                     "example": "This brought to you by Wolf Cola"
                   },
-                  "welcomeMedia": {
-                    "description": "Media (e.g. Video Links) users see when initially visiting a campaign attached object such as a room or chatAgent",
-                    "type": "string",
-                    "example": "https://link.to.your.video"
-                  },
-                  "welcomeMessageRecording": {
-                    "description": "Audio file (mp3) that is played when someone dials into your campaign Phone Number. This file must be uploaded to your vida media",
-                    "type": "string",
-                    "example": "greeting.mp3"
-                  },
                   "links": {
                     "description": "Array of any http links to reference for external knowledge for your agent",
                     "type": "array",
@@ -2753,15 +2743,6 @@
                     "type": "string",
                     "example": "en-US Female"
                   },
-                  "agentTtsEngine": {
-                    "description": "Text to speech engine for this agent",
-                    "type": "string",
-                    "enum": [
-                      "google",
-                      "11labs"
-                    ],
-                    "default": "google"
-                  },
                   "agentSttEngine": {
                     "description": "Speech to text engine for this agent",
                     "type": "string",
@@ -2782,31 +2763,18 @@
                     ],
                     "default": "en-US"
                   },
-                  "postRewardMessage": {
-                    "description": "Message sent to the user after they have received a reward from a chatAgent or sponsored room",
-                    "type": "string",
-                    "example": "Thanks for watching to receive 10% off your next order, use promo code GIVEME10OFF"
-                  },
-                  "postRewardMedia": {
-                    "description": "Media (e.g. Video Links) users see along with your post reward message",
-                    "type": "string",
-                    "example": "https://link.to.your.video"
-                  },
-                  "postRewardQualifiedLeadMessage": {
-                    "description": "Message sent to the user after reward grant that has met the minimum quality lead score",
-                    "type": "string",
-                    "example": "Wow! This looks like a match made in heaven. Here is an additional 25% off if you sign up with us today!"
-                  },
-                  "qualityLeadMinScore": {
-                    "description": "Minimum lead score to be considered a quality lead. Will move to priority inbox and trigger postRewardQualifiedLeadMessage if set",
-                    "type": "integer",
-                    "example": 5,
-                    "default": 6
-                  },
                   "agentInstructions": {
                     "description": "Agent instructions for user interaction. This is for chatAgents only",
                     "type": "string",
                     "example": "I want you to payout rewards for users that answer a few questions about this promotional video."
+                  },
+                  "postAnswerDtmf": {
+                    "description": "DTMF your agent will send upon answering a call. Useful if you are forwarding calls to your agent from a platform that requires a DTMF verification before the call is connected.",
+                    "type": "string"
+                  },
+                  "waitOnAnswer": {
+                    "description": "The amount of time in milliseconds your Agent will wait before speaking the greeting (welcomeMessage).",
+                    "type": "string"
                   },
                   "interruptionWordCount": {
                     "description": "how many words a caller needs to speak before it is treated as an interruption",
