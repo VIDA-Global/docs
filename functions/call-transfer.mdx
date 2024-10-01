@@ -29,16 +29,20 @@ Valid US phone numbers are supported, as well as usernames of other Vida AI agen
 
 You can also tell your agent to route a call to you, and by default it will route to the Vida mobile app if no other destination is provided.
 
+## Special Features
+
+You can tell your agent to speak information after a Transferred call successfully connects. This is useful if you are transfering to a customer support live agent and you want to summarize the information collected on the call with the Agent. You can simply ask your agent to use the `transferNotification` attribute to speak whatever information it has to the transferred caller.
+
 ### Example Instructions
 
 Here is an example of how you might configure a call transfer action:
 
 ```plaintext
-- **Condition**: For sales inquiries.
-- **Destination**: Transfer to Jim at +15125551234.
+For sales inquiries, Transfer to Jim at +15125551234.
 
-- **Condition**: For support escalations.
-- **Destination**: Transfer to the support team at +17375551234,,,,3.
+For support escalations, Transfer to the support team at +17375551234,,,,3. 
+
+Important: Please include a summary of the problem to the transferred destination using the Transfer Notification attribute.
 ```
 
 ## Use Cases
