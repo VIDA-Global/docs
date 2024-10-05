@@ -26,20 +26,21 @@ Once added, you need to provide instructions to the agent on how and when to use
 Here is an example of how you might configure a webhook action:
 
 ```plaintext
-- **Condition**: When the caller asks for the latest news headlines.
-- **HTTP Method**: GET
-- **URL**: https://api.news.com/v1/latest-headlines
-- **Parameters**: None for GET requests.
-
-- **Condition**: When the caller wants to book an appointment.
+- **Condition**: When the caller wants to book an appointment with authentication.
 - **HTTP Method**: POST
 - **URL**: https://api.scheduler.com/v2/appointments
+- **Headers**: {
+    "Authorization": "Bearer [API_KEY]",
+    "Client-Id": "[Client ID]",
+    "Content-Type": "application/json"
+  }
 - **Parameters**: {
     "name": "[Caller Name]",
     "phone": "[Caller Phone Number]",
     "date": "[Preferred Date]",
     "time": "[Preferred Time]"
   }
+
 
 - **Condition**: When the caller requests product availability.
 - **HTTP Method**: GET
