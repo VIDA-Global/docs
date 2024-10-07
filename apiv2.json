@@ -2519,7 +2519,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Stats Fetched Successfully",
+            "description": "Stats fetched successfully",
             "content": {
               "application/json": {
                 "schema": {
