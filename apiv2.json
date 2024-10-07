@@ -1754,7 +1754,43 @@
             "apiKeyAuth": []
           }
         ],
-        "requestBody": {}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url",
+                  "label",
+                  "type"
+                ],
+                "properties": {
+                  "url": {
+                    "description": "Webhook URL",
+                    "type": "string",
+                    "example": "https://hooks.zapier.com/hooks/catch/123456/abcdef"
+                  },
+                  "label": {
+                    "description": "Friendly label for webhook",
+                    "type": "string",
+                    "example": "Zapier Hook"
+                  },
+                  "type": {
+                    "description": "Webhook type",
+                    "type": "string",
+                    "enum": [
+                      "conversation",
+                      "incoming",
+                      "contact"
+                    ],
+                    "example": "conversation"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
