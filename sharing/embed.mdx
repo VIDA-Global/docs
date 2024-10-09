@@ -53,3 +53,12 @@ Want to change the styling or functionality of our embeddable agent widget? Chec
 
 
 By embedding your Vida AI agent, you can enhance your website's interactivity, allowing visitors to engage with your AI agent directly from your site. Explore other helpful articles and guides to make the most out of your Vida AI phone agents and transform your business interactions!
+
+## Known issue with Embedded Agents
+
+Due to new security policies, some browsers are implementing restrictions on Microphone access on third party scripts.
+
+Here is the relevant documentation for allowing the permissions: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy/microphone
+
+You have to set a header on your webserver to tell browsers that microphone access is allowed to our domain. You'll need to update the Permissions-Policy header to include our TURN and SIP signaling domains:
+Permissions-Policy: microphone=(self "sip.vida.dev" "turn.vida.dev")
