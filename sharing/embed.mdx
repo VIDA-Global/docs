@@ -48,15 +48,18 @@ Below is an example of an AI agent embed.
 
 <div class="">
    <button
-      className="vidaButton"
       data-vida-button
       data-target="vidasales"
       data-type="call"
+      style="background-color: #007aff; color: white; border: none; border-radius: 8px; padding: 12px 20px; font-size: 16px; font-weight: 500; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease, box-shadow 0.3s ease;"
+      onmouseover="this.style.backgroundColor='#005bb5'; this.style.boxShadow='0 6px 10px rgba(0, 0, 0, 0.15)';"
+      onmouseout="this.style.backgroundColor='#007aff'; this.style.boxShadow='0 4px 6px rgba(0, 0, 0, 0.1)';"
+      onmousedown="this.style.backgroundColor='#004a99'; this.style.boxShadow='0 3px 5px rgba(0, 0, 0, 0.2)';"
+      onmouseup="this.style.backgroundColor='#005bb5'; this.style.boxShadow='0 6px 10px rgba(0, 0, 0, 0.15)';"
    >
    Call
    </button>
    <button
-      className="vidaButton"
       data-vida-button
       data-target="vidasales"
       data-type="chat"
