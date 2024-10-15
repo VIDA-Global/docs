@@ -24,11 +24,16 @@ function loadJS(url, callback) {
 
 // Usage
 
+/*
 loadCSS('https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.css', function() {
 	console.log("Loaded Vida Widget CSS")
     loadJS('https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.js', function() {
     	console.log("Loaded Vida Widget JS")
     });
+});
+*/
+loadJS('https://vida.io/embed/button/v1/script.js', function() {
+    console.log("Loaded Vida Widget JS")
 });
 
 /*

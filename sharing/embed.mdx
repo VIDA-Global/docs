@@ -9,47 +9,61 @@ Here is an example code that embeds a Vida AI phone agent into a web page:
 
 ```html
 	<!-- 
-	  -- data-agent = the vida agent username you want to embed (required)
-	  -- data-welcome = text that will be shown when hovering over the widget. Default: "Talk to our AI!"
-	  -- data-size = "expanded" if you want the widget pre-expanded without needing hover
+	  -- data-target = the vida agent username you want to embed (required)
+	  -- data-type = call or chat
 	-->
-	<div 
-	  id="webrtc-widget"
-	  class="vida-webrtc-widget"
-	  data-agent="vidasales"
-	  data-welcome="Talk to our AI!"
-	  data-size="normal"
-	></div>
-	<link rel="stylesheet" href="https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.css">
-	<script src="https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.js"></script>
+	<button
+    	className="vidaButton"
+	    data-vida-button
+	    data-target="vidasales"
+	    data-type="call"
+  	>
+    	Call
+  	</button>
+  	<button
+    	className="vidaButton"
+	    data-vida-button
+	    data-target="vidasales"
+	    data-type="chat"
+  	>
+    	Chat
+  	</button>
+	<script src="https://vida.io/embed/button/v1/script.js" defer />
 ```
 
 ### Explanation of data fields
 
-- **data-agent**: The Vida agent username you want to embed (required).
-- **data-welcome**: Text shown when hovering over the widget. Default is "Talk to our AI!".
-- **data-size**: Use "expanded" if you want the widget to be pre-expanded without needing to hover.
+- **data-target**: The Vida agent username you want to embed (required).
+- **data-type**: "call" or "chat" depending on if you want to initiate a call or text chat with the target agent.
 
 ### CSS and JS File Locations
 
-Make sure to include the correct CSS and JS file locations as shown in the example:
+Make sure to include the correct JS file location as shown in the example:
 
-- CSS: `https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.css`
-- JS: `https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.js`
-
-## Example web page
-
-Here is a link to a live example web page: [Vida Widget Demo](https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.html)
+- JS: `https://vida.io/embed/button/v1/script.js`
 
 ## Live example
 
 Below is an example of an AI agent embed.
 
-<div id="webrtc-widget" class="vida-webrtc-widget" data-agent="ginkosushidemo" data-welcome="Try this agent!" data-size="normal"></div>
-
-## Code on Github
-
-Want to change the styling or functionality of our embeddable agent widget? Checkout [this Github repo](https://github.com/VIDA-Global/vida-webrtc-widget) and fork and go wild!
+<div class="">
+   <button
+      className="vidaButton"
+      data-vida-button
+      data-target="vidasales"
+      data-type="call"
+   >
+   Call
+   </button>
+   <button
+      className="vidaButton"
+      data-vida-button
+      data-target="vidasales"
+      data-type="chat"
+   >
+   Chat
+   </button>
+</div>
 
 
 By embedding your Vida AI agent, you can enhance your website's interactivity, allowing visitors to engage with your AI agent directly from your site. Explore other helpful articles and guides to make the most out of your Vida AI phone agents and transform your business interactions!
