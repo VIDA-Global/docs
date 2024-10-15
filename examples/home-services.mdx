@@ -4,7 +4,24 @@ description: 'Example of Vida agent configured to answer calls for a home servic
 ---
 # Acme Solar Demo Agent
 
-<div id="webrtc-widget" class="vida-webrtc-widget" data-agent="acmesolardemo" data-welcome="Try this agent!" data-size="expanded"></div>
+<div class="">
+	<button
+		className="vidaButton"
+    	data-vida-button
+    	data-target="acmesolardemo"
+    	data-type="call"
+	>
+	Call
+	</button>
+	<button
+		className="vidaButton"
+    	data-vida-button
+    	data-target="acmesolardemo"
+    	data-type="chat"
+	>
+	Chat
+	</button>
+</div>
 
 ## Agent Prompt
 
