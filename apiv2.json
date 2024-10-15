@@ -1779,6 +1779,11 @@
                   "type": {
                     "description": "Webhook type",
                     "type": "string",
+                    "enum": [
+                      "conversation",
+                      "incoming",
+                      "contact"
+                    ],
                     "example": "conversation"
                   }
                 }
@@ -2550,7 +2555,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Stats Fetched Successfully",
+            "description": "Stats fetched successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -2762,6 +2767,16 @@
                       "es-US"
                     ],
                     "default": "en-US"
+                  },
+                  "agentS2SEngine": {
+                    "description": "(Requires Specific Paid Plan) The Speech-to-Speech Voice engine to use for voice, AI, and transcriptions",
+                    "type": "string",
+                    "enum": [
+                      null,
+                      "openai",
+                      "deepgram"
+                    ],
+                    "default": null
                   },
                   "agentInstructions": {
                     "description": "Agent instructions for user interaction. This is for chatAgents only",
