@@ -69,7 +69,8 @@
     {
       "group": "Get Started",
       "pages": [
-        "welcome"
+        "welcome",
+        "realtime"
       ]
     },
     {
@@ -83,8 +84,7 @@
         "agents/greeting",
         "agents/language",
         "agents/contacts",
-        "agents/enable-sms",
-        "agents/realtime"
+        "agents/enable-sms"        
       ]
     },
     {
