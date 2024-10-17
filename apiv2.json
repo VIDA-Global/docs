@@ -2084,6 +2084,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "description": "Whether to return only resellers with this given active state",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -2209,6 +2218,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "description": "Whether to return only organizations with this given active state",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -2251,6 +2269,15 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "description": "Whether to return only accounts with this given active state",
+            "required": false,
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -2642,6 +2669,169 @@
           },
           "401": {
             "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/product/subscribe": {
+      "post": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Subscribe to product plan",
+        "description": "Subscribe to a product plan",
+        "responses": {
+          "200": {
+            "description": "Successfully subscribed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "productPlanId",
+                  "term"
+                ],
+                "properties": {
+                  "productPlanId": {
+                    "description": "Product Plan Id to enable subscription",
+                    "type": "string",
+                    "example": "pplan-vida-business-basic"
+                  },
+                  "term": {
+                    "description": "Subscription length of month or year",
+                    "type": "string",
+                    "example": "month"
+                  },
+                  "cancelUrl": {
+                    "description": "If using external payment processor (eg Stripe) what url to redirect if payment canceled",
+                    "type": "string",
+                    "example": "https://yoursite.io/cancel"
+                  },
+                  "successUrl": {
+                    "description": "If using external payment processor (eg Stripe) what url to redirect if payment successful",
+                    "type": "string",
+                    "example": "https://yoursite.io/success"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/product/productCatalog": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "View Product Catalog",
+        "description": "View Your Product Catalog Plans. Reseller or Partner Account Required.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/product/productPlan/{productPlanId}": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Fetch a product plan details",
+        "description": "Fetch a product plan details from your catalog",
+        "parameters": [
+          {
+            "name": "productPlanId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Product Plan Id",
+            "example": "pplan-id-xxxx"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
