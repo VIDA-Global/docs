@@ -83,7 +83,7 @@
         "agents/greeting",
         "agents/language",
         "agents/contacts",
-        "agents/enable-sms"
+        "agents/enable-sms",
         "agents/realtime"
       ]
     },
