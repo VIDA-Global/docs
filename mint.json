@@ -114,6 +114,7 @@
     {
       "group": "Sharing and Publishing",
       "pages": [
+        "sharing/forward",
         "sharing/publish",
         "sharing/profile",
         "sharing/embed",
