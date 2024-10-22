@@ -2175,31 +2175,7 @@
             "apiKeyAuth": []
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "orgName"
-                ],
-                "properties": {
-                  "email": {
-                    "description": "Admin user email for this account",
-                    "type": "string",
-                    "example": "admin@acmesolar.com"
-                  },
-                  "orgName": {
-                    "description": "Organization Name",
-                    "type": "string",
-                    "example": "Acme Solar"
-                  }
-                }
-              }
-            }
-          }
-        }
+        "requestBody": {}
       }
     },
     "/api/v2/listOrganizations": {
