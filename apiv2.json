@@ -2578,6 +2578,44 @@
         ]
       }
     },
+    "/api/v2/product/offeredPlan": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "View Offered Product Plan",
+        "description": "View Your Product Plan Offer",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/product/currentPlan": {
       "get": {
         "tags": [
