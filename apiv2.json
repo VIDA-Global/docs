@@ -2060,6 +2060,16 @@
                     "description": "Reseller Name",
                     "type": "string",
                     "example": "Acme Solar"
+                  },
+                  "offeredProductPlanId": {
+                    "description": "Offered Product Plan. Requires the Reseller to accept and checkout.",
+                    "type": "string",
+                    "example": "custom-plan-1"
+                  },
+                  "productPlanId": {
+                    "description": "Product Plan to set on the account. Otherwise default sell plan is used",
+                    "type": "string",
+                    "example": "base-plan-1"
                   }
                 }
               }
