@@ -2185,7 +2185,36 @@
             "apiKeyAuth": []
           }
         ],
-        "requestBody": {}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "orgName"
+                ],
+                "properties": {
+                  "email": {
+                    "description": "Admin user email for this account",
+                    "type": "string",
+                    "example": "admin@acmesolar.com"
+                  },
+                  "orgName": {
+                    "description": "Organization Name",
+                    "type": "string",
+                    "example": "Acme Solar"
+                  },
+                  "productPlanId": {
+                    "description": "Product Plan Id. If not specified inherits your default sell planId",
+                    "type": "string",
+                    "example": "pplan-example-planId"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v2/listOrganizations": {
