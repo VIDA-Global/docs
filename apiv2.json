@@ -2577,6 +2577,13 @@
         "description": "View statistics about account usage",
         "parameters": [
           {
+            "name": "billingPeriod",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "giveCosts",
             "in": "query",
             "schema": {
