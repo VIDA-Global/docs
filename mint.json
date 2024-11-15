@@ -174,7 +174,10 @@
       "pages": [
         "api-reference/sip/list-sip-ip-whitelist",
         "api-reference/sip/add-ip-to-sip-ip-whitelist",
-        "api-reference/sip/remove-ip-from-sip-ip-whitelist"
+        "api-reference/sip/remove-ip-from-sip-ip-whitelist",
+        "api-reference/sip/list-sip-outbound-routes",
+        "api-reference/sip/add-sip-outbound-route",
+        "api-reference/sip/remove-sip-outbound-route"
       ]
     },
     {
