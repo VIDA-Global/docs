@@ -470,6 +470,182 @@
         }
       }
     },
+    "/api/v2/sip/outboundRoutes": {
+      "get": {
+        "tags": [
+          "SIP"
+        ],
+        "summary": "List SIP Outbound Routes",
+        "description": "List all existing SIP outbound routes for a user.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "routes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "1.1.1.1:5060;transport=udp"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "SIP"
+        ],
+        "summary": "Add SIP Outbound Route",
+        "description": "Add a new outbound route for SIP. IP Required, port and transport optional.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Route added successfully"
+                    },
+                    "routes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "1.1.1.1:5060;transport=udp"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "route"
+                ],
+                "properties": {
+                  "route": {
+                    "description": "Outbound route to add",
+                    "type": "string",
+                    "example": "1.1.1.1:5060;transport=udp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SIP"
+        ],
+        "summary": "Remove SIP Outbound Route",
+        "description": "Remove an existing SIP outbound route.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Route removed successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "route"
+                ],
+                "properties": {
+                  "route": {
+                    "description": "Outbound route to remove",
+                    "type": "string",
+                    "example": "1.1.1.1:5060;transport=udp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/phoneNumber/assign": {
       "post": {
         "tags": [
