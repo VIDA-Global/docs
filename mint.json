@@ -112,14 +112,19 @@
       ]
     },
     {
+      "group": "SIP",
+      "pages": [
+        "sip/sip-inbound",
+        "sip/sip-outbound"
+      ]
+    },
+    {
       "group": "Sharing and Publishing",
       "pages": [
         "sharing/forward",
         "sharing/publish",
         "sharing/profile",
-        "sharing/embed",
-        "sharing/sip-inbound",
-        "sharing/sip-outbound"
+        "sharing/embed"
       ]
     },
     {
