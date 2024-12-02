@@ -520,7 +520,7 @@
           "SIP"
         ],
         "summary": "Add SIP Outbound Route",
-        "description": "Add a new outbound route for SIP. IP Required, port and transport optional.",
+        "description": "Add a new outbound route for SIP. IP or domain Required (port and transport optional).",
         "responses": {
           "200": {
             "description": "OK"
