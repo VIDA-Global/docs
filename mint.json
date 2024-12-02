@@ -118,8 +118,7 @@
         "sharing/publish",
         "sharing/profile",
         "sharing/embed",
-        "sharing/sip-inbound",
-        "sharing/sip-outbound"
+        "sharing/sip-inbound"
       ]
     },
     {
