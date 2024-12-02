@@ -13,7 +13,7 @@ Before your Vida agent can send outbound calls over SIP, you need to add your SI
 
 ## Format of the SIP Outbound Route
 
-\{Domain or IP}:\{SIP Port};transport=\{tcp or udp};proxyAddress=\{domain or IP}:\{proxy port}
+`{Domain or IP}:{SIP Port};transport={tcp or udp};proxyAddress={domain or IP}:{proxy port}`
 
 **Domain or IP** (Required) - This is the SIP Domain you want calls to be sent to. This supports SIP SRV records or A records. This value will be present in the Request URI and To header host portions.
 
