@@ -3227,6 +3227,11 @@
                     "type": "integer",
                     "default": 3
                   },
+                  "speakingTimeout": {
+                    "description": "(in milliseconds) the default amount of time between words before we consider caller speaking to be finished. Increasing this can help prevent unintentional interruptions for slow talkers. ",
+                    "type": "integer",
+                    "default": 1200
+                  },
                   "speechProcessingDelay": {
                     "description": "(in milliseconds) the default amount of delay before processed speech is sent to the LLM for a response. Increasing this can help prevent unintentional interruptions for slow talkers. Note that this delay automatically increases and decreases depending on the number of interruptions over a period of time.",
                     "type": "integer",
