@@ -227,6 +227,7 @@
         "api-reference/accounts/list-organizations",
         "api-reference/accounts/list-agent-accounts",
         "api-reference/accounts/create-a-new-account",
+        "api-reference/accounts/delete-an-account",
         "api-reference/accounts/list-admin-users",
         "api-reference/accounts/delete-admin-user",
         "api-reference/accounts/invite-admin-user"
