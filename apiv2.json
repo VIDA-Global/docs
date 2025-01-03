@@ -2574,6 +2574,79 @@
         }
       }
     },
+    "/api/v2/deleteAccount": {
+      "delete": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Delete an account",
+        "description": "Delete an account under your organization",
+        "parameters": [
+          {
+            "name": "targetOrganizationId",
+            "in": "query",
+            "description": "Organization Id to delete the account in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Account deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Account deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "targetAccountId": {
+                    "description": "Account Id",
+                    "type": "string",
+                    "example": "3"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/listAdminUsers": {
       "get": {
         "tags": [
