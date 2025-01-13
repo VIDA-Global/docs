@@ -2,10 +2,10 @@
 title: "Authentication"
 description: "Access all the data on Vida through our RESTful API."
 ---
-To use the Vida API you need an API token. Get your token by going to Settings -> Developers in your Vida account. Note that using the Vida API requires a paid account, so you might need to upgrade first.
+To use the Vida API you need an API token. Get your token by going to Settings -> Developers in your Vida account. Note that using the Vida API requires a paid account, so you might need to upgrade first. Your API token should be placed into the URL like this: `https://api.vida.dev/api/v2/agentEventRules/default?token={your token here}`
 
 ![API Token Management](https://vidapublic.s3.us-east-2.amazonaws.com/vida-api-access.png "This is an image of the API page in settings.")
 
-Once you have a paid account you can use the API page in Settings to create and manage your API tokens. You can also manage your SIP IP access lists.
+Once you have a paid account you can use the API page in Settings to create and manage your API tokens. You can also manage your SIP IP access lists. Remember, your token should be placed in the URL like this `?token={your token}`, not in Bearer, Headers, etc.
 
 For additional help, email [help@vida.inc](mailto:help@vida.inc).
