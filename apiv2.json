@@ -470,6 +470,182 @@
         }
       }
     },
+    "/api/v2/sip/outboundRoutes": {
+      "get": {
+        "tags": [
+          "SIP"
+        ],
+        "summary": "List SIP Outbound Routes",
+        "description": "List all existing SIP outbound routes for a user.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "routes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "1.1.1.1:5060;transport=udp"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "SIP"
+        ],
+        "summary": "Add SIP Outbound Route",
+        "description": "Add a new outbound route for SIP. IP or domain Required (port and transport optional).",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Route added successfully"
+                    },
+                    "routes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "1.1.1.1:5060;transport=udp"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "route"
+                ],
+                "properties": {
+                  "route": {
+                    "description": "Outbound route to add",
+                    "type": "string",
+                    "example": "1.1.1.1:5060;transport=udp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SIP"
+        ],
+        "summary": "Remove SIP Outbound Route",
+        "description": "Remove an existing SIP outbound route.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Route removed successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "route"
+                ],
+                "properties": {
+                  "route": {
+                    "description": "Outbound route to remove",
+                    "type": "string",
+                    "example": "1.1.1.1:5060;transport=udp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/phoneNumber/assign": {
       "post": {
         "tags": [
@@ -2060,6 +2236,16 @@
                     "description": "Reseller Name",
                     "type": "string",
                     "example": "Acme Solar"
+                  },
+                  "offeredProductPlanId": {
+                    "description": "Offered Product Plan. Requires the Reseller to accept and checkout.",
+                    "type": "string",
+                    "example": "custom-plan-1"
+                  },
+                  "productPlanId": {
+                    "description": "Product Plan to set on the account. Otherwise default sell plan is used",
+                    "type": "string",
+                    "example": "base-plan-1"
                   }
                 }
               }
@@ -2194,6 +2380,11 @@
                     "description": "Organization Name",
                     "type": "string",
                     "example": "Acme Solar"
+                  },
+                  "productPlanId": {
+                    "description": "Product Plan Id. If not specified inherits your default sell planId",
+                    "type": "string",
+                    "example": "pplan-example-planId"
                   }
                 }
               }
@@ -2383,6 +2574,79 @@
         }
       }
     },
+    "/api/v2/deleteAccount": {
+      "delete": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Delete an account",
+        "description": "Delete an account under your organization",
+        "parameters": [
+          {
+            "name": "targetOrganizationId",
+            "in": "query",
+            "description": "Organization Id to delete the account in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Account deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Account deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "targetAccountId": {
+                    "description": "Account Id",
+                    "type": "string",
+                    "example": "3"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/listAdminUsers": {
       "get": {
         "tags": [
@@ -2562,6 +2826,13 @@
         "description": "View statistics about account usage",
         "parameters": [
           {
+            "name": "billingPeriod",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "giveCosts",
             "in": "query",
             "schema": {
@@ -2590,6 +2861,44 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/product/offeredPlan": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "View Offered Product Plan",
+        "description": "View Your Product Plan Offer",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"
@@ -2938,15 +3247,6 @@
                     "type": "string",
                     "example": "en-US Female"
                   },
-                  "agentSttEngine": {
-                    "description": "Speech to text engine for this agent",
-                    "type": "string",
-                    "enum": [
-                      "google",
-                      "deepgram"
-                    ],
-                    "default": "deepgram"
-                  },
                   "agentLang": {
                     "description": "Agent language to be used for voice and transcriptions",
                     "type": "string",
@@ -2958,6 +3258,16 @@
                     ],
                     "default": "en-US"
                   },
+                  "agentInstructions": {
+                    "description": "Agent instructions for user interaction. This is for chatAgents only",
+                    "type": "string",
+                    "example": "I want you to payout rewards for users that answer a few questions about this promotional video."
+                  },
+                  "agentModel": {
+                    "description": "Agent LLM model to use for its intelligence",
+                    "type": "string",
+                    "example": "gpt-4o-2024-08-06"
+                  },
                   "agentS2SEngine": {
                     "description": "(Requires Specific Paid Plan) The Speech-to-Speech Voice engine to use for voice, AI, and transcriptions",
                     "type": "string",
@@ -2968,10 +3278,14 @@
                     ],
                     "default": null
                   },
-                  "agentInstructions": {
-                    "description": "Agent instructions for user interaction. This is for chatAgents only",
+                  "agentSttEngine": {
+                    "description": "Speech to text engine for this agent",
                     "type": "string",
-                    "example": "I want you to payout rewards for users that answer a few questions about this promotional video."
+                    "enum": [
+                      "google",
+                      "deepgram"
+                    ],
+                    "default": "deepgram"
                   },
                   "postAnswerDtmf": {
                     "description": "DTMF your agent will send upon answering a call. Useful if you are forwarding calls to your agent from a platform that requires a DTMF verification before the call is connected.",
@@ -2991,6 +3305,11 @@
                     "type": "integer",
                     "default": 3
                   },
+                  "speakingTimeout": {
+                    "description": "(in milliseconds) the default amount of time between words before we consider caller speaking to be finished. Increasing this can help prevent unintentional interruptions for slow talkers. ",
+                    "type": "integer",
+                    "default": 1200
+                  },
                   "speechProcessingDelay": {
                     "description": "(in milliseconds) the default amount of delay before processed speech is sent to the LLM for a response. Increasing this can help prevent unintentional interruptions for slow talkers. Note that this delay automatically increases and decreases depending on the number of interruptions over a period of time.",
                     "type": "integer",
@@ -3005,6 +3324,16 @@
                     "description": "the maximum number of interruptions that will influence the speech processing delay.",
                     "type": "integer",
                     "default": 4
+                  },
+                  "callerResponseTimeout": {
+                    "description": "(in seconds) how much silence (nothing said by the caller) before the agent asks _are you still there?_.",
+                    "type": "integer",
+                    "default": 13
+                  },
+                  "callerResponseTimeoutHangupCounter": {
+                    "description": "the maximum number of times your agent can ask _are you there_ (callerResponseTimeout) before hanging up the call.",
+                    "type": "integer",
+                    "default": 3
                   }
                 }
               }

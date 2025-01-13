@@ -84,7 +84,7 @@
         "agents/greeting",
         "agents/language",
         "agents/contacts",
-        "agents/enable-sms"        
+        "agents/enable-sms"
       ]
     },
     {
@@ -112,13 +112,19 @@
       ]
     },
     {
+      "group": "SIP",
+      "pages": [
+        "sip/sip-inbound",
+        "sip/sip-outbound"
+      ]
+    },
+    {
       "group": "Sharing and Publishing",
       "pages": [
         "sharing/forward",
         "sharing/publish",
         "sharing/profile",
-        "sharing/embed",
-        "sharing/sip-inbound"
+        "sharing/embed"
       ]
     },
     {
@@ -174,7 +180,10 @@
       "pages": [
         "api-reference/sip/list-sip-ip-whitelist",
         "api-reference/sip/add-ip-to-sip-ip-whitelist",
-        "api-reference/sip/remove-ip-from-sip-ip-whitelist"
+        "api-reference/sip/remove-ip-from-sip-ip-whitelist",
+        "api-reference/sip/list-sip-outbound-routes",
+        "api-reference/sip/add-sip-outbound-route",
+        "api-reference/sip/remove-sip-outbound-route"
       ]
     },
     {
@@ -218,6 +227,7 @@
         "api-reference/accounts/list-organizations",
         "api-reference/accounts/list-agent-accounts",
         "api-reference/accounts/create-a-new-account",
+        "api-reference/accounts/delete-an-account",
         "api-reference/accounts/list-admin-users",
         "api-reference/accounts/delete-admin-user",
         "api-reference/accounts/invite-admin-user"
@@ -227,8 +237,12 @@
       "group": "Billing",
       "pages": [
         "api-reference/billing/view-usage",
+        "api-reference/billing/view-offered-product-plan",
         "api-reference/billing/view-current-product-plan",
-        "api-reference/billing/view-available-product-plans"
+        "api-reference/billing/view-available-product-plans",
+        "api-reference/billing/subscribe-to-product-plan",
+        "api-reference/billing/view-product-catalog",
+        "api-reference/billing/fetch-a-product-plan-details"
       ]
     }
   ],
