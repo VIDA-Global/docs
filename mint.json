@@ -97,7 +97,8 @@
         "functions/send-email",
         "functions/send-sms",
         "functions/schedule",
-        "functions/payments"
+        "functions/payments",
+        "functions/pre-answer"
       ]
     },
     {

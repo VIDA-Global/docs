@@ -1,0 +1,29 @@
+---
+title: 'Pre-Answer'
+description: 'How to configure and use the Pre-Answer function in Vida agents.'
+---
+
+The **Pre-Answer** function allows your Vida AI phone agents to perform specific actions before answering a call. This feature is designed to enhance the caller experience by intelligently handling calls even before they are connected, using the configured functions within your agent. This is very useful for adding context to your agent at the start of a call so it can do things like Greet callers by name, fetch details from a CRM, etc.
+
+## Adding a Pre-Answer Function
+
+To add a Pre-Answer function to your agent:
+1. Log into your account and navigate to the agent editor.
+2. Click the (+) button in the **Functions** section and select the "Pre Answer" function.
+
+## Configuring the Pre-Answer Function
+
+Once added, you can customize the Pre-Answer function to suit your needs. Configuration options include:
+- **Conditions**: Define when the Pre-Answer function should be triggered.
+- **Actions**: Specify the actions the agent should take before answering the call.
+
+### Example Configuration
+
+Here is an example of how you might configure a Pre-Answer function:
+
+```plaintext
+- **Condition**: When the call is received outside business hours or during a holiday.
+- **Actions**: 
+  1. Run a "Check Business Hours" webhook function to determine if the office is open.
+  2. If closed, customize your greeting to inform the caller of the closure and offer options (e.g., leave a voicemail or send a text message).
+  3. If open, proceed to route the call as normal.
