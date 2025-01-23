@@ -3065,6 +3065,44 @@
         }
       }
     },
+    "/api/v2/addon/available": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "View Available Add Ons",
+        "description": "View all available Add-Ons for current product plan",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/product/productCatalog": {
       "get": {
         "tags": [
@@ -3241,6 +3279,11 @@
                     "example": [
                       "transfer"
                     ]
+                  },
+                  "timezone": {
+                    "description": "The IANA (Internet Assigned Numbers Authority) formatted timezone your AI agent operates in.",
+                    "type": "string",
+                    "example": "America/Chicago, America/New_York, Europe/London, etc"
                   },
                   "agentVoice": {
                     "description": "Agent voice model to use",
