@@ -16,6 +16,8 @@ To set up the greeting for your AI agent:
 
 Prepending "prompt:" to your greeting will trigger your AI phone agent to come up with a dynamic greeting every call. You can feed in additional context in your prompt. This feature also works well with the `Pre-Answer` function for use-cases where you want to greet a caller by name via a CRM pre-answer lookup.
 
+It's important to understand that your entire Agent Instructions is *not* fed into this Prompt-driven greeting, but there is helpful context made available if present: Previous call summaries, previous saved contact info, any context that has been added to the room via our context API, as well as any Pre-Answer function results.
+
 ### Tips for Crafting an Effective Greeting
 
 - **Introduce the Business**: Start by clearly stating the name of your business to let callers know they've reached the right place.
