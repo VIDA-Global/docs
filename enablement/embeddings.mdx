@@ -1,0 +1,81 @@
+---
+title: "Embedding Tools for AI Enablement"
+description: "Guide for white-label resellers to embed AI agents into their clients' websites and customize the experience."
+---
+
+White-label resellers can leverage Vida AI’s embedding tools to integrate branded AI agents into their clients’ websites. This allows seamless interaction through calls or chats, providing an interactive and engaging user experience tailored to each client's brand.
+
+## Embedding Overview
+
+The embedding tools allow you to:
+1. Embed AI agents into any website with a customizable interface.
+2. Support both call and chat interactions directly from the client’s site.
+3. Fully white-label the experience to align with your client’s branding.
+
+### Example Embedding Code
+
+Here’s an example code snippet for embedding an AI agent into a webpage:
+
+data-target = the agent username you want to embed (required)
+data-type = call or chat
+
+```
+<button className="customButton" data-vida-button data-target="vidasales" data-type="call">Call Us</button>
+<button className="customButton" data-vida-button data-target="vidasales" data-type="chat">Chat Now</button>
+<script src="https://vida.io/embed/button/v1/script.js" defer></script>
+```
+
+---
+
+## Key Parameters for Resellers
+
+data-target (Required): The Vida agent username assigned to the client’s agent. Ensure each client has their unique username configured.
+
+data-type (Required): Specify call for initiating a phone call or chat for text-based interactions.
+
+data-number (Optional): On mobile devices, this parameter can trigger dialing a phone number directly rather than using WebRTC. Example: data-number="+1234567890".
+
+---
+
+## Branding and Customization
+
+### Custom Styling
+
+You can override the default button styles to match your client’s brand using CSS.
+```
+.customButton { 
+background-color: #0044cc; /* Client brand color */ 
+color: #ffffff; 
+border: none; 
+padding: 10px 20px; 
+font-size: 16px; 
+border-radius: 5px; 
+cursor: pointer; 
+}
+
+.customButton:hover { 
+background-color: #002288; /* Hover state color */ 
+}
+```
+
+---
+
+## Managing Client Agents
+
+### Setting Up Client Agents
+
+1. Log into the Vida dashboard and navigate to the Agents section.
+2. Create or configure a new agent for your client.
+3. Get your agent's unique username that will be used as the data-target in the embed code.
+4. Share the embed code snippet with your client or integrate it directly into their site.
+
+### Client Access
+
+Vida's Whitelabel portal provides access to the Settings page for your clients to:
+- Manage their agent username.
+- Adjust configurations like call forwarding or chat responses.
+
+
+## Summary
+
+By embedding AI agents into their websites, white-label resellers can offer a fully branded and interactive experience tailored to their clients' needs. With Vida’s flexible tools, resellers can easily integrate and customize AI agents while maintaining a seamless user experience. Explore Vida’s documentation for additional support or reach out to your account manager for assistance.

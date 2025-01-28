@@ -113,6 +113,17 @@
       ]
     },
     {
+      "group": "Enablement",
+      "pages": [
+        "enablement/embeddings",
+        "enablement/billing",
+        "enablement/usage",
+        "enablement/whitelabel",
+        "enablement/api",
+        "enablement/sip"
+      ]
+    },
+    {
       "group": "SIP",
       "pages": [
         "sip/sip-inbound",

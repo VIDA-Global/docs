@@ -33,8 +33,9 @@ Here is an example code that embeds a Vida AI phone agent into a web page:
 
 ### Explanation of data fields
 
-- **data-target**: The Vida agent username you want to embed (required).
-- **data-type**: "call" or "chat" depending on if you want to initiate a call or text chat with the target agent.
+- **data-target**: (Required) The Vida agent username you want to embed (required).
+- **data-type**: (Required) "call" or "chat" depending on if you want to initiate a call or text chat with the target agent.
+- **data-number**: (Optional) If on a mobile device, when pressing the button it will dial this number instead of initiating a call via WebRTC.
 
 
 You can find or edit your agent's username to use in the `data-target` parameter by visiting the [Settings page](https://vida.io/app/inbox?filter=priority&settings=true&showOrgSettings=true&settingsTab=general) if logged in.

@@ -1,0 +1,64 @@
+---
+title: "General SIP Guide for AI Enablement"
+description: "Learn how to configure SIP for both inbound and outbound calls with Vida AI phone agents."
+---
+
+SIP (Session Initiation Protocol) is the dominant protocol used globally for VoIP communications, and Vida's AI agent platform natively supports both inbound and outbound calls via SIP.
+
+## Configuring SIP for Inbound Calls
+
+Before your Vida agent can accept a call over SIP, you need to configure your **SIP IP Access List**. 
+
+### Adding IPs to the SIP IP Access List
+You can add IPs via the [API](/api-reference/sip/list-sip-ip-whitelist) or through the [Settings -> Developer page](https://vida.io/app/inbox?filter=priority&settings=true&showOrgSettings=true&settingsTab=developers) in your Vida account.
+
+Make sure all IPs sending SIP INVITEs are included in the access list, or calls will not be received by your agent.
+
+![SIP IP Access List Configuration](https://vidapublic.s3.us-east-2.amazonaws.com/vida-sip-access-list.png "SIP IP Access List Configuration")
+
+### Your Agent's SIP URI
+Every Vida agent has a unique SIP URI for receiving calls. You can use either the agent's username or phone number in the URI format:
+
+- **Username example**: `sip:vidasales@sip.vida.dev`
+- **Phone number example**: `sip:+18335888432@sip.vida.dev`
+
+Replace `vidasales` with your agent's username or `+18335888432` with your agent's phone number. Send SIP INVITEs to this URI from any VoIP PBX or softphone.
+
+**Important Note**: The SIP `From` header must contain a valid E.164 phone number. Using any other format will result in a SIP 404 error.
+
+---
+
+## Configuring SIP for Outbound Calls
+
+To enable outbound SIP calls, configure your **SIP Outbound Routes** in the Vida platform.
+
+### Adding SIP Outbound Routes
+You can add outbound routes via the [API](https://vida.io/docs/api-reference/sip/add-sip-outbound-route) or through the [Settings -> Developer page](https://vida.io/app/inbox?filter=priority&settings=true&showOrgSettings=true&settingsTab=developers).
+
+![SIP Outbound Route Configuration](https://vidapublic.s3.us-east-2.amazonaws.com/vida-sip-outbound-routes.png "SIP Outbound Route Configuration")
+
+### Format of the SIP Outbound Route
+The general format for SIP Outbound Routes is as follows:
+
+`{Domain or IP}:{SIP Port};transport={tcp or udp};proxyAddress={domain or IP}:{proxy port}`
+
+
+#### Parameters
+- **Domain or IP** (Required): The SIP domain or IP where calls are sent. Supports SIP SRV or A records. This value is used in the Request URI and `To` header host portions.
+- **SIP Port** (Optional): The port used for the SIP request. Defaults to `5060` if not specified.
+- **Transport** (Optional): Specify `tcp` or `udp`. Defaults to `udp` if not specified.
+- **Proxy Address** (Optional): If provided, requests are routed through this address. Supports SIP SRV or A records. The default port is `5060`.
+
+#### Examples
+1. Sending to a SIP domain with default settings: `sip.example.com`
+2. Sending to a SIP domain using TCP on port 6000: `sip.example.com:6000;transport=tcp`
+3. Sending through a SIP proxy using UDP on port 5060: `sip.example.com;proxyAddress=proxy.example.com`
+4. Sending through a SIP proxy using TCP on port 6000: `sip.example.com;transport=tcp;proxyAddress=proxy.example.com:6000`
+
+
+## Summary
+
+Vida’s AI agent platform supports both inbound and outbound SIP configurations. By setting up your **SIP IP Access List** for inbound calls and defining **SIP Outbound Routes**, you can seamlessly integrate your VoIP system with Vida agents. Use the provided examples and ensure your settings match your specific requirements for successful call routing.
+
+
+
