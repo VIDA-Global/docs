@@ -116,7 +116,7 @@
     {
       "group": "Enablement",
       "pages": [
-        "enablement/embeddings",
+        "enablement/embed",
         "enablement/billing",
         "enablement/usage",
         "enablement/whitelabel",
