@@ -1,0 +1,29 @@
+---
+title: 'Reporting'
+description: 'How to configure and use the Reporting function in Vida agents.'
+---
+
+The **Reporting** function allows your AI phone agents to log specific data after handling a conversation. The data your agent stores can be anything, call outcomes, dispositions, things that happened, data that was collected.
+
+## Adding a Reporting Function
+
+To add a Reporting function to your agent:
+1. Log into your account and navigate to the agent editor.
+2. Click the (+) button in the **Functions** section and select the "Reporting" function.
+
+## Configuring the Reporting Function
+
+Once added, you can customize the Reporting function to suit your needs by telling it what data it should store after handling a converation. Configuration should include fields, and examples.
+
+### Example Configuration
+
+Here is an example of how you might configure a Reporting function:
+
+```plaintext
+Meta fields and data you should always collect and report on:
+{
+  "disposition": {Choose: "transferred", "disconnected", "voicemail"},
+  "satisfaction": {Judge whether the caller would have been satisfied, true or false},
+  "investor": "{If an investor calls, mark as true}"
+}
+```

@@ -98,7 +98,8 @@
         "functions/send-sms",
         "functions/schedule",
         "functions/payments",
-        "functions/pre-answer"
+        "functions/pre-answer",
+        "functions/reporting"
       ]
     },
     {
