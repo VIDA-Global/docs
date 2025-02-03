@@ -3377,6 +3377,16 @@
                     "description": "the maximum number of times your agent can ask _are you there_ (callerResponseTimeout) before hanging up the call.",
                     "type": "integer",
                     "default": 3
+                  },
+                  "noContactInjection": {
+                    "description": "Whether the contact card for the caller should be injected into the agent context",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "noConvoHistory": {
+                    "description": "Whether the call summary history for the caller should be injected into the agent context",
+                    "type": "boolean",
+                    "default": false
                   }
                 }
               }
