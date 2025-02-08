@@ -1,0 +1,87 @@
+---
+title: 'Zapier Agent Function'
+description: 'How to configure and use the Zapier agent function in Vida AI phone agents.'
+---
+
+The **Zapier Agent Function** allows your Vida AI phone agents to interact with **Zapier** to automate workflows and integrate with thousands of external applications dynamically. This function triggers a **Zapier workflow (Zap)** and **waits for a response**, enabling the agent to retrieve and act on real-time data from your Zapier-integrated systems.
+
+## How the Zapier Agent Function Works
+
+When this function is called:
+1. The agent **sends a request** to Zapier, triggering a **Zapier Agent Request Trigger**.
+2. The Zap runs its configured steps, such as fetching data or processing an action.
+3. At the end of the Zap flow, a **Zapier Agent Response Action** sends a response back.
+4. The agent **receives the response** and uses the data to respond accordingly.
+
+This function is useful for scenarios where an AI agent needs **real-time data** or needs to **send data for processing** before proceeding.
+
+## Configuring the Zapier Agent Function
+
+To use the Zapier agent function, a **corresponding Zap must be configured** in Zapier with:
+1. A **Zapier Agent Request Trigger** – This receives data from the agent and starts the Zap workflow.
+2. A **Zapier Agent Response Action** – This sends data back to the agent, ensuring it continues the conversation with the relevant information.
+
+## Adding the Zapier Agent Function to Your Agent
+
+1. Log into your account and navigate to the agent editor.
+2. Click the **(+)** button in the Functions section and select **"Zapier"**.
+3. Configure the function parameters to define the interaction.
+
+## Function Instructions
+
+You can provide any "payload" data to your Agent in the function instructions. It can pass this data to Zapier via the Agent Request trigger. You can also explain any other context or conditions for when the agent should use the function.
+
+### **Example Instructions**
+
+#### Example 1: Sending a Support Request
+
+```
+- **Pre-Function Reply**: "Let me check with our support system. This will take just a moment."
+- **Payload**:
+{
+  "customerId": "[Caller ID]",
+  "issueType": "[Issue Type]",
+  "priority": "high"
+}
+```
+
+The AI agent will inform the user that it is processing their request and will trigger a Zapier workflow. Once the Zap completes, the agent will receive a response and proceed accordingly.
+
+#### Example 2: Fetching Order Status
+
+```
+- **Pre-Function Reply**: "I'll check the status of your order now."
+- **Payload**:
+{
+  "orderId": "[User Provided Order ID]"
+}
+```
+
+The Zap will fetch the order status from an external system and return it to the agent, allowing it to respond with the updated order details.
+
+## **Configuring Your Zap in Zapier**
+
+To ensure the function works, you must create a Zapier workflow with two key steps:
+
+1. **Trigger: Agent Request in Zapier**
+   - This should be a **Zapier Webhook Trigger** configured to receive data from the agent.
+   - The **requestId** will be included in the payload, which must be passed along for tracking.
+
+2. **Action: Agent Response in Zapier**
+   - This sends data back to the Vida AI agent.
+   - The **requestId** from the trigger must be used in this response so the agent can match it to the correct request.
+
+### **Ensuring the Response Matches the Request**
+To ensure the AI agent waits for the correct response, the **requestId** included in the initial trigger must be **passed through all steps of the Zap** and included in the final response action.
+
+## **Use Cases**
+
+The Zapier Agent Function is ideal for:
+- **Fetching real-time data** (e.g., checking stock availability, retrieving live support responses).
+- **Processing external actions** (e.g., creating new orders, logging support tickets).
+- **Interacting with business systems dynamically** (e.g., booking appointments, verifying customer data).
+
+By using Zapier with Vida AI, your agents can **integrate with thousands of applications** seamlessly.
+
+
+

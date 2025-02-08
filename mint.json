@@ -99,7 +99,8 @@
         "functions/schedule",
         "functions/payments",
         "functions/pre-answer",
-        "functions/reporting"
+        "functions/reporting",
+        "functions/zapier"
       ]
     },
     {
