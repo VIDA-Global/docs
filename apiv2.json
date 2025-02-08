@@ -1784,6 +1784,45 @@
         ]
       }
     },
+    "/api/v2/agent/zapier/response": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "requestId": {
+                    "example": "any"
+                  },
+                  "responseData": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/webhooks": {
       "get": {
         "tags": [
@@ -1958,7 +1997,8 @@
                     "enum": [
                       "conversation",
                       "incoming",
-                      "contact"
+                      "contact",
+                      "agent"
                     ],
                     "example": "conversation"
                   }
@@ -3377,6 +3417,16 @@
                     "description": "the maximum number of times your agent can ask _are you there_ (callerResponseTimeout) before hanging up the call.",
                     "type": "integer",
                     "default": 3
+                  },
+                  "noContactInjection": {
+                    "description": "Whether the contact card for the caller should be injected into the agent context",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "noConvoHistory": {
+                    "description": "Whether the call summary history for the caller should be injected into the agent context",
+                    "type": "boolean",
+                    "default": false
                   }
                 }
               }
