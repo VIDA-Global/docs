@@ -258,6 +258,12 @@
         "api-reference/billing/view-product-catalog",
         "api-reference/billing/fetch-a-product-plan-details"
       ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/post-apiv2agentzapierresponse"
+      ]
     }
   ],
   "footerSocials": {
