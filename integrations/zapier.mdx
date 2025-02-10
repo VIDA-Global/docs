@@ -7,10 +7,14 @@ Integrate your Vida AI Phone Agent with over 7000 apps via Zapier. This provides
 
 ### Supported Zapier Triggers and Actions
 
+- **Agent Request**: Triggered by your AI agent. This allows your Agent to interact with any Zap in real-time during live conversations. Depends on a `Agent Response` action being configured in the Zap flow. [More info on the Zapier agent function here](https://vida.io/docs/functions/zapier).
 - **New Contacts**: Triggers when a contact is added or updated. This makes it easy to sync contacts that your phone agent enriches to your CRM.
 - **New Conversations**: Triggers when a new conversation is completed. This allows you to take action based on the full details of the conversation.
 - **Incoming Conversations**: Triggers before your agent responds to a new conversation. This enables you to prepare or log incoming communication in real-time.
 - **Inject Context**: Action to provide your AI agent with additional context about a caller. This can enhance the interaction by ensuring the agent has all necessary information.
+- **Outbound Call**: Action that allows a Zap to initiate an outbound call from your AI agent.
+- **Outbound SMS**: Action that allows a Zap to initiate an outbound SMS text message from your AI agent.
+- **Agent Response**: Used in conjunction with the `Agent Request` trigger, this action let's you feed a Zap outcome or response back to your agent during a live conversation. [More info on the Zapier agent function here](https://vida.io/docs/functions/zapier).
 
 <div id="zapier-container" class="zapier-container"></div>
 
