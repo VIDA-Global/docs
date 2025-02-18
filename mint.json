@@ -138,7 +138,8 @@
         "sharing/forward",
         "sharing/publish",
         "sharing/profile",
-        "sharing/embed"
+        "sharing/embed",
+        "sharing/port-number"
       ]
     },
     {
