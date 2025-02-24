@@ -2433,6 +2433,82 @@
         }
       }
     },
+    "/api/v2/deleteOrganization": {
+      "delete": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Delete an organization",
+        "description": "Delete (immediately) an organization under your reseller. Reseller account required.",
+        "parameters": [
+          {
+            "name": "targetResellerId",
+            "in": "query",
+            "description": "Reseller Id to delete organization in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Organization deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Organization deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "targetOrganizationId"
+                ],
+                "properties": {
+                  "targetOrganizationId": {
+                    "description": "Organization Id to delete",
+                    "type": "integer",
+                    "example": "XXXXXXX"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/listOrganizations": {
       "get": {
         "tags": [
