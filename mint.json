@@ -239,6 +239,7 @@
         "api-reference/accounts/create-a-new-reseller",
         "api-reference/accounts/list-resellers",
         "api-reference/accounts/create-a-new-organization",
+        "api-reference/accounts/delete-an-organization",
         "api-reference/accounts/list-organizations",
         "api-reference/accounts/list-agent-accounts",
         "api-reference/accounts/create-a-new-account",
