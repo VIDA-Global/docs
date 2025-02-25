@@ -100,7 +100,8 @@
         "functions/payments",
         "functions/pre-answer",
         "functions/reporting",
-        "functions/zapier"
+        "functions/zapier",
+        "functions/start-stop-recording"
       ]
     },
     {
