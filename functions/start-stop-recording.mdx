@@ -24,3 +24,11 @@ Here is an example of how you might configure the Record Audio function:
 ```plaintext
 When you reach step 5 of our onboarding questions, immediately start recording audio before continuing. You should stop recording immediately after concluding step 5. Please also use the 'notice' attribute to let the caller know you've started or stopped recording.
 ```
+
+### Retrieving Recordings
+
+There are a number of ways to retrieve recordings your AI Agent initiates.
+
+- The recordings will be available in the Agent's inbox for download.
+- The recordings are available on the message object when accessing it via API.
+- The recordings are present on all post-conversation webhooks configured, including any Agent initiated webhooks during and at the end of calls via a `agentRecordings` object.
