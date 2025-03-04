@@ -208,7 +208,8 @@
         "api-reference/messaging/list-priority-inbox",
         "api-reference/messaging/list-junk-inbox",
         "api-reference/messaging/fetch-recent-messages",
-        "api-reference/messaging/fetch-room-messages"
+        "api-reference/messaging/fetch-room-messages",
+        "api-reference/messaging/fetch-conversation"
       ]
     },
     {
