@@ -3934,6 +3934,86 @@
           }
         }
       }
+    },
+    "/api/v2/conversation/{roomId}/{uuid}": {
+      "get": {
+        "tags": [
+          "Messaging"
+        ],
+        "summary": "Fetch Conversation",
+        "description": "Fetch specific conversation logs for a given room ID and UUID",
+        "parameters": [
+          {
+            "name": "roomId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Room Id of the conversation",
+            "example": "3:15"
+          },
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "UUID of the conversation",
+            "example": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "description": "If request was successful",
+                        "type": "boolean",
+                        "example": "true"
+                      },
+                      "message": {
+                        "description": "Success or Error Message",
+                        "type": "string",
+                        "example": "Success"
+                      },
+                      "conversation": {
+                        "description": "Conversation logs",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "message": {
+                              "type": "string",
+                              "example": "Hello World"
+                            },
+                            "timestamp": {
+                              "type": "number",
+                              "example": 1630480000
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
