@@ -267,6 +267,9 @@
     {
       "group": "API Reference",
       "pages": [
+        "api-reference/get-apiv2sipregistration",
+        "api-reference/post-apiv2sipregistration",
+        "api-reference/delete-apiv2sipregistration",
         "api-reference/post-apiv2agentzapierresponse"
       ]
     }
