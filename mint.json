@@ -129,6 +129,7 @@
     {
       "group": "SIP",
       "pages": [
+        "sip/sip-registration",
         "sip/sip-inbound",
         "sip/sip-outbound"
       ]
