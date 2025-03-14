@@ -33,6 +33,17 @@ You can also tell your agent to route a call to you, and by default it will rout
 
 You can tell your agent to speak information after a Transferred call successfully connects. This is useful if you are transfering to a customer support live agent and you want to summarize the information collected on the call with the Agent. You can simply ask your agent to use the `transferNotification` attribute to speak whatever information it has to the transferred caller.
 
+## Transferring calls via a SIP Registration
+
+Your agent can use your [SIP Registration](https://vida.io/docs/sip/sip-registration) via the transfer function to send calls out via your SIP registration so it can dial extensions and other internal destinations. You simply need to prepend `pbx:` or `ext:` to your transfer destination.
+
+**Example instructions for having your agent transfer to an extension via the Registration:**
+
+```
+Please transfer all sales calls to ext:1002
+Please transfer all support calls to ext:1005
+```
+
 ### Example Instructions
 
 Here is an example of how you might configure a call transfer action:

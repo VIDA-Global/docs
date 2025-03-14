@@ -1,0 +1,90 @@
+---
+title: "SIP Registration"
+description: "Register your Vida AI agent to an external PBX to send and receive calls via SIP / VoIP."
+---
+
+SIP Registration allows your Vida AI agent to register to an external PBX or SIP server, enabling it to send and receive calls just like any other VoIP device within your network.
+
+## Configuring SIP Registration
+
+To register your Vida AI agent with your external SIP system, you'll need the following information:
+
+- **AOR (Address of Record)** *(required)*  
+  Your full SIP address, usually formatted as:  
+  ```
+  username@yourdomain.com
+  ```
+
+- **Username** *(required)*  
+  The SIP username provided by your VoIP service or PBX. Typically, this is your SIP extension. For example:  
+  ```
+  1001
+  ```
+
+- **Password** *(required)*  
+  The SIP password associated with your SIP account.
+
+- **Proxy** *(optional)*  
+  The SIP proxy address your registration requests should be sent to. If your SIP provider uses a separate proxy or outbound server, specify it here.  
+  ```
+  proxy.yourdomain.com
+  ```
+
+- **Port** *(optional)*  
+  The port number used for SIP signaling. Default is:  
+  ```
+  5060
+  ```
+
+- **Transport** *(optional)*  
+  The transport protocol used for SIP signaling (`UDP` or `TCP`). Default is:  
+  ```
+  UDP
+  ```
+
+- **Subscribe to Presence** *(optional)*  
+  Check this option if your SIP provider supports Message Waiting Indicator (MWI) or Busy Lamp Field (BLF) subscriptions.
+
+## SIP Registration Status
+
+Once your SIP account is registered, the status indicator will display the current registration status:
+
+- `200 OK` means your agent has successfully registered.
+- Any other status indicates an issue with registration (e.g., authentication failure, unreachable proxy, or incorrect configuration).
+
+## Example SIP Registration
+
+**Example configuration using a proxy server:**
+
+```
+AOR: 1001@vidaglobal.mynlv.com
+Username: 1001
+Password: yourpassword
+Proxy: beta.mynlv.com
+Port: 5060
+Transport: UDP
+Subscribe to Presence: true
+```
+
+**Example configuration without a proxy server:**
+
+```
+AOR: 1001@sip.yourdomain.com
+Username: 1001
+Password: yourpassword
+Transport: UDP
+```
+
+Ensure you obtain accurate credentials from your VoIP or PBX provider before configuring SIP Registration.
+
+## Transferring calls via your registered extension
+
+Your agent can use your SIP registration via the [Call Transfer](https://vida.io/docs/functions/call-transfer) function to send calls out via your SIP registration so it can dial extensions and other internal destinations. You simply need to prepend `pbx:` or `ext:` to your transfer destination.
+
+**Example instructions for having your agent transfer to an extension via the Registration:**
+
+```
+Please transfer all sales calls to ext:1002
+Please transfer all support calls to ext:1005
+```
+
