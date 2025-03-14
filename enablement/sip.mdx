@@ -5,6 +5,14 @@ description: "Learn how to configure SIP for both inbound and outbound calls wit
 
 SIP (Session Initiation Protocol) is the dominant protocol used globally for VoIP communications, and Vida's AI agent platform natively supports both inbound and outbound calls via SIP.
 
+## Configuring a SIP Registration
+
+SIP Registration allows your Vida AI agent to register to an external PBX or SIP server, enabling it to send and receive calls just like any other VoIP device within your network. This is by far the easiest way to connect your agent to your PBX.
+
+Your agent can use your SIP registration via the [Call Transfer](https://vida.io/docs/functions/call-transfer) function to send calls out via your SIP registration so it can dial extensions and other internal destinations. You simply need to prepend `pbx:` or `ext:` to your transfer destination.
+
+Full details on SIP Registration configuration [can be found here](https://vida.io/docs/sip/sip-registration).
+
 ## Configuring SIP for Inbound Calls
 
 Before your Vida agent can accept a call over SIP, you need to configure your **SIP IP Access List**. 

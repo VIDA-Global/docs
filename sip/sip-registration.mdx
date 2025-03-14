@@ -9,8 +9,8 @@ SIP Registration allows your Vida AI agent to register to an external PBX or SIP
 
 To register your Vida AI agent with your external SIP system, you'll need the following information:
 
-- **AOR (Address of Record)** *(required)*  
-  Your full SIP address, usually formatted as: `username@yourdomain.com`
+- **SIP Domain** *(required)*  
+  Your SIP domain, usually formatted as something like: `sip.yourdomain.com`
 
 - **Username** *(required)*  
   The SIP username provided by your VoIP service or PBX. Typically, this is your SIP extension. For example: `1001`
@@ -42,7 +42,7 @@ Once your SIP account is registered, the status indicator will display the curre
 **Example configuration using a proxy server:**
 
 ```
-AOR: 1001@vidaglobal.mynlv.com
+SIP Domain: vidaglobal.mynlv.com
 Username: 1001
 Password: yourpassword
 Proxy: beta.mynlv.com
@@ -54,7 +54,7 @@ Subscribe to Presence: true
 **Example configuration without a proxy server:**
 
 ```
-AOR: 1001@sip.yourdomain.com
+SIP Domain: sip.yourdomain.com
 Username: 1001
 Password: yourpassword
 Transport: UDP
