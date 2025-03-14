@@ -10,37 +10,22 @@ SIP Registration allows your Vida AI agent to register to an external PBX or SIP
 To register your Vida AI agent with your external SIP system, you'll need the following information:
 
 - **AOR (Address of Record)** *(required)*  
-  Your full SIP address, usually formatted as:  
-  ```
-  username@yourdomain.com
-  ```
+  Your full SIP address, usually formatted as: `username@yourdomain.com`
 
 - **Username** *(required)*  
-  The SIP username provided by your VoIP service or PBX. Typically, this is your SIP extension. For example:  
-  ```
-  1001
-  ```
+  The SIP username provided by your VoIP service or PBX. Typically, this is your SIP extension. For example: `1001`
 
 - **Password** *(required)*  
   The SIP password associated with your SIP account.
 
 - **Proxy** *(optional)*  
-  The SIP proxy address your registration requests should be sent to. If your SIP provider uses a separate proxy or outbound server, specify it here.  
-  ```
-  proxy.yourdomain.com
-  ```
+  The SIP proxy address your registration requests should be sent to. If your SIP provider uses a separate proxy or outbound server, specify it here. Example: `proxy.yourdomain.com`
 
 - **Port** *(optional)*  
-  The port number used for SIP signaling. Default is:  
-  ```
-  5060
-  ```
+  The port number used for SIP signaling. Default is: `5060`
 
 - **Transport** *(optional)*  
-  The transport protocol used for SIP signaling (`UDP` or `TCP`). Default is:  
-  ```
-  UDP
-  ```
+  The transport protocol used for SIP signaling (`UDP` or `TCP`). Default is: `UDP`
 
 - **Subscribe to Presence** *(optional)*  
   Check this option if your SIP provider supports Message Waiting Indicator (MWI) or Busy Lamp Field (BLF) subscriptions.
