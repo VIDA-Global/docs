@@ -9,26 +9,27 @@ console.log("Custom white-label script loaded!");
 const domainConfig = [
   {
     match: /^vidadev\.lylepratt\.com$/,
-    brandName: "Vida Dev",
+    brandName: "AutomatedPhone",
     replacements: [
-      { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
-      { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" },
-      { from: /Vida(\.io)?/gi, to: "Vida Dev" }
+        { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
+        { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
+        { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
     ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
-    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   },
   {
     match: /(.*\.)?automatedphone\.ai$/,
-    brandName: "Automated Phone",
+    brandName: "AutomatedPhone",
     replacements: [
-      { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
-      { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" },
-      { from: /Vida(\.io)?/gi, to: "Automated Phone" }
+        { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
+        { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
+        { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
     ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
-    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   }
+  // Removed generic fallback to avoid unintended replacements on vida.io
 ];
 
 // Get current domain config based on regex match
@@ -48,10 +49,11 @@ function replaceBrandMentions() {
 
     const isCodeElement = node.parentElement.closest('pre, code, script, style');
 
-    currentDomainConfig.replacements.forEach(({from, to}) => {
-      const isSafeInCode = /api\.vida\.dev|help@vida\.inc/i.test(from.source);
+    currentDomainConfig.replacements.forEach(({ from, to }) => {
+      const isApiReplacement = /api\.vida\.dev|help@vida\.inc/i.test(from.source);
 
-      if (!isCodeElement || isSafeInCode) {
+      // Fix applied explicitly here: Correct variable names and logic
+      if (!isCodeElement || isCodeElement && isApiReplacement) {
         node.nodeValue = node.nodeValue.replace(from, to);
       }
     });
@@ -59,6 +61,7 @@ function replaceBrandMentions() {
     node.__whitelabeled = true;
   }
 }
+
 
 // Replace logo
 function replaceLogo() {
