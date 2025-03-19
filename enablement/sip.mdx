@@ -9,16 +9,16 @@ SIP (Session Initiation Protocol) is the dominant protocol used globally for VoI
 
 SIP Registration allows your Vida AI agent to register to an external PBX or SIP server, enabling it to send and receive calls just like any other VoIP device within your network. This is by far the easiest way to connect your agent to your PBX.
 
-Your agent can use your SIP registration via the [Call Transfer](/docs/functions/call-transfer) function to send calls out via your SIP registration so it can dial extensions and other internal destinations. You simply need to prepend `pbx:` or `ext:` to your transfer destination.
+Your agent can use your SIP registration via the [Call Transfer](https://vida.io/docs/functions/call-transfer) function to send calls out via your SIP registration so it can dial extensions and other internal destinations. You simply need to prepend `pbx:` or `ext:` to your transfer destination.
 
-Full details on SIP Registration configuration [can be found here](/docs/sip/sip-registration).
+Full details on SIP Registration configuration [can be found here](https://vida.io/docs/sip/sip-registration).
 
 ## Configuring SIP for Inbound Calls
 
 Before your Vida agent can accept a call over SIP, you need to configure your **SIP IP Access List**. 
 
 ### Adding IPs to the SIP IP Access List
-You can add IPs via the [API](/api-reference/sip/list-sip-ip-whitelist) or through the [Settings -> Developer page](/app/inbox?filter=priority&settings=true&showOrgSettings=true&settingsTab=developers) in your Vida account.
+You can add IPs via the [API](/api-reference/sip/list-sip-ip-whitelist) or through the [Settings -> Developer page](https://vida.io/app/inbox?filter=priority&settings=true&showOrgSettings=true&settingsTab=developers) in your Vida account.
 
 Make sure all IPs sending SIP INVITEs are included in the access list, or calls will not be received by your agent.
 
@@ -41,7 +41,7 @@ Replace `vidasales` with your agent's username or `+18335888432` with your agent
 To enable outbound SIP calls, configure your **SIP Outbound Routes** in the Vida platform.
 
 ### Adding SIP Outbound Routes
-You can add outbound routes via the [API](/docs/api-reference/sip/add-sip-outbound-route) or through the [Settings -> Developer page](/app/inbox?filter=priority&settings=true&showOrgSettings=true&settingsTab=developers).
+You can add outbound routes via the [API](https://vida.io/docs/api-reference/sip/add-sip-outbound-route) or through the [Settings -> Developer page](https://vida.io/app/inbox?filter=priority&settings=true&showOrgSettings=true&settingsTab=developers).
 
 ![SIP Outbound Route Configuration](https://vidapublic.s3.us-east-2.amazonaws.com/vida-sip-outbound-routes.png "SIP Outbound Route Configuration")
 

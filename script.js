@@ -100,6 +100,18 @@ function replaceBrandMentions() {
   }
 }
 
+// replace urls
+function replaceURLs() {
+  if (!currentDomainConfig) return; // Only run on whitelabel domains
+  const newDomain = window.location.hostname;
+  // Process all anchor tags in the document
+  document.querySelectorAll('a').forEach(link => {
+    if (link.href && link.href.indexOf('vida.io') !== -1) {
+      link.href = link.href.replace(/vida\.io/gi, newDomain);
+    }
+  });
+}
+
 // Replace logo
 function replaceLogo() {  
   const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
@@ -142,7 +154,8 @@ function replaceLogo() {
 // Initialize replacements
 function initializeWhiteLabel() {
   replaceLogo(); 
-  if (currentDomainConfig) {    
+  if (currentDomainConfig) {
+    replaceURLs(); // Update URLs to point at the current domain 
     replaceBrandMentions();    
     console.log("White-label applied for domain:", currentDomainConfig.brandName);
   }
