@@ -123,8 +123,8 @@ function replaceLogo() {
 
 // Initialize replacements
 function initializeWhiteLabel() {
-  if (currentDomainConfig) {
-    replaceLogo();
+  replaceLogo(); 
+  if (currentDomainConfig) {    
     replaceBrandMentions();    
     console.log("White-label applied for domain:", currentDomainConfig.brandName);
   }
