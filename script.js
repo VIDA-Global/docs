@@ -36,7 +36,7 @@ const domainConfig = [
 const hostname = window.location.hostname;
 const currentDomainConfig = domainConfig.find(config => config.match.test(hostname));
 
-// Replace text mentions (preventing infinite loops and unintended skips)
+// Replace text mentions (enhanced handling for code blocks)
 function replaceBrandMentions() {
   if (!currentDomainConfig || !currentDomainConfig.replacements) return;
 
@@ -50,11 +50,10 @@ function replaceBrandMentions() {
     const isCodeElement = node.parentElement.closest('pre, code, script, style');
 
     currentDomainConfig.replacements.forEach(({from, to}) => {
-      const allowInCode = /api\.vida\.dev|help@vida\.inc/i.test(from.source);
-
+      const allowInCode = from.source.includes('api.vida.dev') || from.source.includes('help@vida.inc');
+      
       if (!isCodeElement || allowInCode) {
-        // Use a fresh regex to avoid internal state issues
-        node.nodeValue = node.nodeValue.replace(new RegExp(from.source, from.flags), to);
+        node.nodeValue = node.nodeValue.replace(from, to);
       }
     });
 
