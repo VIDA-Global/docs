@@ -117,17 +117,15 @@ function replaceLogo() {
       img.alt = `${currentDomainConfig.brandName} Logo Dark`;
     }
     // Reveal the logo once updated
-    setTimeout(function() {
-        img.style.visibility = 'visible';
-    }, 1000)    
+    img.style.visibility = 'visible';
   });
 }
 
 // Initialize replacements
 function initializeWhiteLabel() {
   if (currentDomainConfig) {
-    replaceBrandMentions();
     replaceLogo();
+    replaceBrandMentions();    
     console.log("White-label applied for domain:", currentDomainConfig.brandName);
   }
 }
