@@ -104,19 +104,28 @@ function replaceBrandMentions() {
 function replaceLogo() {  
   const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
   logoImgs.forEach(img => {
-    if(currentDomainConfig) {
-        if (img.alt === 'light logo') {
-          img.src = currentDomainConfig.logoLightUrl;
-          img.alt = `${currentDomainConfig.brandName} Logo Light`;
-        } else if (img.alt === 'dark logo') {
-          img.src = currentDomainConfig.logoDarkUrl;
-          img.alt = `${currentDomainConfig.brandName} Logo Dark`;
-        }
+    if (currentDomainConfig) {
+      // Determine new source and alt based on the image type
+      const isLightLogo = img.alt === 'light logo';
+      const newSrc = isLightLogo ? currentDomainConfig.logoLightUrl : currentDomainConfig.logoDarkUrl;
+      const newAlt = isLightLogo ? `${currentDomainConfig.brandName} Logo Light` : `${currentDomainConfig.brandName} Logo Dark`;
+
+      // Preload the new image
+      const preloadedImage = new Image();
+      preloadedImage.onload = function() {
+        // Once preloaded, update the logo's src and alt, then unhide it
+        img.src = newSrc;
+        img.alt = newAlt;
+        img.style.setProperty('visibility', 'visible', 'important');
+      };
+      preloadedImage.src = newSrc;
+    } else {
+      // On non-white-label domains, just unhide the logo
+      img.style.setProperty('visibility', 'visible', 'important');
     }
-    // Reveal the logo once updated
-    img.style.setProperty('visibility', 'visible', 'important');
   });
 }
+
 
 // Initialize replacements
 function initializeWhiteLabel() {
