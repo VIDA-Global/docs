@@ -49,19 +49,19 @@ function replaceBrandMentions() {
 
     const isCodeElement = node.parentElement.closest('pre, code, script, style');
 
-    currentDomainConfig.replacements.forEach(({ from, to }) => {
-      const isApiReplacement = /api\.vida\.dev|help@vida\.inc/i.test(from.source);
+    currentDomainConfig.replacements.forEach(({from, to}) => {
+      const allowInCode = /api\.vida\.dev|help@vida\.inc/i.test(from.source);
 
-      // Fix applied explicitly here: Correct variable names and logic
-      if (!isCodeElement || isCodeElement && isApiReplacement) {
-        node.nodeValue = node.nodeValue.replace(from, to);
+      if (!isCodeElement || allowInCode) {
+        if (from.test(node.nodeValue)) {
+          node.nodeValue = node.nodeValue.replace(from, to);
+        }
       }
     });
 
     node.__whitelabeled = true;
   }
 }
-
 
 // Replace logo
 function replaceLogo() {
