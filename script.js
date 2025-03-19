@@ -104,10 +104,7 @@ function replaceBrandMentions() {
 function replaceLogo() {  
   const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
   logoImgs.forEach(img => {
-    if(!currentDomainConfig) {
-        img.style.visibility = 'visible';
-    }
-    else {
+    if(currentDomainConfig) {
         if (img.alt === 'light logo') {
           img.src = currentDomainConfig.logoLightUrl;
           img.alt = `${currentDomainConfig.brandName} Logo Light`;
@@ -115,9 +112,9 @@ function replaceLogo() {
           img.src = currentDomainConfig.logoDarkUrl;
           img.alt = `${currentDomainConfig.brandName} Logo Dark`;
         }
-        // Reveal the logo once updated
-        img.style.visibility = 'visible';
     }
+    // Reveal the logo once updated
+    img.style.visibility = 'visible';
   });
 }
 
