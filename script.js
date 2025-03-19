@@ -5,7 +5,7 @@
 window.dataLayer = window.dataLayer || [];
 console.log("Custom white-label script loaded!");
 
-// Define domain-specific rules
+// Define domain-specific rules clearly, EXCLUDING vida.io explicitly
 const domainConfig = [
   {
     match: /^vidadev\.lylepratt\.com$/,
@@ -24,32 +24,28 @@ const domainConfig = [
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
-  },
-  {
-    match: /.*/,
-    brandName: "Generic Brand",
-    replacements: [
-      { from: /Vida(\.io)?/gi, to: "Generic Brand" }
-    ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
-    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
   }
+  // Removed generic fallback to avoid unintended replacements on vida.io
 ];
 
 // Get current domain config based on regex match
 const hostname = window.location.hostname;
 const currentDomainConfig = domainConfig.find(config => config.match.test(hostname));
 
-// Replace text mentions
+// Replace text mentions safely (avoid repeating)
 function replaceBrandMentions() {
   if (!currentDomainConfig || !currentDomainConfig.replacements) return;
 
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
 
   while (walker.nextNode()) {
-    currentDomainConfig.replacements.forEach(({from, to}) => {
-      walker.currentNode.nodeValue = walker.currentNode.nodeValue.replace(from, to);
-    });
+    const node = walker.currentNode;
+    if (!node.__whitelabeled) { // prevent re-replacing
+      currentDomainConfig.replacements.forEach(({ from, to }) => {
+        node.nodeValue = node.nodeValue.replace(from, to);
+      });
+      node.__whitelabeled = true; // mark as processed
+    }
   }
 }
 
@@ -59,10 +55,10 @@ function replaceLogo() {
 
   const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
   logoImgs.forEach(img => {
-    if (img.alt === 'light logo') {
+    if (img.alt === 'light logo' && img.src !== currentDomainConfig.logoLightUrl) {
       img.src = currentDomainConfig.logoLightUrl;
       img.alt = `${currentDomainConfig.brandName} Logo Light`;
-    } else if (img.alt === 'dark logo') {
+    } else if (img.alt === 'dark logo' && img.src !== currentDomainConfig.logoDarkUrl) {
       img.src = currentDomainConfig.logoDarkUrl;
       img.alt = `${currentDomainConfig.brandName} Logo Dark`;
     }
@@ -75,36 +71,14 @@ function initializeWhiteLabel() {
     replaceBrandMentions();
     replaceLogo();
     console.log("White-label applied for domain:", currentDomainConfig.brandName);
+  } else {
+    console.log("No white-labeling applied for domain:", hostname);
   }
-}
-
-// Function to observe and initialize white-label replacements and Zapier embed
-function observeAndInitialize() {
-  const observer = new MutationObserver((mutationsList) => {
-    mutationsList.forEach(() => {
-      initializeWhiteLabel();
-      initializeZapierEmbed();
-    });
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
-}
-
-// Wait for DOM load
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    initializeWhiteLabel();
-    observeAndInitialize();
-  });
-} else {
-  initializeWhiteLabel();
-  observeAndInitialize();
 }
 
 /*
 * Vida Style Scripts Locked and Loaded
 */
-window.dataLayer = window.dataLayer || [];
 console.log("Custom vida script loaded!")
 
 /* Load Vida Widget Script and CSS for Demos */
@@ -159,5 +133,25 @@ function initializeZapierEmbed() {
   }
 }
 
-// Observe changes for dynamic navigation and white-labeling
-observeAndInitialize();
+// Single unified Mutation Observer (your existing observer)
+function observeAndInitialize() {
+  const observer = new MutationObserver((mutationsList) => {
+    mutationsList.forEach(() => {
+      initializeWhiteLabel();
+      initializeZapierEmbed();
+    });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+// Wait for DOM load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeWhiteLabel();
+    observeAndInitialize();
+  });
+} else {
+  initializeWhiteLabel();
+  observeAndInitialize();
+}
