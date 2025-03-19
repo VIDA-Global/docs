@@ -12,7 +12,7 @@ const domainConfig = [
     brandName: "AutomatedPhone",
     replacements: [
         { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
-        { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" }
+        { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" },
         { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
@@ -23,7 +23,7 @@ const domainConfig = [
     brandName: "AutomatedPhone",
     replacements: [
         { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
-        { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" }
+        { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" },
         { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
