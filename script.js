@@ -13,7 +13,7 @@ const domainConfig = [
     replacements: [
       { from: /Vida(\.io)?/gi, to: "AutomatedPhone" }
     ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   },
   {
@@ -22,7 +22,7 @@ const domainConfig = [
     replacements: [
       { from: /Vida(\.io)?/gi, to: "AutomatedPhone" }
     ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   }
   // Removed generic fallback to avoid unintended replacements on vida.io
