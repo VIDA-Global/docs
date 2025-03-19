@@ -53,15 +53,15 @@ function replaceBrandMentions() {
       const allowInCode = /api\.vida\.dev|help@vida\.inc/i.test(from.source);
 
       if (!isCodeElement || allowInCode) {
-        if (from.test(node.nodeValue)) {
-          node.nodeValue = node.nodeValue.replace(from, to);
-        }
+        // Use a fresh regex to avoid internal state issues
+        node.nodeValue = node.nodeValue.replace(new RegExp(from.source, from.flags), to);
       }
     });
 
     node.__whitelabeled = true;
   }
 }
+
 
 // Replace logo
 function replaceLogo() {
