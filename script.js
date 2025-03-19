@@ -11,9 +11,9 @@ const domainConfig = [
     match: /^vidadev\.lylepratt\.com$/,
     brandName: "AutomatedPhone",
     replacements: [
-      { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
-      { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
-      { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" }
+        { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
+        { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" }
+        { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
@@ -22,9 +22,9 @@ const domainConfig = [
     match: /(.*\.)?automatedphone\.ai$/,
     brandName: "AutomatedPhone",
     replacements: [
-      { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
-      { from: /help@vida\.inc/gi, to: "support@automatedphone.ai" },
-      { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" }
+        { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
+        { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" }
+        { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
@@ -45,22 +45,27 @@ function replaceBrandMentions() {
   while (walker.nextNode()) {
     const node = walker.currentNode;
 
-    // Skip if already processed
+    // Skip already processed nodes
     if (node.__whitelabeled) continue;
 
-    // Avoid replacing within code or pre tags
-    if (node.parentElement.closest('pre, code, script, style')) continue;
+    // Check if node is within code/pre elements
+    const isCodeElement = node.parentElement.closest('pre, code, script, style');
 
     currentDomainConfig.replacements.forEach(({ from, to }) => {
-      node.nodeValue = node.nodeValue.replace(from, to);
+      const isApiReplacement = /api\.vida\.dev|help@vida\.inc/i.test(from.source);
+
+      // Perform replacements only if:
+      // - NOT in a code block OR
+      // - the replacement is specifically allowed within code blocks (like API URLs)
+      if (!isCodeElement || isApiReplacement) {
+        node.nodeValue = node.nodeValue.replace(from, to);
+      }
     });
 
     // Mark node as processed
     node.__whitelabeled = true;
   }
 }
-
-
 
 // Replace logo
 function replaceLogo() {
