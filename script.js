@@ -1,4 +1,86 @@
 /*
+* Vida White-label Customization Script
+*/
+
+window.dataLayer = window.dataLayer || [];
+console.log("Custom white-label script loaded!");
+
+// Define domain-specific rules
+const domainConfig = [
+  {
+    match: /^vidadev\.lylepratt\.com$/,
+    brandName: "Vida Dev",
+    replaceText: /Vida(\.io)?/gi,
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+  },
+  {
+    match: /(.*\.)?automatedphone\.ai$/,
+    brandName: "Automated Phone",
+    replaceText: /Vida(\.io)?/gi,
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+  },
+  {
+    match: /.*/,
+    brandName: "Generic Brand",
+    replaceText: /Vida(\.io)?/gi,
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+  }
+];
+
+// Get current domain config based on regex match
+const hostname = window.location.hostname;
+const currentDomainConfig = domainConfig.find(config => config.match.test(hostname));
+
+// Replace text mentions
+function replaceBrandMentions() {
+  if (!currentDomainConfig) return;
+
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+
+  while (walker.nextNode()) {
+    walker.currentNode.nodeValue = walker.currentNode.nodeValue.replace(currentDomainConfig.replaceText, currentDomainConfig.brandName);
+  }
+
+  console.log("Brand mentions replaced with:", currentDomainConfig.brandName);
+}
+
+// Replace logo
+function replaceLogo() {
+  if (!currentDomainConfig) return;
+
+  const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
+  logoImgs.forEach(img => {
+    if (img.alt === 'light logo') {
+      img.src = currentDomainConfig.logoLightUrl;
+      img.alt = `${currentDomainConfig.brandName} Logo Light`;
+    } else if (img.alt === 'dark logo') {
+      img.src = currentDomainConfig.logoDarkUrl;
+      img.alt = `${currentDomainConfig.brandName} Logo Dark`;
+    }
+  });
+
+  console.log("Logos replaced for domain:", hostname);
+}
+
+// Initialize replacements
+function initializeWhiteLabel() {
+  if (currentDomainConfig) {
+    replaceBrandMentions();
+    replaceLogo();
+  }
+}
+
+// Wait for DOM load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeWhiteLabel);
+} else {
+  initializeWhiteLabel();
+}
+
+/*
 * Vida Style Scripts Locked and Loaded
 */
 window.dataLayer = window.dataLayer || [];
