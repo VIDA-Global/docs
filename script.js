@@ -54,6 +54,15 @@ const domainConfig = [
   // Removed generic fallback to avoid unintended replacements on vida.io
 ];
 
+// Immediately set a data attribute based on the domain
+(function() {
+  const hostname = window.location.hostname;
+  // Determine if the current domain matches any white-label domain
+  const isWhiteLabel = domainConfig.some(config => config.match.test(hostname));
+  // Add a data attribute to <html> so CSS can react accordingly
+  document.documentElement.setAttribute('data-domain', isWhiteLabel ? 'whitelabel' : 'default');
+})();
+
 // Get current domain config based on regex match
 const hostname = window.location.hostname;
 const currentDomainConfig = domainConfig.find(config => config.match.test(hostname));
@@ -93,7 +102,10 @@ function replaceBrandMentions() {
 
 // Replace logo
 function replaceLogo() {
-  if (!currentDomainConfig) return;
+  if (!currentDomainConfig) {
+    img.style.visibility = 'visible';
+    return;
+  }
 
   const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
   logoImgs.forEach(img => {
@@ -105,7 +117,9 @@ function replaceLogo() {
       img.alt = `${currentDomainConfig.brandName} Logo Dark`;
     }
     // Reveal the logo once updated
-    img.style.visibility = 'visible';
+    setTimeout(function() {
+        img.style.visibility = 'visible';
+    }, 1000)    
   });
 }
 

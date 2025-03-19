@@ -4,8 +4,14 @@
 /*
 Vida Style Sheet Locked and Loaded
 */
-/* Hide logo images initially */
+/* Default: logos are visible */
 img[alt="light logo"],
 img[alt="dark logo"] {
-  visibility: hidden;
+  visibility: visible;
+}
+
+/* Hide logos on white-label domains */
+html[data-domain="whitelabel"] img[alt="light logo"],
+html[data-domain="whitelabel"] img[alt="dark logo"] {
+  visibility: hidden !important;
 }
