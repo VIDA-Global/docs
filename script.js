@@ -5,38 +5,37 @@
 window.dataLayer = window.dataLayer || [];
 console.log("Custom white-label script loaded!");
 
-// Define domain-specific rules clearly, EXCLUDING vida.io explicitly
+// Define domain-specific rules
 const domainConfig = [
   {
     match: /^vidadev\.lylepratt\.com$/,
-    brandName: "AutomatedPhone",
+    brandName: "Vida Dev",
     replacements: [
-        { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
-        { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" },
-        { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
+      { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
+      { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" },
+      { from: /Vida(\.io)?/gi, to: "Vida Dev" }
     ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
-    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
   },
   {
     match: /(.*\.)?automatedphone\.ai$/,
-    brandName: "AutomatedPhone",
+    brandName: "Automated Phone",
     replacements: [
-        { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
-        { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" },
-        { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
+      { from: /help@vida\.inc/gi, to: "support@yourdomain.com" },
+      { from: /api\.vida\.dev/gi, to: "api.yourdomain.com" },
+      { from: /Vida(\.io)?/gi, to: "Automated Phone" }
     ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
-    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
   }
-  // Removed generic fallback to avoid unintended replacements on vida.io
 ];
 
 // Get current domain config based on regex match
 const hostname = window.location.hostname;
 const currentDomainConfig = domainConfig.find(config => config.match.test(hostname));
 
-// Replace text mentions safely (avoid repeating)
+// Replace text mentions (preventing infinite loops and unintended skips)
 function replaceBrandMentions() {
   if (!currentDomainConfig || !currentDomainConfig.replacements) return;
 
@@ -45,24 +44,18 @@ function replaceBrandMentions() {
   while (walker.nextNode()) {
     const node = walker.currentNode;
 
-    // Skip already processed nodes
     if (node.__whitelabeled) continue;
 
-    // Check if node is within code/pre elements
     const isCodeElement = node.parentElement.closest('pre, code, script, style');
 
-    currentDomainConfig.replacements.forEach(({ from, to }) => {
-      const isApiReplacement = /api\.vida\.dev|help@vida\.inc/i.test(from.source);
+    currentDomainConfig.replacements.forEach(({from, to}) => {
+      const isSafeInCode = /api\.vida\.dev|help@vida\.inc/i.test(from.source);
 
-      // Perform replacements only if:
-      // - NOT in a code block OR
-      // - the replacement is specifically allowed within code blocks (like API URLs)
-      if (!isCodeElement || isApiReplacement) {
+      if (!isCodeElement || isSafeInCode) {
         node.nodeValue = node.nodeValue.replace(from, to);
       }
     });
 
-    // Mark node as processed
     node.__whitelabeled = true;
   }
 }
@@ -73,10 +66,10 @@ function replaceLogo() {
 
   const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
   logoImgs.forEach(img => {
-    if (img.alt === 'light logo' && img.src !== currentDomainConfig.logoLightUrl) {
+    if (img.alt === 'light logo') {
       img.src = currentDomainConfig.logoLightUrl;
       img.alt = `${currentDomainConfig.brandName} Logo Light`;
-    } else if (img.alt === 'dark logo' && img.src !== currentDomainConfig.logoDarkUrl) {
+    } else if (img.alt === 'dark logo') {
       img.src = currentDomainConfig.logoDarkUrl;
       img.alt = `${currentDomainConfig.brandName} Logo Dark`;
     }
@@ -89,9 +82,30 @@ function initializeWhiteLabel() {
     replaceBrandMentions();
     replaceLogo();
     console.log("White-label applied for domain:", currentDomainConfig.brandName);
-  } else {
-    console.log("No white-labeling applied for domain:", hostname);
   }
+}
+
+// Function to observe and initialize white-label replacements and Zapier embed
+function observeAndInitialize() {
+  const observer = new MutationObserver((mutationsList) => {
+    mutationsList.forEach(() => {
+      initializeWhiteLabel();
+      initializeZapierEmbed();
+    });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
+// Wait for DOM load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeWhiteLabel();
+    observeAndInitialize();
+  });
+} else {
+  initializeWhiteLabel();
+  observeAndInitialize();
 }
 
 /*
@@ -99,7 +113,6 @@ function initializeWhiteLabel() {
 */
 console.log("Custom vida script loaded!")
 
-/* Load Vida Widget Script and CSS for Demos */
 function loadCSS(url, callback) {
     var link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -124,13 +137,10 @@ loadJS('https://vida.io/embed/button/v1/script.js', function() {
 /*
 * Zapier Embed
 */
-
 function initializeZapierEmbed() {
   const container = document.querySelector("#zapier-container");
 
-  if (container === null) {
-    return;
-  }
+  if (!container) return;
 
   if (!container.querySelector("zapier-full-experience")) {
     const script = document.createElement("script");
@@ -149,27 +159,4 @@ function initializeZapierEmbed() {
     element.appSearchBarDisplay = "show";
     container.appendChild(element);
   }
-}
-
-// Single unified Mutation Observer (your existing observer)
-function observeAndInitialize() {
-  const observer = new MutationObserver((mutationsList) => {
-    mutationsList.forEach(() => {
-      initializeWhiteLabel();
-      initializeZapierEmbed();
-    });
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
-}
-
-// Wait for DOM load
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    initializeWhiteLabel();
-    observeAndInitialize();
-  });
-} else {
-  initializeWhiteLabel();
-  observeAndInitialize();
 }
