@@ -7,7 +7,7 @@ Vida Style Sheet Locked and Loaded
 /* Default: logos are visible */
 img[alt="light logo"],
 img[alt="dark logo"] {
-  visibility: hidden;
+  visibility: hidden !important;
 }
 
 /* Hide logos on white-label domains */
