@@ -59,7 +59,7 @@ const hostname = window.location.hostname;
 const currentDomainConfig = domainConfig.find(config => config.match.test(hostname));
 
 // Redirect to vida.io if no domain match
-if (!currentDomainConfig) {
+if (!currentDomainConfig && !hostname.includes("vida.io") {
   console.log("No matching domain found. Redirecting to vida.io/docs with the same path");
   const currentPath = window.location.pathname + window.location.search + window.location.hash;
   window.location.href = "https://vida.io/docs" + currentPath;

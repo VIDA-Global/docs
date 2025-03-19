@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Vida Docs",
+  "name": "AI Phone Agent Docs",
   "isWhiteLabeled": true,
   "metadata": {
     "description": "The AI phone agent for small business. Answer calls and texts with an AI phone agent that always works and is never busy.",
