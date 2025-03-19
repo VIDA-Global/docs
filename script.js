@@ -9,21 +9,21 @@ console.log("Custom white-label script loaded!");
 const domainConfig = [
   {
     match: /^vidadev\.lylepratt\.com$/,
-    brandName: "Vida Dev",
+    brandName: "AutomatedPhone",
     replacements: [
-      { from: /Vida(\.io)?/gi, to: "Vida Dev" }
+      { from: /Vida(\.io)?/gi, to: "AutomatedPhone" }
     ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
-    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   },
   {
     match: /(.*\.)?automatedphone\.ai$/,
-    brandName: "Automated Phone",
+    brandName: "AutomatedPhone",
     replacements: [
-      { from: /Vida(\.io)?/gi, to: "Automated Phone" }
+      { from: /Vida(\.io)?/gi, to: "AutomatedPhone" }
     ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
-    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   }
   // Removed generic fallback to avoid unintended replacements on vida.io
 ];
