@@ -10,21 +10,27 @@ const domainConfig = [
   {
     match: /^vidadev\.lylepratt\.com$/,
     brandName: "Vida Dev",
-    replaceText: /Vida(\.io)?/gi,
+    replacements: [
+      { from: /Vida(\.io)?/gi, to: "Vida Dev" }
+    ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
   },
   {
     match: /(.*\.)?automatedphone\.ai$/,
     brandName: "Automated Phone",
-    replaceText: /Vida(\.io)?/gi,
+    replacements: [
+      { from: /Vida(\.io)?/gi, to: "Automated Phone" }
+    ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
   },
   {
     match: /.*/,
     brandName: "Generic Brand",
-    replaceText: /Vida(\.io)?/gi,
+    replacements: [
+      { from: /Vida(\.io)?/gi, to: "Generic Brand" }
+    ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_alianza.jpg",
   }
@@ -36,15 +42,15 @@ const currentDomainConfig = domainConfig.find(config => config.match.test(hostna
 
 // Replace text mentions
 function replaceBrandMentions() {
-  if (!currentDomainConfig) return;
+  if (!currentDomainConfig || !currentDomainConfig.replacements) return;
 
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
 
   while (walker.nextNode()) {
-    walker.currentNode.nodeValue = walker.currentNode.nodeValue.replace(currentDomainConfig.replaceText, currentDomainConfig.brandName);
+    currentDomainConfig.replacements.forEach(({from, to}) => {
+      walker.currentNode.nodeValue = walker.currentNode.nodeValue.replace(from, to);
+    });
   }
-
-  console.log("Brand mentions replaced with:", currentDomainConfig.brandName);
 }
 
 // Replace logo
@@ -61,8 +67,6 @@ function replaceLogo() {
       img.alt = `${currentDomainConfig.brandName} Logo Dark`;
     }
   });
-
-  console.log("Logos replaced for domain:", hostname);
 }
 
 // Initialize replacements
@@ -70,14 +74,31 @@ function initializeWhiteLabel() {
   if (currentDomainConfig) {
     replaceBrandMentions();
     replaceLogo();
+    console.log("White-label applied for domain:", currentDomainConfig.brandName);
   }
+}
+
+// Function to observe and initialize white-label replacements and Zapier embed
+function observeAndInitialize() {
+  const observer = new MutationObserver((mutationsList) => {
+    mutationsList.forEach(() => {
+      initializeWhiteLabel();
+      initializeZapierEmbed();
+    });
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
 }
 
 // Wait for DOM load
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeWhiteLabel);
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeWhiteLabel();
+    observeAndInitialize();
+  });
 } else {
   initializeWhiteLabel();
+  observeAndInitialize();
 }
 
 /*
@@ -104,16 +125,6 @@ function loadJS(url, callback) {
     document.head.appendChild(script);
 }
 
-// Usage
-
-/*
-loadCSS('https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.css', function() {
-	console.log("Loaded Vida Widget CSS")
-    loadJS('https://vidapublic.s3.us-east-2.amazonaws.com/vida-webrtc-widget/index.js', function() {
-    	console.log("Loaded Vida Widget JS")
-    });
-});
-*/
 loadJS('https://vida.io/embed/button/v1/script.js', function() {
     console.log("Loaded Vida Widget JS")
 });
@@ -123,61 +134,30 @@ loadJS('https://vida.io/embed/button/v1/script.js', function() {
 */
 
 function initializeZapierEmbed() {
-    const container = document.querySelector("#zapier-container");
+  const container = document.querySelector("#zapier-container");
 
-    if (container === null) {
-        console.log("Zapier element does not exist.");
-    } else {
-        // Check if zapier-full-experience is already appended
-        if (!container.querySelector("zapier-full-experience")) {
-            console.log("Zapier element exists and will be initialized.");
-            
-            // Load JS
-            const script = document.createElement("script");
-            script.type = "module";
-            script.src = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js";
-            document.head.appendChild(script);
+  if (container === null) {
+    return;
+  }
 
-            // Load CSS
-            const stylesheet = document.createElement("link");
-            stylesheet.rel = "stylesheet";
-            stylesheet.href = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css";
-            document.head.appendChild(stylesheet);
+  if (!container.querySelector("zapier-full-experience")) {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.esm.js";
+    document.head.appendChild(script);
 
-            // Create and display zapier-full-experience
-            const element = document.createElement("zapier-full-experience");
-            // element.signUpEmail = "email_of_your_user@example.com";
-            // element.signUpFirstName = "first_name_of_your_user";
-            // element.signUpLastName = "last_name_of_your_user";
-            element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
-            element.theme = "light";
-            element.appSearchBarDisplay = "show";
-            console.log("Appending Zapier element.")
-            container.appendChild(element);
-        } else {
-            console.log("Zapier embed already initialized.");
-        }
-    }
+    const stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = "https://cdn.zapier.com/packages/partner-sdk/v0/zapier-elements/zapier-elements.css";
+    document.head.appendChild(stylesheet);
+
+    const element = document.createElement("zapier-full-experience");
+    element.clientId = "4ztZwOUy6owmn3O9h3IhW0bs89Elxp45qSkqWGCt";
+    element.theme = "light";
+    element.appSearchBarDisplay = "show";
+    container.appendChild(element);
+  }
 }
 
-// Function to observe and initialize the Zapier embed
-function observeAndInitialize() {
-    const observer = new MutationObserver((mutationsList, observer) => {
-        for (const mutation of mutationsList) {
-            if (mutation.type === 'childList') {
-                // Check if the zapier-container element has been added
-                if (document.querySelector("#zapier-container")) {
-                    console.log("Initializing Zapier via observer.")
-                    initializeZapierEmbed();
-                    break;
-                }
-            }
-        }
-    });
-
-    // Start observing the document body for childList changes
-    observer.observe(document.body, { childList: true, subtree: true });
-}
-
-// Observe changes for dynamic navigation
+// Observe changes for dynamic navigation and white-labeling
 observeAndInitialize();
