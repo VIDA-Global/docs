@@ -21,9 +21,7 @@
     "default": "light",
     "isHidden": true
   },
-  "logo": {
-    //"dark": "logos/dark.svg",
-    //"light": "logos/light.svg",
+  "logo": {    
     "href": "https://vida.io"
   },
   "favicon": "logos/favicon.png",

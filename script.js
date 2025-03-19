@@ -2,6 +2,9 @@
 * Vida White-label Customization Script
 */
 
+//"dark": "logos/dark.svg",
+//"light": "logos/light.svg",
+
 window.dataLayer = window.dataLayer || [];
 console.log("Custom white-label script loaded!");
 
