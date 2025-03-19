@@ -2,9 +2,6 @@
 * Vida White-label Customization Script
 */
 
-//"dark": "logos/dark.svg",
-//"light": "logos/light.svg",
-
 window.dataLayer = window.dataLayer || [];
 console.log("Custom white-label script loaded!");
 
@@ -107,30 +104,40 @@ function replaceBrandMentions() {
 function replaceLogo() {  
   const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
   logoImgs.forEach(img => {
+    let newSrc, newAlt;
+    
+    // If there's a whitelabel config, use that; otherwise use the default Vida logos.
     if (currentDomainConfig) {
-        /*
-      // Determine new source and alt based on the image type
-      const isLightLogo = img.alt === 'light logo';
-      const newSrc = isLightLogo ? currentDomainConfig.logoLightUrl : currentDomainConfig.logoDarkUrl;
-      const newAlt = isLightLogo ? `${currentDomainConfig.brandName} Logo Light` : `${currentDomainConfig.brandName} Logo Dark`;
+      if (img.alt === 'light logo') {
+        newSrc = currentDomainConfig.logoLightUrl;
+        newAlt = `${currentDomainConfig.brandName} Logo Light`;
+      } else if (img.alt === 'dark logo') {
+        newSrc = currentDomainConfig.logoDarkUrl;
+        newAlt = `${currentDomainConfig.brandName} Logo Dark`;
+      }
+    } else {
+      if (img.alt === 'light logo') {
+        newSrc = 'https://mintlify.s3.us-west-1.amazonaws.com/vida/logos/light.svg';
+        newAlt = 'Vida Logo Light';
+      } else if (img.alt === 'dark logo') {
+        newSrc = 'https://mintlify.s3.us-west-1.amazonaws.com/vida/logos/dark.svg';
+        newAlt = 'Vida Logo Dark';
+      }
+    }
 
-      // Preload the new image
+    // Preload the new image before applying it.
+    if (newSrc) {
       const preloadedImage = new Image();
       preloadedImage.onload = function() {
-        // Once preloaded, update the logo's src and alt, then unhide it
         img.src = newSrc;
         img.alt = newAlt;
+        // Use inline style with !important to override any CSS hiding the element.
         img.style.setProperty('visibility', 'visible', 'important');
       };
       preloadedImage.src = newSrc;
-      */
-    } else {
-      // On non-white-label domains, just unhide the logo
-      img.style.setProperty('visibility', 'visible', 'important');
     }
   });
 }
-
 
 // Initialize replacements
 function initializeWhiteLabel() {
