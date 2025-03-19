@@ -101,23 +101,23 @@ function replaceBrandMentions() {
 }
 
 // Replace logo
-function replaceLogo() {
-  if (!currentDomainConfig) {
-    img.style.visibility = 'visible';
-    return;
-  }
-
+function replaceLogo() {  
   const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
   logoImgs.forEach(img => {
-    if (img.alt === 'light logo') {
-      img.src = currentDomainConfig.logoLightUrl;
-      img.alt = `${currentDomainConfig.brandName} Logo Light`;
-    } else if (img.alt === 'dark logo') {
-      img.src = currentDomainConfig.logoDarkUrl;
-      img.alt = `${currentDomainConfig.brandName} Logo Dark`;
+    if(!currentDomainConfig) {
+        img.style.visibility = 'visible';
     }
-    // Reveal the logo once updated
-    img.style.visibility = 'visible';
+    else {
+        if (img.alt === 'light logo') {
+          img.src = currentDomainConfig.logoLightUrl;
+          img.alt = `${currentDomainConfig.brandName} Logo Light`;
+        } else if (img.alt === 'dark logo') {
+          img.src = currentDomainConfig.logoDarkUrl;
+          img.alt = `${currentDomainConfig.brandName} Logo Dark`;
+        }
+        // Reveal the logo once updated
+        img.style.visibility = 'visible';
+    }
   });
 }
 
