@@ -114,7 +114,7 @@ function replaceLogo() {
         }
     }
     // Reveal the logo once updated
-    img.style.visibility = 'visible';
+    img.style.setProperty('visibility', 'visible', 'important');
   });
 }
 
