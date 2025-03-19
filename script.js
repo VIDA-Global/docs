@@ -104,6 +104,8 @@ function replaceLogo() {
       img.src = currentDomainConfig.logoDarkUrl;
       img.alt = `${currentDomainConfig.brandName} Logo Dark`;
     }
+    // Reveal the logo once updated
+    img.style.visibility = 'visible';
   });
 }
 

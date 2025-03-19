@@ -4,10 +4,8 @@
 /*
 Vida Style Sheet Locked and Loaded
 */
-#navbar {
-  
-}
-
-footer {
-  
+/* Hide logo images initially */
+img[alt="light logo"],
+img[alt="dark logo"] {
+  visibility: hidden;
 }
