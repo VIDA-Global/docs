@@ -19,6 +19,17 @@ const domainConfig = [
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   },
   {
+    match: /^jobnimbus\.automatedphone\.ai$/,
+    brandName: "JobNimbus",
+    replacements: [
+      { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
+      { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
+      { from: /Vida(\.io)?/gi, to: "JobNimbus" },
+    ],
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/jobnimbus-logo.png",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/jobnimbus-logo.png",
+  },
+  {
     match: /(.*\.)?automatedphone\.ai$/,
     brandName: "AutomatedPhone",
     replacements: [
@@ -28,13 +39,31 @@ const domainConfig = [
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
-  }
+  },
+  {
+    match: /^app\.getvoicebot\.com$/,
+    brandName: "VoiceBot",
+    replacements: [
+      { from: /help@vida\.inc/gi, to: "help@getvoicebot.com" },
+      { from: /api\.vida\.dev/gi, to: "api.getvoicebot.com" },
+      { from: /Vida(\.io)?/gi, to: "VoiceBot" },
+    ],
+    logoLightUrl: "https://lirp.cdn-website.com/6c7f9e27/dms3rep/multi/opt/VoiceBot_Header_Logo2-243w.png",
+    logoDarkUrl: "https://lirp.cdn-website.com/6c7f9e27/dms3rep/multi/opt/VoiceBot_Header_Logo2-243w.png",
+  }  
   // Removed generic fallback to avoid unintended replacements on vida.io
 ];
 
 // Get current domain config based on regex match
 const hostname = window.location.hostname;
 const currentDomainConfig = domainConfig.find(config => config.match.test(hostname));
+
+// Redirect to vida.io if no domain match
+if (!currentDomainConfig) {
+  console.log("No matching domain found. Redirecting to vida.io/docs with the same path");
+  const currentPath = window.location.pathname + window.location.search + window.location.hash;
+  window.location.href = "https://vida.io/docs" + currentPath;
+}
 
 // Replace text mentions (enhanced handling for code blocks)
 function replaceBrandMentions() {
