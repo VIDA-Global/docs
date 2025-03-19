@@ -105,6 +105,7 @@ function replaceLogo() {
   const logoImgs = document.querySelectorAll('div.flex-1.flex.items-center.gap-x-4 a img');
   logoImgs.forEach(img => {
     if (currentDomainConfig) {
+        /*
       // Determine new source and alt based on the image type
       const isLightLogo = img.alt === 'light logo';
       const newSrc = isLightLogo ? currentDomainConfig.logoLightUrl : currentDomainConfig.logoDarkUrl;
@@ -119,6 +120,7 @@ function replaceLogo() {
         img.style.setProperty('visibility', 'visible', 'important');
       };
       preloadedImage.src = newSrc;
+      */
     } else {
       // On non-white-label domains, just unhide the logo
       img.style.setProperty('visibility', 'visible', 'important');
