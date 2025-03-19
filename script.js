@@ -11,9 +11,9 @@ const domainConfig = [
     match: /^vidadev\.lylepratt\.com$/,
     brandName: "AutomatedPhone",
     replacements: [
-        { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
-        { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
-        { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
+      { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
+      { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
+      { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
@@ -22,9 +22,9 @@ const domainConfig = [
     match: /(.*\.)?automatedphone\.ai$/,
     brandName: "AutomatedPhone",
     replacements: [
-        { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
-        { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
-        { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
+      { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
+      { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
+      { from: /Vida(\.io)?/gi, to: "AutomatedPhone" },
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-light.png",
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
@@ -49,8 +49,9 @@ function replaceBrandMentions() {
 
     const isCodeElement = node.parentElement.closest('pre, code, script, style');
 
-    currentDomainConfig.replacements.forEach(({from, to}) => {
-      const allowInCode = from.source.includes('api.vida.dev') || from.source.includes('help@vida.inc');
+    currentDomainConfig.replacements.forEach(({ from, to }) => {
+      // FIXED LINE BELOW:
+      const allowInCode = from.source.includes('api\\.vida\\.dev') || from.source.includes('help@vida\\.inc');
       
       if (!isCodeElement || allowInCode) {
         node.nodeValue = node.nodeValue.replace(from, to);
@@ -60,7 +61,6 @@ function replaceBrandMentions() {
     node.__whitelabeled = true;
   }
 }
-
 
 // Replace logo
 function replaceLogo() {
@@ -113,27 +113,27 @@ if (document.readyState === "loading") {
 /*
 * Vida Style Scripts Locked and Loaded
 */
-console.log("Custom vida script loaded!")
+console.log("Custom vida script loaded!");
 
 function loadCSS(url, callback) {
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = url;
-    link.onload = callback;
-    document.head.appendChild(link);
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = url;
+  link.onload = callback;
+  document.head.appendChild(link);
 }
 
 function loadJS(url, callback) {
-    var script = document.createElement('script');
-    script.src = url;
-    script.type = 'text/javascript';
-    script.async = true;
-    script.onload = callback;
-    document.head.appendChild(script);
+  var script = document.createElement('script');
+  script.src = url;
+  script.type = 'text/javascript';
+  script.async = true;
+  script.onload = callback;
+  document.head.appendChild(script);
 }
 
 loadJS('https://vida.io/embed/button/v1/script.js', function() {
-    console.log("Loaded Vida Widget JS")
+  console.log("Loaded Vida Widget JS");
 });
 
 /*
