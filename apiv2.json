@@ -790,6 +790,88 @@
         }
       }
     },
+    "/api/v2/phoneNumber/byo/assign": {
+      "post": {
+        "tags": [
+          "Phone Numbers"
+        ],
+        "summary": "Assign a BYO phone number",
+        "description": "Assign a phone number you are supplying yourself to an agent. Requires reseller account.",
+        "responses": {
+          "200": {
+            "description": "Successfully assigned phone number to account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Unable to assign phone number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "A descriptive error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "number"
+                ],
+                "properties": {
+                  "number": {
+                    "description": "Phone Number to assign to your account",
+                    "type": "string",
+                    "example": "+12145551234"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/phoneNumber/search/local/locality": {
       "post": {
         "tags": [
