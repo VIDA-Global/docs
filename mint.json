@@ -23,7 +23,7 @@
   },
   "logo": {
     "dark": "logos/blank.svg",
-    "light": "logos/blank.svg",    
+    "light": "logos/blank.svg",
     "href": "https://vida.io"
   },
   "favicon": "logos/favicon.png",
@@ -186,6 +186,7 @@
       "group": "Phone Numbers",
       "pages": [
         "api-reference/phone-numbers/assign-phone-number-to-your-account",
+        "api-reference/phone-numbers/assign-a-byo-phone-number",
         "api-reference/phone-numbers/search-for-local-numbers-by-locality",
         "api-reference/phone-numbers/search-for-local-numbers-by-prefix",
         "api-reference/phone-numbers/search-for-local-numbers-by-phrase"
