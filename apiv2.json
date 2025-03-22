@@ -872,6 +872,88 @@
         }
       }
     },
+    "/api/v2/phoneNumber/return": {
+      "post": {
+        "tags": [
+          "Phone Numbers"
+        ],
+        "summary": "Return / Unassign Phone Number",
+        "description": "Return a phone number and unassigns the number from the agent account. If provided by an external integrated number supplier, will return to them too. Requires reseller account.",
+        "responses": {
+          "200": {
+            "description": "Successfully returned phone number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Unable to return phone number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "A descriptive error message"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "number"
+                ],
+                "properties": {
+                  "number": {
+                    "description": "Phone Number to unassign from your account",
+                    "type": "string",
+                    "example": "+12145551234"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/phoneNumber/search/local/locality": {
       "post": {
         "tags": [
