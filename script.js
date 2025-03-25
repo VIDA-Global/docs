@@ -30,6 +30,17 @@ const domainConfig = [
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/jobnimbus-logo.png",
   },
   {
+    match: /^marketinghub\.jobnimbus\.com$/,
+    brandName: "JobNimbus",
+    replacements: [
+      { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
+      { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
+      { from: /Vida(\.io)?/gi, to: "JobNimbus" },
+    ],
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/jobnimbus-logo.png",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/jobnimbus-logo.png",
+  },
+  {
     match: /(.*\.)?automatedphone\.ai$/,
     brandName: "AutomatedPhone",
     replacements: [
