@@ -1,5 +1,5 @@
 /*
-* Vida White-label Customization Script
+* Vida White-label Customization Script for UI
 */
 
 window.dataLayer = window.dataLayer || [];
