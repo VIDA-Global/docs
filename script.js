@@ -41,6 +41,17 @@ const domainConfig = [
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/jobnimbus-logo.png",
   },
   {
+    match: /^agent\.myproclaim\.com$/,
+    brandName: "Proclaim AI",
+    replacements: [
+      { from: /help@vida\.inc/gi, to: "help@proclaimvoip.com" },
+      { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
+      { from: /Vida(\.io)?/gi, to: "Proclaim AI" },
+    ],
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/proclaimvoip-website-logo.pngg",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/proclaimvoip-website-logo.pngg",
+  },
+  {
     match: /(.*\.)?automatedphone\.ai$/,
     brandName: "AutomatedPhone",
     replacements: [
