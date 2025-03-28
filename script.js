@@ -48,8 +48,8 @@ const domainConfig = [
       { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
       { from: /Vida(\.io)?/gi, to: "Proclaim AI" },
     ],
-    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/proclaimvoip-website-logo-bg.png",
-    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/proclaimvoip-website-logo-bg.png",
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/proclaimvoip_white.png",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/proclaimvoip_white.png",
   },
   {
     match: /(.*\.)?automatedphone\.ai$/,
