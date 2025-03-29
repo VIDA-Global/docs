@@ -173,12 +173,43 @@ function replaceLogo() {
   });
 }
 
+function removeUnwantedNavLinks() {
+  const itemsToRemove = [
+    "Athena Health",
+    "Cox Automotive",
+    "White Label Capabilities",
+    "Embedding Tools for AI Enablement",
+    "Enabling SMS",
+  ];
+
+  // Remove sidebar links that match those names
+  const navLinks = document.querySelectorAll('nav a, nav li, aside a, aside li');
+
+  navLinks.forEach(link => {
+    const text = link.textContent.trim();
+    if (itemsToRemove.includes(text)) {
+      link.closest('li, a, div')?.remove(); // Try to remove the parent container
+    }
+  });
+
+  // Remove entire Agent Examples section by heading match
+  const headings = Array.from(document.querySelectorAll('nav h2, nav h3, aside h2, aside h3'));
+  headings.forEach(heading => {
+    if (heading.textContent.trim().toLowerCase().includes("agent examples")) {
+      const section = heading.closest('section, div, ul, nav');
+      section?.remove();
+    }
+  });
+}
+
+
 // Initialize replacements
 function initializeWhiteLabel() {
   replaceLogo(); 
   if (currentDomainConfig) {
     replaceURLs(); // Update URLs to point at the current domain 
-    replaceBrandMentions();    
+    replaceBrandMentions();
+    removeUnwantedNavLinks();
     console.log("White-label applied for domain:", currentDomainConfig.brandName);
   }
 }
