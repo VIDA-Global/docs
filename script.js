@@ -173,35 +173,43 @@ function replaceLogo() {
   });
 }
 
-function removeUnwantedNavLinks() {
-  const itemsToRemove = [
-    "Athena Health",
-    "Cox Automotive",
-    "White Label Capabilities",
-    "Embedding Tools for AI Enablement",
-    "Enabling SMS",
+function removeUnwantedNavItems() {
+  // SECTION HEADERS TO REMOVE COMPLETELY
+  const sectionHeadersToRemove = [
+    "Enablement",
+    "Agent Examples"
   ];
 
-  // Remove sidebar links that match those names
-  const navLinks = document.querySelectorAll('nav a, nav li, aside a, aside li');
+  // SPECIFIC ITEM TEXT TO REMOVE
+  const individualItemsToRemove = [
+    "Athena Health",
+    "Cox Automotive",
+    "White-Label Capabilities",
+    "Enabling SMS",
+    "OpenAI Speech-to-Speech"
+  ];
 
-  navLinks.forEach(link => {
-    const text = link.textContent.trim();
-    if (itemsToRemove.includes(text)) {
-      link.closest('li, a, div')?.remove(); // Try to remove the parent container
+  // === Remove Entire Sections by <h5> header ===
+  document.querySelectorAll('h5').forEach(h5 => {
+    const title = h5.textContent.trim();
+    if (sectionHeadersToRemove.includes(title)) {
+      const container = h5.closest('div');
+      if (container) {
+        container.remove();
+        console.log(`[White-label] Removed section: ${title}`);
+      }
     }
   });
 
-  // Remove entire Agent Examples section by heading match
-  const headings = Array.from(document.querySelectorAll('nav h2, nav h3, aside h2, aside h3'));
-  headings.forEach(heading => {
-    if (heading.textContent.trim().toLowerCase().includes("agent examples")) {
-      const section = heading.closest('section, div, ul, nav');
-      section?.remove();
+  // === Remove individual <li> items by inner text ===
+  document.querySelectorAll('li').forEach(li => {
+    const label = li.textContent.trim();
+    if (individualItemsToRemove.some(item => label.includes(item))) {
+      li.remove();
+      console.log(`[White-label] Removed nav item: ${label}`);
     }
   });
 }
-
 
 // Initialize replacements
 function initializeWhiteLabel() {
@@ -209,7 +217,7 @@ function initializeWhiteLabel() {
   if (currentDomainConfig) {
     replaceURLs(); // Update URLs to point at the current domain 
     replaceBrandMentions();
-    removeUnwantedNavLinks();
+    removeUnwantedNavItems();
     console.log("White-label applied for domain:", currentDomainConfig.brandName);
   }
 }
