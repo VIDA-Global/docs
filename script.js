@@ -211,6 +211,36 @@ function removeUnwantedNavItems() {
   });
 }
 
+function removeUnwantedHeaderLinks() {
+  const headerLinkTextsToRemove = [
+    "OpenAPI Definition",
+    "Examples",
+    "Pricing",
+    "Login"
+  ];
+
+  const headerNavLinks = document.querySelectorAll('nav ul li a');
+
+  headerNavLinks.forEach(link => {
+    const text = link.textContent.trim();
+    if (headerLinkTextsToRemove.includes(text)) {
+      const li = link.closest('li');
+      if (li) {
+        li.remove();
+        console.log(`[White-label] Removed header link: ${text}`);
+      }
+    }
+  });
+
+  // Also remove the CTA login button (desktop)
+  const ctaButton = document.querySelector('#topbar-cta-button');
+  if (ctaButton) {
+    ctaButton.remove();
+    console.log('[White-label] Removed CTA Login button');
+  }
+}
+
+
 // Initialize replacements
 function initializeWhiteLabel() {
   replaceLogo(); 
@@ -218,6 +248,7 @@ function initializeWhiteLabel() {
     replaceURLs(); // Update URLs to point at the current domain 
     replaceBrandMentions();
     removeUnwantedNavItems();
+    removeUnwantedHeaderLinks();
     console.log("White-label applied for domain:", currentDomainConfig.brandName);
   }
 }
