@@ -245,15 +245,25 @@ function removeUnwantedHeaderLinks() {
 function replaceFavicon() {
   if (!currentDomainConfig || !currentDomainConfig.faviconUrl) return;
 
-  let link = document.querySelector("link[rel~='icon']");
-  if (!link) {
-    link = document.createElement('link');
-    link.rel = 'icon';
-    document.head.appendChild(link);
-  }
+  // Remove all existing favicon links
+  const selectors = [
+    "link[rel='icon']",
+    "link[rel='shortcut icon']",
+    "link[rel='apple-touch-icon']",
+    "link[rel='mask-icon']"
+  ];
+  selectors.forEach(selector => {
+    document.querySelectorAll(selector).forEach(el => el.remove());
+  });
 
+  // Add the new favicon
+  const link = document.createElement('link');
+  link.rel = 'icon';
+  link.type = 'image/png';
   link.href = currentDomainConfig.faviconUrl;
-  console.log(`[White-label] Favicon updated for ${currentDomainConfig.brandName}`);
+  document.head.appendChild(link);
+
+  console.log(`[White-label] Favicon set to ${link.href}`);
 }
 
 
