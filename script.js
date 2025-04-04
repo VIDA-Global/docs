@@ -21,6 +21,7 @@ const domainConfig = [
   {
     match: /^jobnimbus\.automatedphone\.ai$/,
     brandName: "JobNimbus",
+    faviconUrl: "https://webappui.jobnimbus.com/images/favicon.png",
     replacements: [
       { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
       { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
@@ -32,6 +33,7 @@ const domainConfig = [
   {
     match: /^marketinghub\.jobnimbus\.com$/,
     brandName: "JobNimbus",
+    faviconUrl: "https://webappui.jobnimbus.com/images/favicon.png",
     replacements: [
       { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
       { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
@@ -240,10 +242,25 @@ function removeUnwantedHeaderLinks() {
   }
 }
 
+function replaceFavicon() {
+  if (!currentDomainConfig || !currentDomainConfig.faviconUrl) return;
+
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.head.appendChild(link);
+  }
+
+  link.href = currentDomainConfig.faviconUrl;
+  console.log(`[White-label] Favicon updated for ${currentDomainConfig.brandName}`);
+}
+
 
 // Initialize replacements
 function initializeWhiteLabel() {
   replaceLogo(); 
+  replaceFavicon();
   if (currentDomainConfig) {
     replaceURLs(); // Update URLs to point at the current domain 
     replaceBrandMentions();
