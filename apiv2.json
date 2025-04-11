@@ -3628,6 +3628,7 @@
                     "type": "string",
                     "enum": [
                       "en-US",
+                      "multi",
                       "es-MX",
                       "es-ES",
                       "es-US"
