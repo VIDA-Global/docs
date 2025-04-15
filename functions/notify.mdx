@@ -1,6 +1,6 @@
 ---
-title: 'Notify'
-description: 'How to configure and use the Notify function in Vida agents.'
+title: "Notify"
+description: "How to configure and use the Notify function in Vida agents."
 ---
 
 The Notify function allows your Vida AI phone agents to send notification emails and SMS messages with transcripts and summaries of conversations they handle. This ensures you or your team receive detailed information about each call or message for further action or record-keeping. The Notify function is only run at the end of calls and/or conversations. Note that the Notify action is different from the [Send Email](/functions/send-email) and [Send SMS](/functions/send-sms) functions which allow your agent to send emails and text messages with any content or destination you instruct it to include.
@@ -8,17 +8,21 @@ The Notify function allows your Vida AI phone agents to send notification emails
 ## Adding a Notify Function
 
 To add a notify function to your agent:
-1. Log into your account and navigate to the agent editor.
-2. Click the (+) button in the Functions section and select the "Notify" function.
 
-![Notify function](https://vidapublic.s3.us-east-2.amazonaws.com/vida-edit-agent-functions-notify.png "Notify function")
+1. Log into your account and navigate to the agent editor.
+2. Click the (\+) button in the Functions section and select the "Notify" function.
+
+![Notify function](https://vidapublic.s3.us-east-2.amazonaws.com/vida-edit-agent-functions-notify.png)
 
 ## Configuring the Notify Function
 
 Once added, you need to provide instructions to the agent on how and when to use the notify function. You will specify:
+
 - **Conditions**: Describe under what conditions the agent should notify you.
 - **Email Recipients**: Provide the email addresses where the summaries should be sent. By default, the email notification will be sent to the address on file for your account, but you can add additional email addresses. Note that you do not have control over the content of this email. Summaries, transcriptions and meta information is included.
-- **SMS Recipients**: Provide the phone numbers where the summary notifications should be sent. By default, no SMS notifications are sent unless one or more phone number is provided in the instructions. Note that you do not have control over the content of this SMS. Only summary and meta information gathered is included.
+- **SMS Recipients**: Provide the phone numbers where the summary notifications should be sent. By default, no SMS notifications are sent unless one or more phone number is provided in the instructions. Note that you do not have control over the content of this SMS. Only summary and meta information gathered is included.\
+  \
+  **No mobile information will be shared with third parties/affiliates for marketing/promotional purposes. All the above categories exclude _text messaging originator opt-in data and consent; this information will not be shared with any third parties. By providing a telephone number on the Notify function, you are consenting to be contacted by SMS text messages for notifications (our message frequency may vary). Message & data rates may apply. Reply STOP to opt-out of further messaging. Reply HELP for more information. See our Privacy Policy._**
 - **Content**: Any specific information you want summarized in the notification.
 
 ### Example Instructions
@@ -35,6 +39,7 @@ Here is an example of how you might configure a notify function:
 ## Use Cases
 
 Notify functions can be used in various scenarios:
+
 - **Customer Service**: Notify your team about customer service calls to the support team for follow-up.
 - **Sales Leads**: Email notifications of sales inquiries to the sales team for immediate action.
 - **Support Requests**: Forward details of technical support requests to the appropriate team or support queue (like Intercom) for resolution.
