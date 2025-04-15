@@ -3393,6 +3393,11 @@
                     "description": "If using external payment processor (eg Stripe) what url to redirect if payment successful",
                     "type": "string",
                     "example": "https://yoursite.io/success"
+                  },
+                  "checkoutType": {
+                    "description": "Which checkout session you would like to start. Embedded session or external redirect url",
+                    "type": "string",
+                    "example": "embedded"
                   }
                 }
               }
