@@ -119,6 +119,7 @@
       "pages": [
         "enablement/embed",
         "enablement/billing",
+        "billing/chargebee",
         "enablement/usage",
         "enablement/whitelabel",
         "enablement/api",
