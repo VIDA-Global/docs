@@ -1,14 +1,29 @@
 ---
-title: "New file"
-description: "Chargebee Integration"
+title: "Chargebee"
+description: "Chargebee Integration and Configuration"
 ---
 
 Chargebee is a subscription billing and revenue management platform built for businesses offering recurring, SaaS-based, or usage-based pricing models. It integrates with multiple payment gateways, including Stripe and Authorize.net, to securely process payments.
 
 Vida integrates with Chargebee to enable your Agent product plans to work seamlessly with Chargebee’s subscription system. This allows you to create and manage monthly subscriptions based on your Vida plans.
 
-## \
-**What the integration covers**
+## Preparing for configuration
+
+Before starting your Chargebee configuration, make sure you obtain the following information from the Vida team prior:
+
+- Your Reseller Id (Used for configuring the webhook URL)
+
+While this document covers setting up your Chargebee environment, at this end of this configuration, you will be providing the Vida team with the following information:
+
+- API Key
+- PublishableKey
+- Site
+- Product Plan Id (per agent plan)
+- Price Id (per agent plan)
+- webhookUsername
+- webhookPassword
+
+## What the integration covers
 
 - Creating new subscriptions through Chargebee hosted checkout
 - Cancelling subscriptions
@@ -20,50 +35,168 @@ Vida integrates with Chargebee to enable your Agent product plans to work seamle
 - Create new customer in Chargebee if they don't exist
 - Will use existing customer if we find one based on email address
 
-\
-**New subscriptions**\
-Through your Vida reseller portal, customers can subscribe to your agent product plans and be redirect to Chargebee's hosted checkout session (secure checkout). This will collect the customer's payment information and create a new subscription under the Chargebee customer profile.  \
-\
-If the payment succeeds, Chargebee will inform the Vida platform the account is paid and apply the requested plan. \
-\
-**Note:** If the customer account in Chargebee already has other active subscriptions for your other products, Vida creates a new subscription as to not interfere with your policies on that subscription. For instance, the Vida platform tells Chargebee to create pending invoices for it's subscription allowing Vida to append usage charges to the invoice before payment. \
-\
-**Cancelling subscriptions**\
+### New subscriptions
+
+Through your Vida reseller portal, customers can subscribe to your agent product plans and be redirect to Chargebee's hosted checkout session (secure checkout). This will collect the customer's payment information and create a new subscription under the Chargebee customer profile.
+
+If the payment succeeds, Chargebee will inform the Vida platform the account is paid and apply the requested plan.
+
+Note: If the customer account in Chargebee already has other active subscriptions for your other products, Vida creates a new subscription as to not interfere with your policies on that subscription. For instance, the Vida platform tells Chargebee to create pending invoices for it's subscription allowing Vida to append usage charges to the invoice before payment.
+
+### Cancelling subscriptions
+
 Subscriptions can be cancelled by a few different methods:
 
-- Customer disables their  account on the Vida platform
-- Customer cancels their plan through the Vida billing settings
-- You cancel the subscription manually through Chargebee
-- Chargebee is set to automatically cancel the subscription if payment is uncollectible after the dunning period. 
+Customer disables their  account on the Vida platform
 
-**Subscription Renewals**
+Customer cancels their plan through the Vida billing settings
 
-Chargebee manages the subscripton renewals itself. By default, Vida subscriptions renew on the anniversary day of when the subscription was created. If a subscription was created on April 5th, then the subscription will renew on May 5th. When the subscription renews, Chargebee informs the Vida platform a new billing cycle has begun which allows Vida to provide current and previous billing period ranges on our usage screens.\
-\
-**Upgrading or Downgrading Plans**
+You cancel the subscription manually through Chargebee
 
-When a customer wants to upgrade or downgrade their Agent plan, Vida automatically switches the plan in the existing subscription. On upgrades, Chargebee will charge the prorated amount of the new plan immediately to bring the balance where it should be. On downgrades, Chargebee may be configured to credit customer account the amount instead of refunding. This would be applied on the next billing cycle. 
+Chargebee is set to automatically cancel the subscription if payment is uncollectible after the dunning period.
 
-**Adding usage overages to pending invoices**
+### Subscription Renewals
 
-As a customer's usage progresses through the month, when the next billing cycle happens, we will grab the usage from the previous billing period (previous month) and determine if any usage overages are due. Overages are any product items you have configured for their plan and they have consumed an amount that exceeds any included amount. These charges are then pushed to Chargebee's pending invoice so payment can be collected. 
+Chargebee manages the subscripton renewals itself. By default, Vida subscriptions renew on the anniversary day of when the subscription was created. If a subscription was created on April 5th, then the subscription will renew on May 5th. When the subscription renews, Chargebee informs the Vida platform a new billing cycle has begun which allows Vida to provide current and previous billing period ranges on our usage screens.
 
-## \
-Configurating Chargebee and Connecting to Vida
+### Upgrading or Downgrading Plans
+
+When a customer wants to upgrade or downgrade their Agent plan, Vida automatically switches the plan in the existing subscription. On upgrades, Chargebee will charge the prorated amount of the new plan immediately to bring the balance where it should be. On downgrades, Chargebee may be configured to credit customer account the amount instead of refunding. This would be applied on the next billing cycle.
+
+### Adding usage overages to pending invoices
+
+As a customer's usage progresses through the month, when the next billing cycle happens, we will grab the usage from the previous billing period (previous month) and determine if any usage overages are due. Overages are any product items you have configured for their plan and they have consumed an amount that exceeds any included amount. These charges are then pushed to Chargebee's pending invoice so payment can be collected.
+
+## Configurating Chargebee and Connecting to Vida
 
 This section covers configuring Chargebee to prepare for the integration with Vida. We'll be covering:
 
 - Creating the Product Plans and Pricing
-- Configuring Hosted Pages (Checkout screens)
+- Enabling Hosted Pages (Checkout screens)
+- Enabling Self Service Portal (Payment Method Management and Invoices)
 - Automated Metered Billing Settings
 - Configuring Webhooks to Vida platform
+- Creating API Keys
+- Getting your Site value
 
-**Creating the Product Plans and Pricing**
+### Creating the Product Plans and Pricing
 
-Apart from the agent plans that you have worked with the Vida team to create (plan creation and management coming soon to the reseller tool set\!), we now have to create a product plan in Chargebee.  Once created, you will provide the Vida team with the product Id and the price Id to use for subscription management. \
+After you have already worked with the Vida team to create your agent product plans (agent plan creation and management coming soon to the reseller portal\!), we will need to create the product plans and pricing in Chargebee. We'll then need to take the product plan Id and price Id and configure it on your agent product plan in the Vida platform. \
 \
-To create the plan/pricing, in your Chargebee account:
+In your Chargebee account:
 
-1. Navigate to Product Catalog -\> Product Familes and click "\+ Create Product Family" button on the top right.  Product families allow you to segment certain compatible product plans and add ons.  This is optional if you already have a set structure of Product Family you wish to use. 
-2. (Skip if you already have a product family you wish to use). Create a Product Family Name with a description. For example:\
-   ![image.png](/image.png)
+1. (Skip this step if you have your own product family you'd like to use) Navigate to Product Catalog -\> Product Families -\> "\+ Create Product Family" button. Product families are used to bucketize product plans and add-ons to be used together.
+2. Enter a Product family name and description and click "Create" button on top right. Example:\
+   ![Image Pn](/image.png)
+
+   \
+   \
+   \
+   3. Create the product plan by navigating to Product Catalog -\> Plans -\> "\+ Create Plan" button.
+   - Product Family: Select the previously created Product Family or the family you wish to use.\\
+   - External Name: This should match the plan name you provided in your Vida Agent plan\\
+   - Internal Name: This is Chargebee's internal plan name and will be used to generate the Plan Id. 
+   - This plan is metered - Leave this box **Unchecked**
+   - Display in Self-Serve Portal - Leave this box **Unchecked** as we do not want to allow plan switching in Chargebee portal, only through the Vida platform.\
+     ![New Plan Jp](/images/NewPlan.jpg)
+   1. After you click "Create" you will be brought back to the product plans overview screen. Here we will set the price
+   - Under pricing section, click "**Set Price**" next to the **Monthly** frequency line. This will bring you to the screen to set the monthly price.
+   - **Pricing Model**: Set this to **Flat Fee**
+   - **Price**: set this to the USD value that you have configured on your Vida Agent plan\\
+   - **Billing Cycles**: Set this to forever to keep the subscription ongoing until either you or your customer cancels. 
+   - Click **Create button on top left**\
+     ![Price Configuration Jp](/images/PriceConfiguration.jpg)
+   1. After you click create, we will need to collect both the **plan Id** and the **price Id**
+   - The product plan Id can be found in the top section of the product plan.  ![Plan Id Location Jp](/images/PlanIdLocation.jpg)
+   1. Fetch the **Price Id** by going onto the Plan's Pricing section and clicking on "**Monthly**" on the price line you just updated\
+      ![Price Click Jp](/images/PriceClick.jpg)
+
+   \
+   7. This will bring you to the Price configuration screen where we can get the price Id. Click the copy icon to the right of the ID.\
+   ![Price Id Location Jp](/images/PriceIdLocation.jpg)
+   1. Repeat these steps for any agent product plans you created with Vida. Provide <u>both the </u>**<u>Product Plan ID</u>**<u> and the </u>**<u>Price Id</u>** to the VIda team to complete the agent product plan configuration.
+
+### Enabling Hosted Pages (Checkout)
+
+Vida uses Chargebee's hosted pages for checkout when customers choose an initial plan in the Agent platform.  To enable:
+
+1. Navigate to Settings -\> Configure Chargebee -\> Customer-Facing Essentials Section -\> Checkout and Self-Serve Portal
+2. Click the Configuration tab at the top right
+3. Under the checkout section:
+
+- **Identify existing customers for checkout access using**: Set to **Single Sign On API**
+
+### ![Checkout Configuration Jp](/images/CheckoutConfiguration.jpg)
+
+Enabling Self Service Portal (Payment Method Management and Invoices)
+
+\
+In the same configuration screen, navigate to the **Self-Service Portal** section. 
+
+1. On the setting **Customers can access the self-serve portal** setting is set to **Via Single Sign On API**. This allows the Vida platform to create portal sessions for your customers to securely manage payment methods and view invoices. \
+   ![Self Service Portal Settings Jp](/images/SelfServicePortalSettings.jpg)
+
+### \
+Automated Metered Billing Settings
+
+The Vida platform will leverage pending invoices on the subscriptions it manages to append usage charges before the invoice is finalized. Let's configure the settings for this to describe how Chargebee should handle and automatically close these invoices. 
+
+1. Navigate to **Settings -\> Configure Chargebee -\> Billing Section -\> Billing LogIQ -\> Billing & Invoices -\> Metered Billing**
+2. Click Enable on the bottom of the screen. Configure each setting as below:\
+   ![Metered Billing Correct Jp](/images/MeteredBillingCorrect.jpg)
+3. Click **Apply** button on the top right of the screen.
+
+### Configuring Webhooks to Vida platform
+
+Lastly, let's configure the communication link between Chargebee and Vida. This will allow Vida to receive the events from Chargebee when payments or subscription events occur.\
+\
+1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events Section -\> Webhooks**\
+2. Click "**\+ Add Webhook**" button\
+  - Webhook Name: Vida\
+  - Webhook URL: https://api.vida.dev/chargebee/events?resellerId=**YOUR_RESELLER_ID**\
+     **IMPORTANT: Obtain your resellerId from Vida to complete this step.** Your final WebhookURL would look like this if your resellerId was 555555:   **https://api.vida.dev/chargebee/events?resellerId=555555 **\
+\
+3. Toggle "Protect webhook URL with basic authentication" to On.\
+4. Configure the Username and Password to something that is secure\
+5. Set API Version to "Version 2"\
+6. Set this as primary should be toggled to On. If you have an existing webhook that is primary, please let Vida know as this may impact the integration.\
+6. **IMPORTANT STEP**: Click the "**Events to Send**" box and configure the below events:
+
+- Customer Changed
+- Subscription Created
+- Subscription Activated
+- Subscription Changed
+- Subscription Cancelled
+- Subscription Renewed
+- Pending Invoice Created
+- Pending Invoice Updated
+- Invoice Generated
+- Invoice Updated
+- Invoice Deleted
+- Payment Succeeded
+- Payment Failed\
+  \
+  (13 total event types)
+
+### Creating API Keys
+
+Lastly, we need to configure the API keys (API Key and PublishableKey) so that Vida can connect to your Chargebee instance. \
+\
+1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events section -\> API Keys**\
+2. Click "**\+ Add API Key**" button\
+3. Choose "**Full-Access Key**"\
+4. Choose "**All**"\
+5. Set the name of the API Key to "**Vida**"\
+![Create API Key Jp](/images/CreateAPIKey.jpg)
+
+6. Click **Create Key** button\
+7. After creation, this will take you back to the key list. Find the Key you just created with the name of Vida and click the copy icon next to the key value. Give this to your Vida contact. \
+8. In this same list, you should also see a key called "**publishable_api_key**" or similar. Also copy this key and provide to Vida to complete the configuration. 
+
+### Getting your Site value
+
+Your Chargebee site tells Vida where to connect to your platform. This is located in the URL of your browser session and also in the top left corner of Chargebee dashboard. By default, Chargebee gives you a production site and a test site. You will need your **Production Site** value to configure with Vida. \
+\
+For instance, if you are logged into your production Chargebee account at **https://acmesolar.chargebee.com**, your site value would be "**acmesolar**". 
+
+### 
