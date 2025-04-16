@@ -95,7 +95,7 @@ In your Chargebee account:
    3. Create the product plan by navigating to Product Catalog -\> Plans -\> "\+ Create Plan" button.
    - Product Family: Select the previously created Product Family or the family you wish to use.\\
    - External Name: This should match the plan name you provided in your Vida Agent plan\\
-   - Internal Name: This is Chargebee's internal plan name and will be used to generate the Plan Id. 
+   - Internal Name: This is Chargebee's internal plan name and will be used to generate the Plan Id.
    - This plan is metered - Leave this box **Unchecked**
    - Display in Self-Serve Portal - Leave this box **Unchecked** as we do not want to allow plan switching in Chargebee portal, only through the Vida platform.\
      ![New Plan Jp](/images/NewPlan.jpg)
@@ -103,7 +103,7 @@ In your Chargebee account:
    - Under pricing section, click "**Set Price**" next to the **Monthly** frequency line. This will bring you to the screen to set the monthly price.
    - **Pricing Model**: Set this to **Flat Fee**
    - **Price**: set this to the USD value that you have configured on your Vida Agent plan\\
-   - **Billing Cycles**: Set this to forever to keep the subscription ongoing until either you or your customer cancels. 
+   - **Billing Cycles**: Set this to forever to keep the subscription ongoing until either you or your customer cancels.
    - Click **Create button on top left**\
      ![Price Configuration Jp](/images/PriceConfiguration.jpg)
    1. After you click create, we will need to collect both the **plan Id** and the **price Id**
@@ -128,18 +128,17 @@ Vida uses Chargebee's hosted pages for checkout when customers choose an initial
 
 ### ![Checkout Configuration Jp](/images/CheckoutConfiguration.jpg)
 
-Enabling Self Service Portal (Payment Method Management and Invoices)
+### Enabling Self Service Portal (Payment Method Management and Invoices)
 
 \
-In the same configuration screen, navigate to the **Self-Service Portal** section. 
+In the same configuration screen, navigate to the **Self-Service Portal** section.
 
 1. On the setting **Customers can access the self-serve portal** setting is set to **Via Single Sign On API**. This allows the Vida platform to create portal sessions for your customers to securely manage payment methods and view invoices. \
    ![Self Service Portal Settings Jp](/images/SelfServicePortalSettings.jpg)
 
-### \
-Automated Metered Billing Settings
+### Automated Metered Billing Settings
 
-The Vida platform will leverage pending invoices on the subscriptions it manages to append usage charges before the invoice is finalized. Let's configure the settings for this to describe how Chargebee should handle and automatically close these invoices. 
+The Vida platform will leverage pending invoices on the subscriptions it manages to append usage charges before the invoice is finalized. Let's configure the settings for this to describe how Chargebee should handle and automatically close these invoices.
 
 1. Navigate to **Settings -\> Configure Chargebee -\> Billing Section -\> Billing LogIQ -\> Billing & Invoices -\> Metered Billing**
 2. Click Enable on the bottom of the screen. Configure each setting as below:\
@@ -149,18 +148,21 @@ The Vida platform will leverage pending invoices on the subscriptions it manages
 ### Configuring Webhooks to Vida platform
 
 Lastly, let's configure the communication link between Chargebee and Vida. This will allow Vida to receive the events from Chargebee when payments or subscription events occur.\
-\
-1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events Section -\> Webhooks**\
-2. Click "**\+ Add Webhook**" button\
-  - Webhook Name: Vida\
-  - Webhook URL: https://api.vida.dev/chargebee/events?resellerId=**YOUR_RESELLER_ID**\
-     **IMPORTANT: Obtain your resellerId from Vida to complete this step.** Your final WebhookURL would look like this if your resellerId was 555555:   **https://api.vida.dev/chargebee/events?resellerId=555555 **\
-\
-3. Toggle "Protect webhook URL with basic authentication" to On.\
-4. Configure the Username and Password to something that is secure\
-5. Set API Version to "Version 2"\
-6. Set this as primary should be toggled to On. If you have an existing webhook that is primary, please let Vida know as this may impact the integration.\
-6. **IMPORTANT STEP**: Click the "**Events to Send**" box and configure the below events:
+\\
+
+1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events Section -\> Webhooks**\\
+2. Click "**\+ Add Webhook**" button\\
+
+- Webhook Name: Vida\\
+- Webhook URL: https://api.vida.dev/chargebee/events?resellerId=\*\*YOUR_RESELLER_ID\*\*\\
+  **IMPORTANT: Obtain your resellerId from Vida to complete this step.** Your final WebhookURL would look like this if your resellerId was 555555:   \*\*https://api.vida.dev/chargebee/events?resellerId=555555 \*\*\
+  \\
+
+1. Toggle "Protect webhook URL with basic authentication" to On.\\
+2. Configure the Username and Password to something that is secure\\
+3. Set API Version to "Version 2"\\
+4. Set this as primary should be toggled to On. If you have an existing webhook that is primary, please let Vida know as this may impact the integration.\\
+5. **IMPORTANT STEP**: Click the "**Events to Send**" box and configure the below events:
 
 - Customer Changed
 - Subscription Created
@@ -181,22 +183,22 @@ Lastly, let's configure the communication link between Chargebee and Vida. This 
 ### Creating API Keys
 
 Lastly, we need to configure the API keys (API Key and PublishableKey) so that Vida can connect to your Chargebee instance. \
-\
-1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events section -\> API Keys**\
-2. Click "**\+ Add API Key**" button\
-3. Choose "**Full-Access Key**"\
-4. Choose "**All**"\
-5. Set the name of the API Key to "**Vida**"\
-![Create API Key Jp](/images/CreateAPIKey.jpg)
+\\
 
-6. Click **Create Key** button\
-7. After creation, this will take you back to the key list. Find the Key you just created with the name of Vida and click the copy icon next to the key value. Give this to your Vida contact. \
-8. In this same list, you should also see a key called "**publishable_api_key**" or similar. Also copy this key and provide to Vida to complete the configuration. 
+1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events section -\> API Keys**\\
+2. Click "**\+ Add API Key**" button\\
+3. Choose "**Full-Access Key**"\\
+4. Choose "**All**"\\
+5. Set the name of the API Key to "**Vida**"\
+   ![Create API Key Jp](/images/CreateAPIKey.jpg)
+6. Click **Create Key** button\\
+7. After creation, this will take you back to the key list. Find the Key you just created with the name of Vida and click the copy icon next to the key value. Give this to your Vida contact. \\
+8. In this same list, you should also see a key called "**publishable_api_key**" or similar. Also copy this key and provide to Vida to complete the configuration.
 
 ### Getting your Site value
 
 Your Chargebee site tells Vida where to connect to your platform. This is located in the URL of your browser session and also in the top left corner of Chargebee dashboard. By default, Chargebee gives you a production site and a test site. You will need your **Production Site** value to configure with Vida. \
 \
-For instance, if you are logged into your production Chargebee account at **https://acmesolar.chargebee.com**, your site value would be "**acmesolar**". 
+For instance, if you are logged into your production Chargebee account at [**https://acmesolar.chargebee.com**](https://acmesolar.chargebee.com), your site value would be "**acmesolar**".
 
 ### 
