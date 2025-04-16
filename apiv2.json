@@ -3323,6 +3323,98 @@
         ]
       }
     },
+    "/api/v2/billing/billingSystemConfig": {
+      "post": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Provision Billing System Configuration",
+        "description": "Provision or Update Your Billing System Configuration",
+        "responses": {
+          "200": {
+            "description": "Successfull response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "billingSystemType"
+                ],
+                "properties": {
+                  "billingSystemType": {
+                    "description": "Type of billing system",
+                    "type": "string",
+                    "example": "stripe"
+                  },
+                  "apiKey": {
+                    "description": "Required - API Key used for billing system access",
+                    "type": "string",
+                    "example": "somekey"
+                  },
+                  "publishableKey": {
+                    "description": "Required - Publishable Key used for embeded checkouts",
+                    "type": "string",
+                    "example": "somepublishablekey"
+                  },
+                  "webhookSigningKey": {
+                    "description": "Required for Stripe only - used for validating webhooks are signed by Stripe",
+                    "type": "string",
+                    "example": "somewebhooksigningkey"
+                  },
+                  "site": {
+                    "description": "Required for Chargebee only - site (without chargebee.com) of your payment system",
+                    "type": "string",
+                    "example": "vida"
+                  },
+                  "webhookUsername": {
+                    "description": "Required for Chargebee only - username for webhook authentication",
+                    "type": "string",
+                    "example": "someusername"
+                  },
+                  "webhookPassword": {
+                    "description": "Required for Chargebee only - password for webhook authentication",
+                    "type": "string",
+                    "example": "somepassword"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/product/subscribe": {
       "post": {
         "tags": [
