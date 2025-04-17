@@ -3824,8 +3824,8 @@
                     "type": "boolean",
                     "default": false
                   },
-                  "preAnswerRingCount": {
-                    "description": "How many rings should the caller experience before the agent answers. Valid value range is 1-10",
+                  "preAnswerRingTime": {
+                    "description": "In seconds. How many seconds should the caller experience ringing before the agent answers. Valid value range is 1-60",
                     "type": "integer",
                     "default": null
                   }
