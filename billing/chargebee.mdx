@@ -78,6 +78,7 @@ This section covers configuring Chargebee to prepare for the integration with Vi
 - Configuring Webhooks to Vida platform
 - Creating API Keys
 - Getting your Site value
+- Configure Dunning Settings
 
 ### Creating the Product Plans and Pricing
 
@@ -147,21 +148,18 @@ The Vida platform will leverage pending invoices on the subscriptions it manages
 
 ### Configuring Webhooks to Vida platform
 
-Lastly, let's configure the communication link between Chargebee and Vida. This will allow Vida to receive the events from Chargebee when payments or subscription events occur.\
-\\
+Lastly, let's configure the communication link between Chargebee and Vida. This will allow Vida to receive the events from Chargebee when payments or subscription events occur.
 
 1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events Section -\> Webhooks**\\
-2. Click "**\+ Add Webhook**" button\\
+2. Click "**\+ Add Webhook**" button
 
-- Webhook Name: Vida\\
-- Webhook URL: https://api.vida.dev/chargebee/events?resellerId=\*\*YOUR_RESELLER_ID\*\*\\
-  **IMPORTANT: Obtain your resellerId from Vida to complete this step.** Your final WebhookURL would look like this if your resellerId was 555555:   \*\*https://api.vida.dev/chargebee/events?resellerId=555555 \*\*\
-  \\
+- Webhook Name: Vida
+- Webhook URL: [https://api.vida.dev/chargebee/events?resellerId=YOUR_RESELLER_ID](https://api.vida.dev/chargebee/events?resellerId=\*\*YOUR_RESELLER_ID\*\*\\) **IMPORTANT: Obtain your resellerId from Vida to complete this step.** Your final WebhookURL would look like this if your resellerId was 555555:  https://api.vida.dev/chargebee/events?resellerId=555555 
 
-1. Toggle "Protect webhook URL with basic authentication" to On.\\
-2. Configure the Username and Password to something that is secure\\
-3. Set API Version to "Version 2"\\
-4. Set this as primary should be toggled to On. If you have an existing webhook that is primary, please let Vida know as this may impact the integration.\\
+1. Toggle "Protect webhook URL with basic authentication" to On.
+2. Configure the Username and Password to something that is secure
+3. Set API Version to "Version 2"
+4. Set this as primary should be toggled to On. If you have an existing webhook that is primary, please let Vida know as this may impact the integration.
 5. **IMPORTANT STEP**: Click the "**Events to Send**" box and configure the below events:
 
 - Customer Changed
@@ -182,13 +180,12 @@ Lastly, let's configure the communication link between Chargebee and Vida. This 
 
 ### Creating API Keys
 
-Lastly, we need to configure the API keys (API Key and PublishableKey) so that Vida can connect to your Chargebee instance. \
-\\
+Lastly, we need to configure the API keys (API Key and PublishableKey) so that Vida can connect to your Chargebee instance. 
 
-1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events section -\> API Keys**\\
-2. Click "**\+ Add API Key**" button\\
-3. Choose "**Full-Access Key**"\\
-4. Choose "**All**"\\
+1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events section -\> API Keys**
+2. Click "**\+ Add API Key**" button
+3. Choose "**Full-Access Key**"
+4. Choose "**All**"
 5. Set the name of the API Key to "**Vida**"\
    ![Create API Key Jp](/images/CreateAPIKey.jpg)
 6. Click **Create Key** button\\
@@ -201,4 +198,16 @@ Your Chargebee site tells Vida where to connect to your platform. This is locate
 \
 For instance, if you are logged into your production Chargebee account at [**https://acmesolar.chargebee.com**](https://acmesolar.chargebee.com), your site value would be "**acmesolar**".
 
-### 
+### \
+Configure Dunning Settings
+
+Chargebee's dunning feature allows you to configure how Chargebee will handle collection of payment after an attempted payment of an invoice failes. You can configure how long an account remains in a dunning state and how often Chargebee tries to re-attempt the payment. \
+\
+Here is where you also configure what Chargebee does with the subscription when it has exhaused all retries. For instance, if all payment retries have failed, you may want Chargebee to automatically cancel the subscription. This would trigger the Vida platform to put the account in an unpaid state and release all of the phone numbers from the agents. Vida recommends this if you do not want to manage the collection itself and wish your customer's agents to be shutdown if payment can not be collected.\
+\
+To configure the Dunning settings, go to **Settings-\>Configure Chargebee -\> Dunning for online/offline payments**. \
+\
+If you wish for Chargebee to cancel the subscription after all payment reattempts have failed, configure the "**When dunning period ends, what happens to subscriptions**" setting to "**Cancel Subscriptions**". Click **Apply** button. \
+\
+Also, review the Dunning period duration and the Retry Frequency to best suit your business needs. \
+![Dunning Jp](/images/dunning.jpg)
