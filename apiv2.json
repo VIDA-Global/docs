@@ -3823,6 +3823,11 @@
                     "description": "Whether to automatically notify callers from area codes where it is legally required that _This call is being recorded_.",
                     "type": "boolean",
                     "default": false
+                  },
+                  "preAnswerRingCount": {
+                    "description": "How many rings should the caller experience before the agent answers. Valid value range is 1-10",
+                    "type": "integer",
+                    "default": null
                   }
                 }
               }
