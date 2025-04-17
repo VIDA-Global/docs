@@ -98,7 +98,7 @@ In the Add a product screen:
 3. This will bring you to the Product Catalog screen. Grab the product Id and the Price Id for the plan. Click on the product you just created.
 
 - The product Id is on the right under **Details**. Click the copy button to get the product Id associated with this plan.
-- The price Id can be obtained by clicking the "\*\*..." \*\*next to the price in the **Pricing** section and click "**Copy price id**"
+- The price Id can be obtained by clicking the "**...**" next to the price in the **Pricing** section and click "**Copy price id**"
 - Repeat these steps for any other agent products you created with Vida. Provide both the Product Id and the Price id to the Vida team to complete the agent product plan configuration.
 
 ### Enabling Hosted Checkout
@@ -159,7 +159,7 @@ Lastly, let's configure the communication link between Stripe and Vida. This wil
    invoice.created\
    **(12 events total)**
 7. Click **Add endpoint** button to finish the configuration
-8. After the endpoint is added, obtain the webhook signing key by clicking on the new endpoint you just created and clicking **Reveal** under the \*\*Signing secret \*\*in the top section. <u>Provide this as the webhook signing key to Vida.</u>
+8. After the endpoint is added, obtain the webhook signing key by clicking on the new endpoint you just created and clicking **Reveal** under the **Signing secret** in the top section. <u>Provide this as the webhook signing key to Vida.</u>
 
 ### Creating API Keys
 
@@ -178,10 +178,10 @@ Here is where you also configure what Stripe does with the subscription when it 
 To configure the Failed Payment settings, go to **Settings (Gear Icon) -\> Billing -\> Subscription and emails tab**.
 
 - **Prevent failed Payments**
-  - Enable **Send emails about expiring cards** with \*\*Link to a Stripe-hosted page \*\*select
+  - Enable **Send emails about expiring cards** with **Link to a Stripe-hosted page**
 - **Manage failed payments for subscriptions**
-  - Select \*\*Use a Smart Retry Policy for subscriptions \*\*and Retry up to **8 times** within **2 weeks**
-  - Enable \*\*Send emails when card payment fail \*\*with **Link to a Stripe-hosted page**
+  - Select **Use a Smart Retry Policy for subscriptions** and Retry up to **8 times** within **2 weeks**
+  - Enable **Send emails when card payment fail** with **Link to a Stripe-hosted page**
   - Set **If all retries for a payment fail** to **cancel the subscription**
   - Set **If all retries for a payment fail** to **mark the invoice as uncollectible**
 - **Manage invoices sent to customers**
