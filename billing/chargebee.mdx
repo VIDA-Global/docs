@@ -47,13 +47,10 @@ Note: If the customer account in Chargebee already has other active subscription
 
 Subscriptions can be cancelled by a few different methods:
 
-Customer disables their  account on the Vida platform
-
-Customer cancels their plan through the Vida billing settings
-
-You cancel the subscription manually through Chargebee
-
-Chargebee is set to automatically cancel the subscription if payment is uncollectible after the dunning period.
+- Customer disables their  account on the Vida platform
+- Customer cancels their plan through the Vida billing settings
+- You cancel the subscription manually through Chargebee
+- Chargebee is set to automatically cancel the subscription if payment is uncollectible after the dunning period.
 
 ### Subscription Renewals
 
@@ -154,7 +151,7 @@ Lastly, let's configure the communication link between Chargebee and Vida. This 
 2. Click "**\+ Add Webhook**" button
 
 - Webhook Name: Vida
-- Webhook URL: [https://api.vida.dev/chargebee/events?resellerId=YOUR_RESELLER_ID](https://api.vida.dev/chargebee/events?resellerId=**YOUR_RESELLER_ID**\) **IMPORTANT: Obtain your resellerId from Vida to complete this step.** Your final WebhookURL would look like this if your resellerId was 555555:  https://api.vida.dev/chargebee/events?resellerId=555555
+- Webhook URL: [https://api.vida.dev/chargebee/events?resellerId=YOUR_RESELLER_ID](https://api.vida.dev/chargebee/events?resellerId=\*\*YOUR_RESELLER_ID\*\*\\) **IMPORTANT: Obtain your resellerId from Vida to complete this step.** Your final WebhookURL would look like this if your resellerId was 555555:  https://api.vida.dev/chargebee/events?resellerId=555555
 
 1. Toggle "Protect webhook URL with basic authentication" to On.
 2. Configure the Username and Password to something that is secure
