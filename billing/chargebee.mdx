@@ -154,7 +154,7 @@ Lastly, let's configure the communication link between Chargebee and Vida. This 
 2. Click "**\+ Add Webhook**" button
 
 - Webhook Name: Vida
-- Webhook URL: [https://api.vida.dev/chargebee/events?resellerId=YOUR_RESELLER_ID](https://api.vida.dev/chargebee/events?resellerId=\*\*YOUR_RESELLER_ID\*\*\\) **IMPORTANT: Obtain your resellerId from Vida to complete this step.** Your final WebhookURL would look like this if your resellerId was 555555:  https://api.vida.dev/chargebee/events?resellerId=555555 
+- Webhook URL: [https://api.vida.dev/chargebee/events?resellerId=YOUR_RESELLER_ID](https://api.vida.dev/chargebee/events?resellerId=**YOUR_RESELLER_ID**\) **IMPORTANT: Obtain your resellerId from Vida to complete this step.** Your final WebhookURL would look like this if your resellerId was 555555:  https://api.vida.dev/chargebee/events?resellerId=555555
 
 1. Toggle "Protect webhook URL with basic authentication" to On.
 2. Configure the Username and Password to something that is secure
@@ -180,7 +180,7 @@ Lastly, let's configure the communication link between Chargebee and Vida. This 
 
 ### Creating API Keys
 
-Lastly, we need to configure the API keys (API Key and PublishableKey) so that Vida can connect to your Chargebee instance. 
+Lastly, we need to configure the API keys (API Key and PublishableKey) so that Vida can connect to your Chargebee instance.
 
 1. Navigate to **Settings -\> Configure Chargebee -\> API Keys and Events section -\> API Keys**
 2. Click "**\+ Add API Key**" button
@@ -198,8 +198,7 @@ Your Chargebee site tells Vida where to connect to your platform. This is locate
 \
 For instance, if you are logged into your production Chargebee account at [**https://acmesolar.chargebee.com**](https://acmesolar.chargebee.com), your site value would be "**acmesolar**".
 
-### \
-Configure Dunning Settings
+### Configure Dunning Settings
 
 Chargebee's dunning feature allows you to configure how Chargebee will handle collection of payment after an attempted payment of an invoice failes. You can configure how long an account remains in a dunning state and how often Chargebee tries to re-attempt the payment. \
 \
