@@ -120,6 +120,7 @@
         "enablement/embed",
         "enablement/billing",
         "billing/chargebee",
+        "billing/stripe",
         "enablement/usage",
         "enablement/whitelabel",
         "enablement/api",
