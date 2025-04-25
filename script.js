@@ -242,6 +242,16 @@ function removeUnwantedHeaderLinks() {
   }
 }
 
+function hideSocialIcons() {
+  // Only act when a white-label domain is active
+  if (!currentDomainConfig) return;
+
+  // Hide every social-icon link in the footer
+  document
+    .querySelectorAll('#footer .flex a')
+    .forEach(a => { a.style.display = 'none'; });
+}
+
 function replaceFavicon() {
   if (!currentDomainConfig || !currentDomainConfig.faviconUrl) return;
 
@@ -276,6 +286,7 @@ function initializeWhiteLabel() {
     replaceBrandMentions();
     removeUnwantedNavItems();
     removeUnwantedHeaderLinks();
+    hideSocialIcons();
     console.log("White-label applied for domain:", currentDomainConfig.brandName);
   }
 }
