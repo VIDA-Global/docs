@@ -2532,6 +2532,36 @@
             }
           },
           {
+            "name": "pagination",
+            "in": "query",
+            "description": "Whether to provide pagination",
+            "required": false,
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to fetch",
+            "required": false,
+            "example": 0,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "How many resellers per page",
+            "required": false,
+            "example": 20,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "active",
             "in": "query",
             "description": "Whether to return only resellers with this given active state",
@@ -2543,20 +2573,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    }
-                  }
-                }
-              }
-            }
+            "description": "OK"
           }
         },
         "security": [
@@ -2747,6 +2764,36 @@
             }
           },
           {
+            "name": "pagination",
+            "in": "query",
+            "description": "Whether to provide pagination",
+            "required": false,
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to fetch (0-based)",
+            "required": false,
+            "example": 0,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "How many orgs per page",
+            "required": false,
+            "example": 20,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "active",
             "in": "query",
             "description": "Whether to return only organizations with this given active state",
@@ -2757,21 +2804,8 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    }
-                  }
-                }
-              }
-            }
+          "default": {
+            "description": ""
           }
         },
         "security": [
@@ -2799,6 +2833,36 @@
             }
           },
           {
+            "name": "pagination",
+            "in": "query",
+            "description": "Whether to provide pagination",
+            "required": false,
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to fetch",
+            "required": false,
+            "example": 0,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "How many accounts per page",
+            "required": false,
+            "example": 20,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "active",
             "in": "query",
             "description": "Whether to return only accounts with this given active state",
@@ -2810,20 +2874,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    }
-                  }
-                }
-              }
-            }
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
