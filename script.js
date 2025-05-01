@@ -19,6 +19,17 @@ const domainConfig = [
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   },
   {
+    match: /^shureai\.automatedphone\.ai$/,
+    brandName: "Shure AI",
+    replacements: [
+      { from: /help@vida\.inc/gi, to: "dev@shure.ai" },
+      { from: /api\.vida\.dev/gi, to: "api.vida.dev" },
+      { from: /Vida(\.io)?/gi, to: "Shure AI" },
+    ],
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/shure-ai-logo-cropped.png",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/shure-ai-logo-cropped.png",
+  },
+  {
     match: /^jobnimbus\.automatedphone\.ai$/,
     brandName: "JobNimbus",
     faviconUrl: "https://webappui.jobnimbus.com/images/favicon.png",
