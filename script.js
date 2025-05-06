@@ -35,7 +35,7 @@ const domainConfig = [
     faviconUrl: "https://webappui.jobnimbus.com/images/favicon.png",
     replacements: [
       { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
-      { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
+      { from: /api\.vida\.dev/gi, to: "api.vida.dev" },
       { from: /Vida(\.io)?/gi, to: "JobNimbus" },
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/jobnimbus-logo.png",
@@ -47,7 +47,7 @@ const domainConfig = [
     faviconUrl: "https://webappui.jobnimbus.com/images/favicon.png",
     replacements: [
       { from: /help@vida\.inc/gi, to: "help@automatedphone.ai" },
-      { from: /api\.vida\.dev/gi, to: "api.automatedphone.ai" },
+      { from: /api\.vida\.dev/gi, to: "api.vida.dev" },
       { from: /Vida(\.io)?/gi, to: "JobNimbus" },
     ],
     logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/jobnimbus-logo.png",
