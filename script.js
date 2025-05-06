@@ -117,15 +117,15 @@ function replaceBrandMentions() {
 
   while (walker.nextNode()) {
     const node = walker.currentNode;
-
     if (node.__whitelabeled) continue;
 
-    const isCodeElement = node.parentElement.closest('pre, code, script, style');
+    const isCodeElement =
+      node.parentElement && node.parentElement.closest('pre, code, script, style');
 
     currentDomainConfig.replacements.forEach(({ from, to }) => {
-      // FIXED LINE BELOW:
-      const allowInCode = from.source.includes('api\\.vida\\.dev') || from.source.includes('help@vida\\.inc');
-      
+      const allowInCode =
+        from.source.includes('api\\.vida\\.dev') || from.source.includes('help@vida\\.inc');
+
       if (!isCodeElement || allowInCode) {
         node.nodeValue = node.nodeValue.replace(from, to);
       }
@@ -134,6 +134,7 @@ function replaceBrandMentions() {
     node.__whitelabeled = true;
   }
 }
+
 
 // replace urls
 function replaceURLs() {
@@ -187,13 +188,11 @@ function replaceLogo() {
 }
 
 function removeUnwantedNavItems() {
-  // SECTION HEADERS TO REMOVE COMPLETELY
   const sectionHeadersToRemove = [
     "Enablement",
     "Agent Examples"
   ];
 
-  // SPECIFIC ITEM TEXT TO REMOVE
   const individualItemsToRemove = [
     "Athena Health",
     "Cox Automotive",
@@ -202,24 +201,18 @@ function removeUnwantedNavItems() {
     "OpenAI Speech-to-Speech"
   ];
 
-  // === Remove Entire Sections by <h5> header ===
   document.querySelectorAll('h5').forEach(h5 => {
     const title = h5.textContent.trim();
     if (sectionHeadersToRemove.includes(title)) {
       const container = h5.closest('div');
-      if (container) {
-        container.remove();
-        console.log(`[White-label] Removed section: ${title}`);
-      }
+      if (container) container.style.display = 'none';
     }
   });
 
-  // === Remove individual <li> items by inner text ===
   document.querySelectorAll('li').forEach(li => {
     const label = li.textContent.trim();
     if (individualItemsToRemove.some(item => label.includes(item))) {
-      li.remove();
-      console.log(`[White-label] Removed nav item: ${label}`);
+      li.style.display = 'none';
     }
   });
 }
@@ -232,25 +225,16 @@ function removeUnwantedHeaderLinks() {
     "Login"
   ];
 
-  const headerNavLinks = document.querySelectorAll('nav ul li a');
-
-  headerNavLinks.forEach(link => {
+  document.querySelectorAll('nav ul li a').forEach(link => {
     const text = link.textContent.trim();
     if (headerLinkTextsToRemove.includes(text)) {
       const li = link.closest('li');
-      if (li) {
-        li.remove();
-        console.log(`[White-label] Removed header link: ${text}`);
-      }
+      if (li) li.style.display = 'none';
     }
   });
 
-  // Also remove the CTA login button (desktop)
   const ctaButton = document.querySelector('#topbar-cta-button');
-  if (ctaButton) {
-    ctaButton.remove();
-    console.log('[White-label] Removed CTA Login button');
-  }
+  if (ctaButton) ctaButton.style.display = 'none';
 }
 
 function hideSocialIcons() {
