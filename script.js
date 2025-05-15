@@ -190,7 +190,8 @@ function replaceLogo() {
 function removeUnwantedNavItems() {
   const sectionHeadersToRemove = [
     "Enablement",
-    "Agent Examples"
+    "Agent Examples",
+    "Integrations",
   ];
 
   const individualItemsToRemove = [
