@@ -1,5 +1,5 @@
 ---
-title: 'Embed your Agent'
+title: "Embed your Agent"
 description: "Embed your AI agent into your website to allow vistors to talk to your agent from anywhere."
 ---
 
@@ -33,10 +33,9 @@ Here is an example code that embeds a Vida AI phone agent into a web page:
 
 ### Explanation of data fields
 
-- **data-target**: (Required) The Vida agent username you want to embed (required).
+- **data-target**: (Required) The agent username you want to embed (required).
 - **data-type**: (Required) "call" or "chat" depending on if you want to initiate a call or text chat with the target agent.
 - **data-number**: (Optional) If on a mobile device, when pressing the button it will dial this number instead of initiating a call via WebRTC.
-
 
 You can find or edit your agent's username to use in the `data-target` parameter by visiting the [Settings page](https://vida.io/app/inbox?filter=priority&settings=true&showOrgSettings=true&settingsTab=general) if logged in.
 
@@ -50,24 +49,17 @@ Make sure to include the correct JS file location as shown in the example:
 
 Below is an example of an AI agent embed.
 
-<div class="">
-   <button
-   	  className="vidaButton"
-      data-vida-button
-      data-target="vidasales"
-      data-type="call"
-   >
-   Call
-   </button>
-   <button
-   	  className="vidaButton"
-      data-vida-button
-      data-target="vidasales"
-      data-type="chat"
-   >
-   Chat
-   </button>
+<div class>
+<button className="vidaButton" data-vida-button data-target="vidasales" data-type="call">
+Call
+
+</button>
+
+<button className="vidaButton" data-vida-button data-target="vidasales" data-type="chat">
+Chat
+
+</button>
+
 </div>
 
-
-By embedding your Vida AI agent, you can enhance your website's interactivity, allowing visitors to engage with your AI agent directly from your site. Explore other helpful articles and guides to make the most out of your Vida AI phone agents and transform your business interactions!
+By embedding your AI agent, you can enhance your website's interactivity, allowing visitors to engage with your AI agent directly from your site. Explore other helpful articles and guides to make the most out of your AI phone agents and transform your business interactions\!
