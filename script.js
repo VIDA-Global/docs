@@ -19,7 +19,7 @@ const domainConfig = [
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   },
   {
-    match: /^shureai\.automatedphone\.ai$/,
+    match: /^voice\.shure\.ai$/,
     brandName: "Shure AI",
     replacements: [
       { from: /help@vida\.inc/gi, to: "dev@shure.ai" },
