@@ -3669,6 +3669,37 @@
         ]
       }
     },
+    "/api/v2/getAccountByExternalId": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Fetch Account by externalAccountId",
+        "description": "Returns the account that matches the externalAccountId – Reseller/Partner only.",
+        "parameters": [
+          {
+            "name": "externalAccountId",
+            "in": "query",
+            "description": "Your system’s customer / account ID",
+            "required": true,
+            "example": "acct_123abc",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/agent": {
       "post": {
         "tags": [
