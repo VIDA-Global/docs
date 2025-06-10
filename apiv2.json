@@ -2589,13 +2589,14 @@
           "Accounts"
         ],
         "summary": "Create a new organization",
-        "description": "Create a new organization under your reseller account. Reseller account required.",
+        "description": "Creates an organization under your reseller account (reseller auth required).",
         "parameters": [
           {
             "name": "targetResellerId",
             "in": "query",
-            "description": "Reseller Id to create organization in",
+            "description": "Reseller-ID under which the org will be created",
             "required": true,
+            "example": "2286",
             "schema": {
               "type": "string"
             }
@@ -2606,7 +2607,7 @@
             "description": "OK"
           },
           "201": {
-            "description": "Organization created",
+            "description": "Organization successfully created",
             "content": {
               "application/json": {
                 "schema": {
@@ -2621,8 +2622,8 @@
                       "example": "Organization created"
                     },
                     "organization": {
-                      "type": "string",
-                      "example": "New Organization object"
+                      "type": "object",
+                      "description": "Created organization object"
                     }
                   }
                 }
@@ -2649,19 +2650,74 @@
                 ],
                 "properties": {
                   "email": {
-                    "description": "Admin user email for this account",
+                    "description": "Admin-user e-mail for the new org",
                     "type": "string",
                     "example": "admin@acmesolar.com"
                   },
                   "orgName": {
-                    "description": "Organization Name",
+                    "description": "Organization name",
                     "type": "string",
                     "example": "Acme Solar"
                   },
                   "productPlanId": {
-                    "description": "Product Plan Id. If not specified inherits your default sell planId",
+                    "description": "Product-plan ID. If omitted, defaults to your reseller sell-plan.",
                     "type": "string",
-                    "example": "pplan-example-planId"
+                    "example": "pplan-basic-monthly"
+                  },
+                  "externalAccountId": {
+                    "description": "Your own CRM/customer ID for this org",
+                    "type": "string",
+                    "example": "external-org-12345"
+                  },
+                  "integrations": {
+                    "description": "Optional list of third-party app integrations to set up at org creation",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "appId",
+                        "appVersion",
+                        "appData"
+                      ],
+                      "properties": {
+                        "appId": {
+                          "type": "string",
+                          "example": "someappId"
+                        },
+                        "appVersion": {
+                          "type": "string",
+                          "example": "v1"
+                        },
+                        "appData": {
+                          "type": "object",
+                          "description": "Key/value settings specific to the integration",
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "example": {
+                            "apiToken": "appsApiToken"
+                          }
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "appId": "some-app-id",
+                        "appVersion": "v1",
+                        "appData": {
+                          "apiToken": "APIToken"
+                        }
+                      },
+                      {
+                        "appId": "another-example-app",
+                        "appVersion": "v2",
+                        "appData": {
+                          "accountSid": "sidxxxxxxx",
+                          "accountToken": "tokenxxxxxxx",
+                          "apiUrl": "https://someurl.example"
+                        }
+                      }
+                    ]
                   }
                 }
               }
@@ -2953,6 +3009,56 @@
                     "description": "Account Name",
                     "type": "string",
                     "example": "Acme Solar Bay Area Support Agent"
+                  },
+                  "integrations": {
+                    "description": "Optional list of third-party app integrations to set up at org creation",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "appId",
+                        "appVersion",
+                        "appData"
+                      ],
+                      "properties": {
+                        "appId": {
+                          "type": "string",
+                          "example": "someappId"
+                        },
+                        "appVersion": {
+                          "type": "string",
+                          "example": "v1"
+                        },
+                        "appData": {
+                          "type": "object",
+                          "description": "Key/value settings specific to the integration",
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "example": {
+                            "apiToken": "appsApiToken"
+                          }
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "appId": "some-app-id",
+                        "appVersion": "v1",
+                        "appData": {
+                          "apiToken": "APIToken"
+                        }
+                      },
+                      {
+                        "appId": "another-example-app",
+                        "appVersion": "v2",
+                        "appData": {
+                          "accountSid": "sidxxxxxxx",
+                          "accountToken": "tokenxxxxxxx",
+                          "apiUrl": "https://someurl.example"
+                        }
+                      }
+                    ]
                   }
                 }
               }
