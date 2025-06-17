@@ -4016,6 +4016,36 @@
                     "description": "In seconds. How many seconds should the caller experience ringing before the agent answers. Valid value range is 1-60",
                     "type": "integer",
                     "default": null
+                  },
+                  "apps": {
+                    "description": "Array of apps to enable for this given agent",
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "appId",
+                        "version",
+                        "instructions"
+                      ],
+                      "properties": {
+                        "appId": {
+                          "type": "string",
+                          "example": "squareUp",
+                          "description": "The identifier for the integrated app."
+                        },
+                        "version": {
+                          "type": "string",
+                          "example": "v1",
+                          "description": "The version of the app integration."
+                        },
+                        "instructions": {
+                          "type": "string",
+                          "example": "Use this app to book appointments from the user.",
+                          "description": "Instructions for how to use the app."
+                        }
+                      }
+                    }
                   }
                 }
               }
