@@ -649,6 +649,15 @@
     "/api/v2/sip/registration": {
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -664,6 +673,9 @@
           },
           "500": {
             "description": "Internal Server Error"
+          },
+          "502": {
+            "description": "Bad Gateway"
           }
         }
       },
