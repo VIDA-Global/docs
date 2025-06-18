@@ -3,7 +3,7 @@ title: "Agent Detail Record Exports"
 description: "Exporting your Agent Detail Records (ADRs) to an external billing/rating engine"
 ---
 
-The Vida platform supports exporting daily agent detail records to your external billing or rating platform over SFTP or FTP. 
+The Vida platform supports exporting daily agent detail records to your external billing or rating platform over SFTP or FTP.
 
 ## Configuration
 
@@ -13,7 +13,7 @@ Configuration requires the following specifications:
 
 **Rotation Minutes:** How many minutes of records should be contained in each file (defaults to 60)\
 **Transfer Protocol:** SFTP or FTP\
-**Host: **IP Address or DNS name that resolves to the host you wish ADR files to be delivered to.\
+**Host:** IP Address or DNS name that resolves to the host you wish ADR files to be delivered to.\
 **Port: **Port on your host for the transfer protocol\
 **Username:** file transfer username\
 **Password:** file transfer password\
@@ -21,16 +21,16 @@ Configuration requires the following specifications:
 
 ## Export Frequency
 
-The export process will begin shipping files to your destination server daily at 2am UTC time. 
+The export process will begin shipping files to your destination server daily at 2am UTC time.
 
 ## File Name:
 
 The files are named in the following format:\
-ADR\_{accountId}\_YYYY_MM_DD_HHmmss.csv.gz 
+ADR\_accountId\_YYYY_MM_DD_HHmmss.csv.gz
 
 ## CSV Format:
 
-ADR Exports can be configured at the Partner, Reseller, or Organization level. The file format is slightly different depending on which level the export is created at. All fields are wrapped in double quotes. 
+ADR Exports can be configured at the Partner, Reseller, or Organization level. The file format is slightly different depending on which level the export is created at. All fields are wrapped in double quotes.
 
 ### Field Descriptions:
 
@@ -69,4 +69,4 @@ Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 tha
 \
 Explanation:
 
-Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 45 seconds. The source number (PSTN side) was \+12165551234 and the AI Agent number was \+14405559999. This was not a self testing event. 
+Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 45 seconds. The source number (PSTN side) was \+12165551234 and the AI Agent number was \+14405559999. This was not a self testing event.
