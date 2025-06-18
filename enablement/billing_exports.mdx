@@ -1,0 +1,72 @@
+---
+title: "Agent Detail Record Exports"
+description: "Exporting your Agent Detail Records (ADRs) to an external billing/rating engine"
+---
+
+The Vida platform supports exporting daily agent detail records to your external billing or rating platform over SFTP or FTP. 
+
+## Configuration
+
+To configure ADR exports, speak with your Vida representative to configure this (configuration in your Partner or Reseller portal coming soon\!).\
+\
+Configuration requires the following specifications:
+
+**Rotation Minutes:** How many minutes of records should be contained in each file (defaults to 60)\
+**Transfer Protocol:** SFTP or FTP\
+**Host: **IP Address or DNS name that resolves to the host you wish ADR files to be delivered to.\
+**Port: **Port on your host for the transfer protocol\
+**Username:** file transfer username\
+**Password:** file transfer password\
+**Path:** file path to deliver the ADR records to (defaults to "/" for default user directory)
+
+## Export Frequency
+
+The export process will begin shipping files to your destination server daily at 2am UTC time. 
+
+## File Name:
+
+The files are named in the following format:\
+ADR\_{accountId}\_YYYY_MM_DD_HHmmss.csv.gz 
+
+## CSV Format:
+
+ADR Exports can be configured at the Partner, Reseller, or Organization level. The file format is slightly different depending on which level the export is created at. All fields are wrapped in double quotes. 
+
+### Field Descriptions:
+
+| **Column**            | **Type**            | **Example**              | **Description**                                                                                                                                                                                                                                                             |
+| :-------------------- | :------------------ | :----------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **timestamp**         | _integer_           | 1750201280950            | Unix epoch time in **milliseconds (UTC)** when the billable event was written.                                                                                                                                                                                              |
+| **timestampISO**      | _text_              | 2025-06-17T23:01:20.950Z | ISO-8601 rendering of **timestamp** in UTC. Easiest for human reading and SQL TIMESTAMP casting.                                                                                                                                                                            |
+| **resellerId**        | _text_              | 1534562                  | _Partner files only._ Unique ID of the child reseller that owns the event.                                                                                                                                                                                                  |
+| **orgId**             | _text_              | 1534562                  | _Partner & Reseller files._ Customer organization that generated the usage.                                                                                                                                                                                                 |
+| **agentId**           | _text_              | gpt4o-partner-1          | AI Agent Id that produced the billing event. This may be the same value as the orgId if the default agent for the organization was used.                                                                                                                                    |
+| **productItem**       | _text_              | pstn-inbound-voice       | Billable SKU code.                                                                                                                                                                                                                                                          |
+| **billedQuantity**    | _integer_           | 126                      | Billed quantity of the product item unit of measure (e.g. minutes, messages, or token counts) the Vida system billed. This may not match what your system will use for billing increments. See quantity.                                                                    |
+| **quantity**          | _integer_           | 126                      | **Raw** measured usage before rounding from Vida platform. In case of voice minutes, this will be the raw seconds billed without any rounding adjustment as represented in billedQuantity. Identical to _billedQuantity_ when no adjustment is needed.                      |
+| **selfTesting**       | _boolean (as text)_ | false                    | "true" when the usage was created due to a customer self testing their AI agent. These are specially flagged in case you wish not to bill these particular use cases.                                                                                                       |
+| **srcAddress**        | _text_              | \+12165551234            | Originating phone number or email address that interacted with the AI Agent. Depending on which channel was used for communication (voice, sms, or email). This could be the AI Agent's address or remote address depending on the direction specified in the product item. |
+| **destAddress**       | _text_              | \+14405559999            | Destination phone number or email address that interacted with the AI Agent. Depending on which channel was used for communication (voice, sms, or email). This could be the AI Agent's address or remote address depending on the direction specified in the product item. |
+| **externalAccountId** | _text_              | acct-A1B2C3              | Arbitrary identifier you supplied on the AI Agent. This may map to your internal CRM or other external system for account reconciliation.                                                                                                                                   |
+| **externalBillingId** | _text_              | cust_ddk77d              | Arbitrary billing identifier you supplied on the AI Agent. This is useful for mapping AI Agents to accounts or sub accounts in your billing system. This may also match the Stripe or Chargbee Id if connected.                                                             |
+
+**<u>Example Partner Leel Export Record:</u>**\
+"1750168869810","2025-06-17T14:01:09.810Z","444444","5555555","5555555","sms-inbound-message","1","32","true","\+12165551234","\+14405559999","",""\
+\
+Explanation:
+
+Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 32 seconds. The source number (PSTN side) was \+12165551234 and the AI Agent number was \+14405559999. This record also indicates the child reseller Id that owns this agent (444444). This was a self testing event. \
+\
+**<u>Example Reseller Level Export Record:</u>**\
+"1750168869810","2025-06-17T14:01:09.810Z","5555555","5555555","pstn-inbound-voice","1","45","false","\+12165551234","\+14405559999","",""\
+\
+Explanation:
+
+Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 45 seconds. The source number (PSTN side) was \+12165551234 and the AI Agent number was \+14405559999. This was not a self testing event. \
+\
+**<u>Example Organization Level Export Record:</u>**\
+"1750168869810","2025-06-17T14:01:09.810Z","5555555","pstn-inbound-voice","1","45","false","\+12165551234","\+14405559999","",""\
+\
+Explanation:
+
+Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 45 seconds. The source number (PSTN side) was \+12165551234 and the AI Agent number was \+14405559999. This was not a self testing event. 
