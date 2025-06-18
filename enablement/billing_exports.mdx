@@ -26,7 +26,7 @@ The export process will begin shipping files to your destination server daily at
 ## File Name:
 
 The files are named in the following format:\
-ADR_accountId_YYYY_MM_DD_HHmmss.csv.gz
+ADR\_{accountId}\_YYYY_MM_DD_HHmmss.csv.gz
 
 ## CSV Format:
 
@@ -50,7 +50,7 @@ ADR Exports can be configured at the Partner, Reseller, or Organization level. T
 | **externalAccountId** | _text_              | acct-A1B2C3              | Arbitrary identifier you supplied on the AI Agent. This may map to your internal CRM or other external system for account reconciliation.                                                                                                                                   |
 | **externalBillingId** | _text_              | cust_ddk77d              | Arbitrary billing identifier you supplied on the AI Agent. This is useful for mapping AI Agents to accounts or sub accounts in your billing system. This may also match the Stripe or Chargbee Id if connected.                                                             |
 
-**<u>Example Partner Leel Export Record:</u>**\
+**<u>Example Partner Level Export Record:</u>**\
 "1750168869810","2025-06-17T14:01:09.810Z","444444","5555555","5555555","sms-inbound-message","1","32","true","\+12165551234","\+14405559999","",""\
 \
 Explanation:
