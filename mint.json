@@ -125,7 +125,8 @@
         "enablement/whitelabel",
         "enablement/api",
         "enablement/sip",
-        "enablement/billing_exports"
+        "enablement/billing_exports",
+        "enablement/product_items"
       ]
     },
     {
