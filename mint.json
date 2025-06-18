@@ -269,7 +269,8 @@
         "api-reference/billing/subscribe-to-product-plan",
         "api-reference/billing/view-available-add-ons",
         "api-reference/billing/view-product-catalog",
-        "api-reference/billing/fetch-a-product-plan-details"
+        "api-reference/billing/fetch-a-product-plan-details",
+        "api-reference/billing/configure-adr-export-settings"
       ]
     },
     {
