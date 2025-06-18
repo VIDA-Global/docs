@@ -3818,6 +3818,107 @@
         ]
       }
     },
+    "/api/v2/billing/adrExportConfig": {
+      "post": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Configure ADR Export Settings",
+        "description": "Configure or update your ADR export settings",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "deliveryProtocol",
+                  "rotationMinutes",
+                  "host",
+                  "port",
+                  "username",
+                  "password"
+                ],
+                "properties": {
+                  "deliveryProtocol": {
+                    "description": "SFTP or FTP",
+                    "type": "string",
+                    "example": "sftp"
+                  },
+                  "rotationMinutes": {
+                    "description": "How many minutes of records should be contained in each file",
+                    "type": "string",
+                    "example": "somekey",
+                    "default": "60"
+                  },
+                  "host": {
+                    "description": "hostname or IP address where to ship the ADR files to",
+                    "type": "string",
+                    "example": "sftp.domain.com"
+                  },
+                  "port": {
+                    "description": "Port for the SFTP or FTP service",
+                    "type": "integer",
+                    "example": 2202
+                  },
+                  "username": {
+                    "description": "username for the sftp or ftp account",
+                    "type": "string",
+                    "example": "someuser"
+                  },
+                  "password": {
+                    "description": "password for the sftp or ftp account",
+                    "type": "string",
+                    "example": "somepassword"
+                  },
+                  "path": {
+                    "description": "Folder path to deposit the files to. Defaults to the users home directory",
+                    "type": "string",
+                    "example": "/path/"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/agent": {
       "post": {
         "tags": [
