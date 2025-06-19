@@ -3877,7 +3877,7 @@
                 ],
                 "properties": {
                   "deliveryProtocol": {
-                    "description": "SFTP or FTP",
+                    "description": "SFTP, FTPS, or FTP",
                     "type": "string",
                     "example": "sftp"
                   },
