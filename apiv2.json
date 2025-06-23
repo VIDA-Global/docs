@@ -4080,10 +4080,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [],
                 "properties": {
                   "productPlanId": {
-                    "description": "Change Product Plan Id on the Organization. Note, if the target product plan is tied to a Stripe or Chargebee product, and the customer has not yet subscribed, this will not work. Give the customer an offered product plan first. Otherwise, this will update the product plan on Vida and in the configured billing system.",
+                    "description": "Change Product Plan Id on the Organization. Note: if the target product plan is tied to a Stripe or Chargebee product and the customer has not yet subscribed - this will not work. Give the customer an offered product plan first. Otherwise - this will update the product plan on Vida and in the configured billing system.",
                     "type": "string",
                     "example": "someProductPlanId"
                   },
