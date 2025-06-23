@@ -3919,6 +3919,226 @@
         }
       }
     },
+    "/api/v2/updateOrganization": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Update Organization Settings",
+        "description": "Update certain settings for an organization – Reseller/Partner only.",
+        "parameters": [
+          {
+            "name": "targetOrganizationId",
+            "in": "query",
+            "description": "Target Organization Id to update settings for",
+            "required": true,
+            "example": "XXXXXXX",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "At least one setting was successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Organization settings updated"
+                    },
+                    "updatedSettings": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "orgName",
+                        "vidaPremium"
+                      ]
+                    },
+                    "failedSettings": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "nullable": true,
+                      "example": [
+                        "email"
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "AllSuccess": {
+                    "summary": "All requested changes succeeded",
+                    "value": {
+                      "success": true,
+                      "message": "Organization settings updated",
+                      "updatedSettings": [
+                        "productPlanId",
+                        "externalBillingId"
+                      ]
+                    }
+                  },
+                  "PartialSuccess": {
+                    "summary": "Some settings failed validation / update",
+                    "value": {
+                      "success": true,
+                      "message": "Organization settings updated",
+                      "updatedSettings": [
+                        "vidaPremium"
+                      ],
+                      "failedSettings": [
+                        "email",
+                        "smsEnabled"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request – nothing updated *or* specific validation failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No settings updated"
+                    },
+                    "failedSettings": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "nullable": true,
+                      "example": [
+                        "productPlanId"
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "NothingUpdated": {
+                    "summary": "Request parsed but no valid changes supplied",
+                    "value": {
+                      "success": false,
+                      "message": "No settings updated"
+                    }
+                  },
+                  "ProductPlanCheckoutRequired": {
+                    "summary": "Product-plan change blocked until checkout completed",
+                    "value": {
+                      "success": false,
+                      "message": "Unable to change product plan, customer has not yet completed billing checkout. Please offer the plan first.",
+                      "failedSettings": [
+                        "productPlanId"
+                      ]
+                    }
+                  },
+                  "InvalidEmail": {
+                    "summary": "Email failed format validation",
+                    "value": {
+                      "success": false,
+                      "message": "Invalid email provided. Doesn't look like a valid email address.",
+                      "failedSettings": [
+                        "email"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [],
+                "properties": {
+                  "productPlanId": {
+                    "description": "Change Product Plan Id on the Organization. Note, if the target product plan is tied to a Stripe or Chargebee product, and the customer has not yet subscribed, this will not work. Give the customer an offered product plan first. Otherwise, this will update the product plan on Vida and in the configured billing system.",
+                    "type": "string",
+                    "example": "someProductPlanId"
+                  },
+                  "offeredProductPlanId": {
+                    "description": "Give an offer of a product plan to a customer. Useful when offering a private plan before the customer has completed checkout. Set null to remove it",
+                    "type": "string",
+                    "example": "someProductPlanId"
+                  },
+                  "email": {
+                    "description": "Change main owner Email Of the Organization",
+                    "type": "string",
+                    "example": "admin@test.com"
+                  },
+                  "orgName": {
+                    "description": "Change Organization Name",
+                    "type": "string",
+                    "example": "Test Organization"
+                  },
+                  "smsEnabled": {
+                    "description": "Enable SMS Capabilities on the agent. Requires smsBrandId and smsCampaignId be sent too",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "smsBrandId": {
+                    "description": "SMS Brand Id that is registered for the organization",
+                    "type": "string",
+                    "example": "XXXXXX"
+                  },
+                  "smsCampaignId": {
+                    "description": "Approved SMS Campaign Id for the organizations traffic",
+                    "type": "string",
+                    "example": "XXXXXX"
+                  },
+                  "vidaPremium": {
+                    "description": "Indicates whether the account is in an unlocked (paid) state.",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "externalAccountId": {
+                    "description": "External Account Id to match with your internal system account Id. Set to null to remove it.",
+                    "type": "string",
+                    "example": "AC_XXXXXXX"
+                  },
+                  "externalBillingId": {
+                    "description": "External Id to match with your internal billing system. Set to null to remove it.",
+                    "type": "string",
+                    "example": "somebillingId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/agent": {
       "post": {
         "tags": [
