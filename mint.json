@@ -178,6 +178,11 @@
       "pages": [
         "api-reference/agents/publish-an-agent",
         "api-reference/agents/revert-an-agent",
+        "api-reference/agents/list-agent-versions",
+        "api-reference/agents/create-named-version",
+        "api-reference/agents/replace-stored-version",
+        "api-reference/agents/restore-version-to-agent",
+        "api-reference/agents/rename-stored-version",
         "api-reference/agents/update-agent",
         "api-reference/agents/fetch-staging-agent",
         "api-reference/agents/fetch-live-agent",
