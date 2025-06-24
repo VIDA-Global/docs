@@ -4740,22 +4740,213 @@
     "/api/v2/webhookRelay/{type}": {
       "post": {
         "tags": [
-          "KnowledgeBase"
+          "Webhooks"
         ],
-        "description": "",
+        "summary": "Create or update a webhook relay",
+        "description": "Forward incoming webhooks of the specified type to your URL.",
         "parameters": [
           {
             "name": "type",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
-            }
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "twilioSMS"
+                }
+              }
+            },
+            "description": "Relay type (e.g. twilioSMS, chargebee)"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Relay stored",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay for type 'twilioSMS' configured successfully."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "headers must be an array of single-key objects"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Premium feature required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay is a premium feature. Please upgrade your account."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Relay type not supported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay type 'foo' is not supported."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Failed to store configuration."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "url"
+                ],
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "Absolute HTTP/HTTPS endpoint that will receive the forwarded webhook.",
+                    "example": "https://example.com/webhook/twilio"
+                  },
+                  "timeout": {
+                    "type": "number",
+                    "description": "Timeout (ms) before the forward request is aborted.",
+                    "example": 5000
+                  },
+                  "headers": {
+                    "type": "array",
+                    "description": "Custom HTTP headers (array of single-key objects).",
+                    "items": {
+                      "type": "object",
+                      "example": {
+                        "Authorization": "Bearer xyz"
+                      }
+                    },
+                    "example": [
+                      {
+                        "Authorization": "Bearer xyz"
+                      },
+                      {
+                        "X-Customer-ID": "abc123"
+                      }
+                    ]
+                  },
+                  "successStatusCodes": {
+                    "type": "array",
+                    "description": "Status codes treated as success by Vida when your endpoint responds.",
+                    "items": {
+                      "type": "integer",
+                      "example": 202
+                    },
+                    "example": [
+                      200,
+                      201,
+                      202
+                    ]
+                  }
+                }
+              }
+            }
           }
         }
       },
