@@ -2016,6 +2016,394 @@
         ]
       }
     },
+    "/api/v2/agent/{agentId}/versions": {
+      "get": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "List Agent Versions",
+        "description": "Return the stored version snapshots for an agent. Pass ?includeData=true to embed full snapshots.",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent Id to inspect",
+            "example": "campa3cfdc312750b193de0..."
+          },
+          {
+            "name": "includeData",
+            "in": "query",
+            "description": "If true the response includes the entire snapshot JSON for each version.",
+            "required": false,
+            "example": "true",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "versions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "example": "Auto-1750194180352"
+                          },
+                          "versionId": {
+                            "type": "integer",
+                            "example": 1750194180352
+                          },
+                          "snapshot": {
+                            "type": "object",
+                            "description": "Only present when includeData=true"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Create Named Version",
+        "description": "Snapshot the current staging or default agent and store it under a custom title.",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent Id to snapshot"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Snapshot stored",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "createdVersion": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "example": "Holiday-2025"
+                        },
+                        "versionId": {
+                          "type": "integer",
+                          "example": 1750195000123
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Holiday-2025"
+                  },
+                  "source": {
+                    "type": "string",
+                    "enum": [
+                      "staging",
+                      "default"
+                    ],
+                    "default": "staging"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/agent/{agentId}/versions/{versionId}": {
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Replace Stored Version",
+        "description": "Overwrite an existing version snapshot by its numeric versionId.",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent Id"
+          },
+          {
+            "name": "versionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Epoch-ms score identifying the snapshot",
+            "example": 1750195000123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Version replaced",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "versionId": {
+                      "type": "integer",
+                      "example": 1750195000123
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "snapshot"
+                ],
+                "properties": {
+                  "snapshot": {
+                    "type": "object",
+                    "description": "Full campaign JSON to store"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/agent/{agentId}/versions/{versionId}/restore": {
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Restore Version to Agent",
+        "description": "Copy a stored snapshot into the staging (default) slot.",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent Id"
+          },
+          {
+            "name": "versionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Epoch-ms score of the snapshot",
+            "example": 1750195000123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Snapshot restored",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "restored": {
+                      "type": "object",
+                      "description": "The campaign object now occupying the target slot"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "target": {
+                    "type": "string",
+                    "enum": [
+                      "staging",
+                      "default"
+                    ],
+                    "default": "staging"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/agent/{agentId}/versions/{versionId}/title": {
+      "put": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Rename Stored Version",
+        "description": "Overwrite only the human-readable title of a stored snapshot.",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent Id"
+          },
+          {
+            "name": "versionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Epoch-ms score of the snapshot",
+            "example": 1750195000123
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Title updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "versionId": {
+                      "type": "integer",
+                      "example": 1750195000123
+                    },
+                    "newTitle": {
+                      "type": "string",
+                      "example": "Holiday-2025"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "example": "Holiday-2025"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/agent/zapier/response": {
       "post": {
         "description": "",
