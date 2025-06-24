@@ -231,6 +231,7 @@
         "api-reference/webhooks/remove-webhook",
         "api-reference/webhooks/list-supported-webhook-relay-types",
         "api-reference/webhooks/get-a-webhook-relay-configuration",
+        "api-reference/webhooks/create-or-update-a-webhook-relay",
         "api-reference/webhooks/delete-a-webhook-relay-configuration",
         "api-reference/webhooks/list-all-webhook-relay-configurations"
       ]
@@ -290,12 +291,6 @@
         "api-reference/post-apiv2sipregistration",
         "api-reference/delete-apiv2sipregistration",
         "api-reference/post-apiv2agentzapierresponse"
-      ]
-    },
-    {
-      "group": "KnowledgeBase",
-      "pages": [
-        "api-reference/knowledgebase/post-apiv2webhookrelay"
       ]
     }
   ],
