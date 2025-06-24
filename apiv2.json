@@ -4526,6 +4526,590 @@
         }
       }
     },
+    "/api/v2/webhookRelay/types": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "List supported Webhook Relay types",
+        "description": "Returns every webhook relay type that can be configured for your account (e.g., Twilio SMS, Chargebee, etc.).",
+        "responses": {
+          "200": {
+            "description": "Relay types fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay types fetched successfully"
+                    },
+                    "types": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "name",
+                          "description"
+                        ],
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Unique identifier for this relay type",
+                            "example": "twilioSMS"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "What the relay does",
+                            "example": "Proxy inbound Twilio SMS webhooks to your app first before agent processes them."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized – missing or invalid API key/token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server or data-store error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Internal data store error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/webhookRelay/{type}": {
+      "post": {
+        "tags": [
+          "KnowledgeBase"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Delete a webhook relay configuration",
+        "description": "Removes the stored webhook relay settings for the specified type from the authenticated user account.",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Relay type to delete (must be one previously configured)",
+            "example": "twilioSMS"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Relay configuration deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay type 'twilioSMS' removed successfully."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid type parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "type path parameter is required and must be a string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized – missing or invalid API key/token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – feature requires Vida Premium",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay is a premium feature. Please upgrade your account to use it."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Relay type was not configured for this user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay type 'foo' was not configured."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Internal error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Webhook Relay"
+        ],
+        "summary": "Get a webhook relay configuration",
+        "description": "Fetch the current webhook relay settings for the given type (e.g., Twilio SMS, Chargebee) for your account.",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Relay type to fetch (must match one of GET /webhookRelay/types)",
+            "example": "twilioSMS"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Relay configuration found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay configuration fetched successfully."
+                    },
+                    "config": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "example": "https://hooks.myapp.com/inbound/twilio"
+                        },
+                        "timeout": {
+                          "type": "number",
+                          "example": 5000
+                        },
+                        "headers": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "example": {
+                              "Authorization": "Bearer xyz"
+                            }
+                          }
+                        },
+                        "successStatusCodes": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "example": [
+                            200,
+                            202
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized – missing or invalid API key/token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – feature requires Vida Premium",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay is a premium feature. Please upgrade your account to use it."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Relay type not configured for this user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay type 'twilioSMS' not configured."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Internal error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/webhookRelay": {
+      "get": {
+        "tags": [
+          "Webhook Relay"
+        ],
+        "summary": "List all webhook relay configurations",
+        "description": "Fetch the complete set of webhook relay settings configured on your account.",
+        "responses": {
+          "200": {
+            "description": "At least one relay configuration found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay configurations fetched successfully."
+                    },
+                    "configs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "type",
+                          "url"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "twilioSMS"
+                          },
+                          "url": {
+                            "type": "string",
+                            "example": "https://hooks.myapp.com/inbound/twilio"
+                          },
+                          "timeout": {
+                            "type": "number",
+                            "example": 5000
+                          },
+                          "headers": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "example": {
+                                "Authorization": "Bearer xyz"
+                              }
+                            }
+                          },
+                          "successStatusCodes": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer"
+                            },
+                            "example": [
+                              200,
+                              202
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized – missing or invalid API key/token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – feature requires Vida Premium",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Webhook Relay is a premium feature. Please upgrade your account to use it."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The user has no webhook relay configurations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No webhook relay configurations found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Internal error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/agent": {
       "post": {
         "tags": [
