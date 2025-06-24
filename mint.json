@@ -230,7 +230,9 @@
         "api-reference/webhooks/add-webhook",
         "api-reference/webhooks/remove-webhook",
         "api-reference/webhooks/list-supported-webhook-relay-types",
-        "api-reference/webhooks/delete-a-webhook-relay-configuration"
+        "api-reference/webhooks/get-a-webhook-relay-configuration",
+        "api-reference/webhooks/delete-a-webhook-relay-configuration",
+        "api-reference/webhooks/list-all-webhook-relay-configurations"
       ]
     },
     {
@@ -288,13 +290,6 @@
         "api-reference/post-apiv2sipregistration",
         "api-reference/delete-apiv2sipregistration",
         "api-reference/post-apiv2agentzapierresponse"
-      ]
-    },
-    {
-      "group": "Webhook Relay",
-      "pages": [
-        "api-reference/webhook-relay/get-a-webhook-relay-configuration",
-        "api-reference/webhook-relay/list-all-webhook-relay-configurations"
       ]
     },
     {
