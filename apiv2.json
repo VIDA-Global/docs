@@ -4794,7 +4794,7 @@
       },
       "get": {
         "tags": [
-          "Webhook Relay"
+          "Webhooks"
         ],
         "summary": "Get a webhook relay configuration",
         "description": "Fetch the current webhook relay settings for the given type (e.g., Twilio SMS, Chargebee) for your account.",
@@ -4954,7 +4954,7 @@
     "/api/v2/webhookRelay": {
       "get": {
         "tags": [
-          "Webhook Relay"
+          "Webhooks"
         ],
         "summary": "List all webhook relay configurations",
         "description": "Fetch the complete set of webhook relay settings configured on your account.",
