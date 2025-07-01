@@ -5563,7 +5563,7 @@
                   },
                   "waitOnAnswer": {
                     "description": "The amount of time in milliseconds your Agent will wait before speaking the greeting (welcomeMessage).",
-                    "type": "string"
+                    "type": "integer"
                   },
                   "interruptionWordCount": {
                     "description": "how many words a caller needs to speak before it is treated as an interruption",
