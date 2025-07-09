@@ -170,7 +170,8 @@
       "pages": [
         "api-reference/authorization/list-tokens",
         "api-reference/authorization/create-a-token",
-        "api-reference/authorization/delete-a-token"
+        "api-reference/authorization/delete-a-token",
+        "api-reference/authorization/generate-one-time-auth-token"
       ]
     },
     {
