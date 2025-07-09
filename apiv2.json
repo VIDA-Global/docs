@@ -4175,6 +4175,148 @@
         ]
       }
     },
+    "/api/v2/auth/account/oneTimeAuthToken": {
+      "get": {
+        "tags": [
+          "Authorization"
+        ],
+        "summary": "Generate one-time auth token",
+        "description": "Generate a single-use authentication token for the specified account – Reseller/Partner only. If the email does not exist and an externalAccountId is provided, the system will automatically add that email as a member of the organization.",
+        "parameters": [
+          {
+            "name": "externalAccountId",
+            "in": "query",
+            "description": "Your system’s customer / account ID (optional)",
+            "required": false,
+            "example": "acct_123abc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email address of the account user",
+            "required": true,
+            "example": "user@example.com",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Auth token created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "authToken": {
+                      "type": "string",
+                      "example": "token_here"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "email is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized : missing / bad API key or token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No account found OR caller lacks access",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Account not found for key: user@example.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "An error occurred while fetching authentication token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/getAccountByExternalId": {
       "get": {
         "tags": [
