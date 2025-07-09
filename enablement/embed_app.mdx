@@ -7,11 +7,12 @@ Partners can surface the full VIDA app inside their own domain with a single `<i
 
 ## Embedding Overview
 
-With the iframe embed you can:  
-1. Auto-login users via a one-time `authToken`.  
-2. Verify user identity with the `email` parameter.  
-3. Redirect unauthenticated visitors into signup.  
-4. Pre-fill signup fields (business name, full name, contact number).  
+With the iframe embed you can:
+
+1. [Auto-login users via a one-time ](https://vida.io/docs/api-reference/authorization/generate-one-time-auth-token)`authToken`.
+2. Verify user identity with the `email` parameter.
+3. Redirect unauthenticated visitors into signup.
+4. Pre-fill signup fields (business name, full name, contact number).
 5. Customize messaging via the `custom` flag.
 
 ### Example Embed Code
@@ -23,10 +24,12 @@ With the iframe embed you can:
 ```
 
 ## Required parameters
-- `authToken` – one‑time authentication token used by the embed page to log the user in automatically. If omitted, the page logs the user out before rendering
-- `email` – the email that must match the authenticated user. If it does not match, the user is logged out.
+
+- `authToken` – one‑time authentication token used by the embed page to log the user in automatically. If omitted, the page logs the user out before rendering. [Read this page](https://vida.io/docs/api-reference/authorization/generate-one-time-auth-token) to learn how to get a one time authToken.
+- `email` – the email that must match the authenticated user. If it does not match, the user is logged out. When the email changes, the user will be automtically logged out.
 
 ## Optional parameters
+
 - `signup` – when present and the user is not authenticated, the embed redirects to the sign‑up flow.
 - `customerId` – external customer identifier passed through to the sign‑up page.
 - `businessName` – pre‑fill the business name on sign up.
@@ -37,4 +40,5 @@ With the iframe embed you can:
 Any combination of optional parameters may be included after the required `authToken` and `email`.
 
 ## Summary
-This guide explains how partners can embed the VIDA application on their own sites using a simple <iframe> integration. It covers the two required query parameters—authToken and email—for automatic user authentication and outlines several optional parameters to customize signup flows and pre-populate user data.
+
+This guide explains how partners can embed the VIDA application on their own sites using a simple `<iframe>` integration. It covers the two required query parameters—authToken and email—for automatic user authentication and outlines several optional parameters to customize signup flows and pre-populate user data.
