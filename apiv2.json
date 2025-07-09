@@ -4181,7 +4181,7 @@
           "Authorization"
         ],
         "summary": "Generate one-time auth token",
-        "description": "Generate a single-use authentication token for the specified account – Reseller/Partner only. If the email does not exist and an externalAccountId is provided, the system will automatically add that email as a member of the organization.",
+        "description": "Generate a single-use authentication token for the specified account – Reseller/Partner account required. If the email does not exist and an externalAccountId is provided, the system will automatically add that email as a member of the organization.",
         "parameters": [
           {
             "name": "externalAccountId",
