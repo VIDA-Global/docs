@@ -23,16 +23,16 @@ With the iframe embed you can:
 ```
 
 ## Required parameters
-- `authToken` – one‑time authentication token used by the embed page to log the user in automatically. If omitted, the page logs the user out before rendering【F:hoc/withOneTimeAuth.js†L20-L33】.
-- `email` – the email that must match the authenticated user. If it does not match, the user is logged out【F:pages/app/embed/index.js†L60-L76】.
+- `authToken` – one‑time authentication token used by the embed page to log the user in automatically. If omitted, the page logs the user out before rendering
+- `email` – the email that must match the authenticated user. If it does not match, the user is logged out.
 
 ## Optional parameters
-- `signup` – when present and the user is not authenticated, the embed redirects to the sign‑up flow【F:pages/app/embed/index.js†L64-L66】.
-- `customerId` – external customer identifier passed through to the sign‑up page【F:pages/app/embed/index.js†L26-L27】.
-- `businessName` – pre‑fill the business name on sign up【F:pages/app/embed/index.js†L29-L30】.
-- `fullName` – pre‑fill the user's name on sign up【F:pages/app/embed/index.js†L32-L33】.
-- `contactNumber` – pre‑fill the phone number on sign up【F:pages/app/embed/index.js†L38-L39】.
-- `custom` – allows alternate sign‑up messaging such as `answeringservice` or `createagent`【F:components/auth/index.js†L308-L333】.
+- `signup` – when present and the user is not authenticated, the embed redirects to the sign‑up flow.
+- `customerId` – external customer identifier passed through to the sign‑up page.
+- `businessName` – pre‑fill the business name on sign up.
+- `fullName` – pre‑fill the user's name on sign up.
+- `contactNumber` – pre‑fill the phone number on sign up.
+- `custom` – allows alternate sign‑up messaging such as `answeringservice` or `createagent`.
 
 Any combination of optional parameters may be included after the required `authToken` and `email`.
 
