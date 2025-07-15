@@ -5767,6 +5767,11 @@
                     "type": "integer",
                     "default": null
                   },
+                  "confirmTransfers": {
+                    "description": "Require callee to press 1 before a transfer is completed",
+                    "type": "boolean",
+                    "default": false
+                  },
                   "apps": {
                     "description": "Array of apps to enable for this given agent",
                     "type": "array",
