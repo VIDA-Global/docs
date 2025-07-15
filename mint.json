@@ -126,7 +126,8 @@
         "enablement/api",
         "enablement/sip",
         "enablement/billing_exports",
-        "enablement/product_items"
+        "enablement/product_items",
+        "enablement/embed_app"
       ]
     },
     {
