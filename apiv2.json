@@ -4194,6 +4194,16 @@
             }
           },
           {
+            "name": "customerId",
+            "in": "query",
+            "description": "Alternative to externalAccountId. Provide either this or your externalAccountId (optional)",
+            "required": false,
+            "example": "acct_123abc",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "email",
             "in": "query",
             "description": "Email address of the account user",
