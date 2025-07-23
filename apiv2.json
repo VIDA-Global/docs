@@ -4175,6 +4175,358 @@
         ]
       }
     },
+    "/api/v2/searchAccounts": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Search accounts",
+        "description": "Search partner, reseller, organization or account objects using various filters",
+        "parameters": [
+          {
+            "name": "accountType",
+            "in": "query",
+            "description": "Type of account to search",
+            "required": true,
+            "example": "organization",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "queryText",
+            "in": "query",
+            "description": "Optional free text search",
+            "required": false,
+            "example": "vida",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagination",
+            "in": "query",
+            "description": "Whether to provide pagination",
+            "required": false,
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to fetch",
+            "required": false,
+            "example": 0,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "How many accounts per page",
+            "required": false,
+            "example": 20,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "createdStart",
+            "in": "query",
+            "description": "Epoch to search created accounts from",
+            "required": false,
+            "example": 1700000000,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "createdEnd",
+            "in": "query",
+            "description": "Epoch to search created accounts until",
+            "required": false,
+            "example": 1710000000,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "canceledStart",
+            "in": "query",
+            "description": "Epoch to search cancellations from",
+            "required": false,
+            "example": 1700000000,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "canceledEnd",
+            "in": "query",
+            "description": "Epoch to search cancellations until",
+            "required": false,
+            "example": 1710000000,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subscribed",
+            "in": "query",
+            "description": "Filter by subscription state",
+            "required": false,
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "canceled",
+            "in": "query",
+            "description": "Filter by canceled subscription state",
+            "required": false,
+            "example": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "description": "Filter by active flag",
+            "required": false,
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "onboardingComplete",
+            "in": "query",
+            "description": "Filter by onboarding completed flag",
+            "required": false,
+            "example": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "productPlanId",
+            "in": "query",
+            "description": "Product plan id filter",
+            "required": false,
+            "example": "plan1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "productPlanTerm",
+            "in": "query",
+            "description": "Product plan term filter",
+            "required": false,
+            "example": "monthly",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "billingSubscriptionId",
+            "in": "query",
+            "description": "Billing subscription id filter",
+            "required": false,
+            "example": "sub_123",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "billingId",
+            "in": "query",
+            "description": "Billing id filter",
+            "required": false,
+            "example": "bill_123",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "externalAccountId",
+            "in": "query",
+            "description": "External account id filter",
+            "required": false,
+            "example": "ext_123",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "currentBillingPeriodVoiceMinutesMin",
+            "in": "query",
+            "description": "Minimum current period voice minutes",
+            "required": false,
+            "example": 10,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currentBillingPeriodVoiceMinutesMax",
+            "in": "query",
+            "description": "Maximum current period voice minutes",
+            "required": false,
+            "example": 200,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "previousBillingPeriodVoiceMinutesMin",
+            "in": "query",
+            "description": "Minimum previous period voice minutes",
+            "required": false,
+            "example": 5,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "previousBillingPeriodVoiceMinutesMax",
+            "in": "query",
+            "description": "Maximum previous period voice minutes",
+            "required": false,
+            "example": 100,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currentBillingPeriodMessagesMin",
+            "in": "query",
+            "description": "Minimum current period messages",
+            "required": false,
+            "example": 10,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "currentBillingPeriodMessagesMax",
+            "in": "query",
+            "description": "Maximum current period messages",
+            "required": false,
+            "example": 200,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "previousBillingPeriodMessagesMin",
+            "in": "query",
+            "description": "Minimum previous period messages",
+            "required": false,
+            "example": 5,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "previousBillingPeriodMessagesMax",
+            "in": "query",
+            "description": "Maximum previous period messages",
+            "required": false,
+            "example": 100,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "allTimeVoiceMinutesMin",
+            "in": "query",
+            "description": "Minimum all time voice minutes",
+            "required": false,
+            "example": 100,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "allTimeVoiceMinutesMax",
+            "in": "query",
+            "description": "Maximum all time voice minutes",
+            "required": false,
+            "example": 1000,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "allTimeMessagesMin",
+            "in": "query",
+            "description": "Minimum all time messages",
+            "required": false,
+            "example": 100,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "allTimeMessagesMax",
+            "in": "query",
+            "description": "Maximum all time messages",
+            "required": false,
+            "example": 1000,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "totalAccounts": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "pageSize": {
+                      "type": "number",
+                      "example": 20
+                    },
+                    "pageNumber": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "accounts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/auth/account/oneTimeAuthToken": {
       "get": {
         "tags": [
