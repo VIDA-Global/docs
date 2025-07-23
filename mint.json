@@ -267,6 +267,7 @@
         "api-reference/accounts/list-admin-users",
         "api-reference/accounts/delete-admin-user",
         "api-reference/accounts/invite-admin-user",
+        "api-reference/accounts/search-accounts",
         "api-reference/accounts/fetch-account-by-externalaccountid",
         "api-reference/accounts/update-organization-settings"
       ]
