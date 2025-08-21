@@ -1,0 +1,161 @@
+---
+title: "Vida Telemetry Script Guide for Pendo"
+description: "How to inject Pendo telemetry into the Vida iframe, identify users and accounts, and track pages and events."
+---
+
+To set up Pendo tracking inside the Vida iframe, you need to add telemetry scripts. The scripts you define will automatically be injected into the app once they are set up. We strongly recommend implementing on staging first, then copying to the production version of your reseller account.
+
+To get started, navigate to the telemetry tab under settings on your reseller account: https://vida.io/app/reseller/1634672/settings/telemetry
+
+---
+
+## Base Script
+
+This script loads at the base of the Vida single page app (SPA). Replace `YOUR_PENDO_KEY` with your unique Pendo key.
+
+### Pendo Example
+
+```javascript
+(function(apiKey){
+  (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=o._q||[];
+  v=['initialize','identify','updateOptions','pageLoad','track'];for(w=0,x=v.length;w<x;++w)(function(m){
+    o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
+    y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
+    z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
+})(YOUR_PENDO_KEY);
+```
+
+---
+
+## User Identification Script
+
+This script runs when the user and account are loaded. It includes the `traits` argument, which provides data about the user and the account. Use `traits.user.externalUserId` and `traits.account.externalAccountId` to match the user and account to your internal analytics. Before the user can be identified, you must first call `pendo.initialize()` with the argument `visitor.id` set to `traits.user.externalAccountIdd`. See below for an example.
+
+**Arguments**
+
+`traits` - object of attributes for the user and the account
+
+```javascript
+{
+  user: {
+    username: "sampleUser",            // Unique login name
+    id: 42,                            // Internal numeric user ID
+    email: "sample.user@example.com",  // Contact email
+    name: "Sample User",               // Full display name
+    firstName: "Sample",               // Given name
+    lastName: "User",                  // Family name
+    active: true,                      // Whether the user account is active
+    disableDetails: "Disabled due to demo rules.", // Optional reason if inactive
+    srcIP: "203.0.113.42",             // IP address of last request
+    organizationId: 99,                // Owning organization’s ID
+    partnerId: 1001,                   // Partner identifier
+    resellerId: 555777,                // Reseller identifier
+    tempUser: false,                   // Flag for temporary/guest accounts
+    phoneNumberVerified: "+1-800-555-0101", // Verified phone number
+    pushEnabled: true                  // Whether push notifications are enabled
+  },
+
+  account: {
+    accountType: "organization",       // "organization" or other account scope
+    username: "sampleOrg",             // Org-level username (often same as user)
+    id: 99,                            // Unique account ID
+    timestamp: 1700000000000,          // Unix ms timestamp when traits generated
+    active: true,                      // Whether the account is active
+    orgName: "Example Corp.",          // Organization display name
+    partnerId: 1001,                   // Partner identifier (mirrors user.partnerId)
+    resellerId: 555777,                // Reseller identifier (mirrors user.resellerId)
+    vidaPremium: true,                 // Subscription flag
+    vidaPhoneNumber: "+1-800-555-0202",// Support/organization phone number
+    vidaPremiumTimestamp: "1700000000",// Unix seconds when premium purchased
+    vidaPremiumExpires: "1710000000",  // Unix seconds when premium expires
+    vidaPremiumCanceled: null,         // Unix seconds of cancellation, null if active
+    productPlanId: "pplan-demo-123",   // Product plan identifier
+    productPlanTerm: null,             // Term details (e.g., "monthly"), null if N/A
+    productPlanOffer: false,           // Whether plan was part of a promo
+    smsEnabled: true,                  // SMS notification availability
+    canceledReason: null,              // Cancellation reason if canceled
+    canceledDetails: null,             // Additional cancellation notes
+    externalAccountId: null,           // Optional external account reference
+    externalBillingId: "cus_123456789",// Billing platform customer ID
+    billingSubscriptionId: null        // External subscription ID, if applicable
+  },
+
+  userAgentData:
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" // Browser user-agent string
+}
+```
+
+### Example
+
+```javascript
+if (typeof window !== 'undefined' && window.pendo) {
+  pendo.initialize({
+    visitor: {
+      id: String(traits.account.externalAccountId ||  traits.account.id)
+    }
+  });
+
+  window.pendo.identify({
+    "account": {
+      "id": String(traits.account.externalAccountId ||  traits.account.id),
+      "vida_organizationId": traits.account.id,
+      "vida_username": traits.account.username,
+      "vida_createDate": traits.account.timestamp,
+      "vida_active": traits.account.active,
+      "vida_signupIp": traits.account.signupIp,
+      "vida_premium": traits.account.vidaPremium,
+      "vida_premiumTimestamp": traits.account.vidaPremiumTimestamp,
+      "vida_premiumExpires": traits.account.vidaPremiumTimestamp,
+      "vida_premiumCanceled": traits.account.vidaPremiumCanceled,
+      "vida_productPlanId": traits.account.productPlanId,
+      "vida_productPlanTerm": traits.account.productPlanTerm,
+      "vida_productPlanOffer": traits.account.productPlanOffer,
+      "vida_smsEnabled": traits.account.smsEnabled,
+      "vida_canceledReason": traits.account.canceledReason,
+      "vida_canceledDetails": traits.account.canceledDetails,
+    },
+    "visitor": {
+      "id": String(traits.user.externalUserId || traits.user.id),
+      "email": traits.user.email,
+      "vida_id": traits.user.id,
+      "vida_username": traits.user.username,
+      "vida_active": traits.user.active,
+      "vida_disableDetails": traits.user.disableDetails,
+      "vida_srcIP": traits.user.srcIP,
+      "vida_organizationId": traits.user.organizationId,
+      "vida_pushEnabled": traits.user.pushEnabled,
+    }
+  });
+}
+```
+
+---
+
+## Page View Tracking Script
+
+Tag a page load. It is best to use `window.location.href` to pass which page is loaded.
+
+```javascript
+if (typeof window !== 'undefined' && window.pendo) {
+  window.pendo.pageLoad(window.location.href);
+}
+```
+
+---
+
+## Event View Tracking Script
+
+Tag predefined tracking events such as clicks, modal views, or form submissions in Vida. We recommend prepending the event with `Vida` so you can more easily document which events are coming from the Vida iframe.
+
+**Arguments**
+
+- `event` - string representing the name of the event  
+- `props` - object of attributes unique to this event
+
+### Example
+
+```javascript
+if (typeof window !== 'undefined' && window.pendo) {
+  window.pendo.track(`Vida - ${event}`, props);
+}
+```
