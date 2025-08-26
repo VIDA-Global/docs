@@ -4241,6 +4241,164 @@
         ]
       }
     },
+    "/api/v2/account": {
+      "get": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Get account details",
+        "description": "Retrieve details for the authenticated account",
+        "parameters": [
+          {
+            "name": "targetAccountId",
+            "in": "query",
+            "description": "Target account ID when acting on behalf of another account",
+            "required": false,
+            "example": 123,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 123
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "user@example.com"
+                    },
+                    "details": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Update account details",
+        "description": "Update profile details for the authenticated account",
+        "parameters": [
+          {
+            "name": "targetAccountId",
+            "in": "query",
+            "description": "Target account ID when acting on behalf of another account",
+            "required": false,
+            "example": 123,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated account details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Full name",
+                    "example": "Ada Lovelace"
+                  },
+                  "partnerName": {
+                    "type": "string",
+                    "description": "Partner name (for partner accounts only)"
+                  },
+                  "resellerName": {
+                    "type": "string",
+                    "description": "Reseller name (for reseller accounts only)"
+                  },
+                  "orgName": {
+                    "type": "string",
+                    "description": "Organization name"
+                  },
+                  "accountName": {
+                    "type": "string",
+                    "description": "Account name"
+                  },
+                  "firstName": {
+                    "type": "string",
+                    "description": "First name"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "description": "Last name"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Profile description"
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "Profile image URL"
+                  },
+                  "businessName": {
+                    "type": "string",
+                    "description": "Business name"
+                  },
+                  "businessAddress": {
+                    "type": "string",
+                    "description": "Business address"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Email address"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/listAccounts": {
       "get": {
         "tags": [
@@ -5017,6 +5175,97 @@
                     "description": "Which checkout session you would like to start. Embedded session or external redirect url",
                     "type": "string",
                     "example": "embedded"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/product/cancel": {
+      "delete": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Cancel product subscription",
+        "description": "Cancel the current product subscription for the authenticated account",
+        "parameters": [
+          {
+            "name": "targetAccountId",
+            "in": "query",
+            "description": "Target account ID when acting on behalf of another account",
+            "required": false,
+            "example": 123,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Subscription canceled",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Subscription cancelled"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unable to cancel subscription",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "A descriptive error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "description": "Cancellation reason"
+                  },
+                  "details": {
+                    "type": "string",
+                    "description": "Additional details"
                   }
                 }
               }
@@ -7781,6 +8030,7 @@
           "content": {
             "application/json": {
               "schema": {
+                "type": "object",
                 "oneOf": [
                   {
                     "type": "object",
