@@ -2443,6 +2443,62 @@
         }
       }
     },
+    "/api/v2/agent/outboundCall": {
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Queue outbound call(s) from your Agent",
+        "description": "Backwards compatible with the previous endpoint. You can pass a single \"target\" and optional \"context\" (old behavior), or provide \"targets\" to enqueue multiple calls. This endpoint queues jobs instead of dialing immediately.",
+        "responses": {
+          "200": {
+            "description": "Queued successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Outbound call initiated."
+                    },
+                    "inserted": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "jobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {}
+      }
+    },
     "/api/v2/webhooks": {
       "get": {
         "tags": [
@@ -2822,6 +2878,874 @@
         }
       }
     },
+    "/api/v2/jobs": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Fetch all jobs",
+        "description": "Retrieve all jobs for the current org. Supports filtering, sorting, and pagination.",
+        "parameters": [
+          {
+            "name": "limit",
+            "description": "Max number of jobs to return",
+            "example": 100,
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "description": "Offset for pagination",
+            "example": 0,
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "since",
+            "description": "Filter by updatedAt >= since (unix seconds)",
+            "example": 1712345678,
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "until",
+            "description": "Filter by updatedAt <= until (unix seconds)",
+            "example": 1712349999,
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "description": "Sort field (createdAt, updatedAt, scheduledFor)",
+            "example": "createdAt",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "description": "Sort order (asc or desc)",
+            "example": "desc",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of jobs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    },
+                    "jobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "job1"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "call"
+                          },
+                          "state": {
+                            "type": "string",
+                            "example": "pending"
+                          },
+                          "target": {
+                            "type": "string",
+                            "example": "+15551234567"
+                          },
+                          "createdAt": {
+                            "type": "number",
+                            "example": 1712345678
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 123
+                    },
+                    "jobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "job1"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "call"
+                          },
+                          "state": {
+                            "type": "string",
+                            "example": "pending"
+                          },
+                          "target": {
+                            "type": "string",
+                            "example": "+15551234567"
+                          },
+                          "createdAt": {
+                            "type": "number",
+                            "example": 1712345678
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Create a new job",
+        "description": "Submit a new job (call, text, ping). For calls/texts, target is required.",
+        "responses": {
+          "201": {
+            "description": "Job created successfully"
+          },
+          "400": {
+            "description": "Missing required fields"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "call"
+                  },
+                  "target": {
+                    "type": "string",
+                    "example": "+15551234567"
+                  },
+                  "context": {
+                    "type": "string",
+                    "example": "Follow-up call"
+                  },
+                  "greeting": {
+                    "type": "string",
+                    "example": "Hello from a job"
+                  },
+                  "waitToGreet": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "scheduledFor": {
+                    "type": "integer",
+                    "example": 1712350000
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/jobs/csv": {
+      "post": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Create multiple jobs via CSV upload",
+        "description": "Upload a CSV file to create multiple jobs. The CSV must include a header row. Recognized columns include type, target, context, jobContext, greeting, waitToGreet, agentId, scheduledFor, message, and externalJobId. Any additional columns will be placed under meta.",
+        "parameters": [
+          {
+            "name": "csv",
+            "in": "formData",
+            "required": true,
+            "description": "CSV file",
+            "schema": {
+              "type": "file"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Jobs queued"
+          },
+          "400": {
+            "description": "Invalid CSV or missing required fields"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v2/jobs/{jobId}": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Fetch a specific job",
+        "description": "Retrieve details for a single job by ID.",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Job ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "job": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "job1"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "call"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "pending"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "job": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "job1"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "call"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "pending"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Job not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Update a job",
+        "description": "Update fields on an existing job by ID.",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Job ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Job not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "example": "canceled"
+                  },
+                  "context": {
+                    "type": "string",
+                    "example": "New context"
+                  },
+                  "waitToGreet": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Delete a job",
+        "description": "Remove a job by ID.",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Job ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Job not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v2/jobs/stats": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Job statistics",
+        "description": "Get counts of jobs grouped by state (pending, running, finished, errored).",
+        "responses": {
+          "200": {
+            "description": "Stats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "byState": {
+                      "type": "object",
+                      "properties": {
+                        "pending": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "running": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "finished": {
+                          "type": "number",
+                          "example": 5
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "byState": {
+                      "type": "object",
+                      "properties": {
+                        "pending": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "running": {
+                          "type": "number",
+                          "example": 3
+                        },
+                        "finished": {
+                          "type": "number",
+                          "example": 5
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v2/jobs/dailyCounts": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Daily counts",
+        "description": "Get current daily usage counts (calls, texts, jobs) for rate limiting.",
+        "responses": {
+          "200": {
+            "description": "Daily counts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "counts": {
+                      "type": "object",
+                      "properties": {
+                        "calls": {
+                          "type": "number",
+                          "example": 5
+                        },
+                        "texts": {
+                          "type": "number",
+                          "example": 12
+                        },
+                        "jobs": {
+                          "type": "number",
+                          "example": 17
+                        },
+                        "date": {
+                          "type": "string",
+                          "example": "2025-08-20"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "counts": {
+                      "type": "object",
+                      "properties": {
+                        "calls": {
+                          "type": "number",
+                          "example": 5
+                        },
+                        "texts": {
+                          "type": "number",
+                          "example": 12
+                        },
+                        "jobs": {
+                          "type": "number",
+                          "example": 17
+                        },
+                        "date": {
+                          "type": "string",
+                          "example": "2025-08-20"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v2/jobs/limits": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Fetch job limits",
+        "description": "Retrieve the org’s current job limits configuration.",
+        "responses": {
+          "200": {
+            "description": "Limits",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "limits": {
+                      "type": "object",
+                      "properties": {
+                        "businessHours": {
+                          "type": "object",
+                          "properties": {
+                            "timezone": {
+                              "type": "string",
+                              "example": "America/Chicago"
+                            },
+                            "days": {
+                              "type": "array",
+                              "example": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                              ],
+                              "items": {
+                                "type": "number"
+                              }
+                            },
+                            "start": {
+                              "type": "string",
+                              "example": "09:00"
+                            },
+                            "end": {
+                              "type": "string",
+                              "example": "17:00"
+                            }
+                          }
+                        },
+                        "daily": {
+                          "type": "object",
+                          "properties": {
+                            "calls": {
+                              "type": "number",
+                              "example": 100
+                            },
+                            "texts": {
+                              "type": "number",
+                              "example": 200
+                            },
+                            "jobs": {
+                              "type": "number",
+                              "example": 300
+                            }
+                          }
+                        },
+                        "concurrencyPerRun": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "cooldowns": {
+                          "type": "object",
+                          "properties": {
+                            "calls": {
+                              "type": "number",
+                              "example": 86400
+                            },
+                            "texts": {
+                              "type": "number",
+                              "example": 300
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "limits": {
+                      "type": "object",
+                      "properties": {
+                        "businessHours": {
+                          "type": "object",
+                          "properties": {
+                            "timezone": {
+                              "type": "string",
+                              "example": "America/Chicago"
+                            },
+                            "days": {
+                              "type": "array",
+                              "example": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                              ],
+                              "items": {
+                                "type": "number"
+                              }
+                            },
+                            "start": {
+                              "type": "string",
+                              "example": "09:00"
+                            },
+                            "end": {
+                              "type": "string",
+                              "example": "17:00"
+                            }
+                          }
+                        },
+                        "daily": {
+                          "type": "object",
+                          "properties": {
+                            "calls": {
+                              "type": "number",
+                              "example": 100
+                            },
+                            "texts": {
+                              "type": "number",
+                              "example": 200
+                            },
+                            "jobs": {
+                              "type": "number",
+                              "example": 300
+                            }
+                          }
+                        },
+                        "concurrencyPerRun": {
+                          "type": "number",
+                          "example": 10
+                        },
+                        "cooldowns": {
+                          "type": "object",
+                          "properties": {
+                            "calls": {
+                              "type": "number",
+                              "example": 86400
+                            },
+                            "texts": {
+                              "type": "number",
+                              "example": 300
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Update job limits",
+        "description": "Update job limit settings. Non-superAdmins cannot edit daily or concurrencyPerRun.",
+        "responses": {
+          "200": {
+            "description": "Limits updated successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden for non-superAdmins editing restricted fields"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "businessHours": {
+                    "type": "object"
+                  },
+                  "cooldowns": {
+                    "type": "object"
+                  },
+                  "daily": {
+                    "type": "object"
+                  },
+                  "concurrencyPerRun": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/createReseller": {
       "post": {
         "tags": [
@@ -3068,6 +3992,52 @@
                     "description": "Your own CRM/customer ID for this org",
                     "type": "string",
                     "example": "external-org-12345"
+                  },
+                  "numberingProviders": {
+                    "description": "Array of numbering provider configurations",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "providerId",
+                        "config"
+                      ],
+                      "properties": {
+                        "providerId": {
+                          "type": "string",
+                          "example": "Twilio"
+                        },
+                        "default": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "config": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "example": {
+                            "accountSid": "ACxxxx",
+                            "authToken": "tokenxxxx"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "smsEnabled": {
+                    "description": "Enable SMS Capabilities on the agent",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "smsBrandId": {
+                    "description": "SMS Brand Id that is registered for the organization",
+                    "type": "string",
+                    "example": "XXXXXX"
+                  },
+                  "smsCampaignId": {
+                    "description": "Approved SMS Campaign Id for the organizations traffic",
+                    "type": "string",
+                    "example": "XXXXXX"
                   },
                   "integrations": {
                     "description": "Optional list of third-party app integrations to set up at org creation",
@@ -4175,6 +5145,68 @@
         ]
       }
     },
+    "/api/v2/numberingProviders": {
+      "get": {
+        "tags": [
+          "Phone Numbers"
+        ],
+        "summary": "List supported numbering providers",
+        "description": "Returns every numbering provider supported along with configuration requirements. Requires a valid reseller or partner account.",
+        "responses": {
+          "200": {
+            "description": "Numbering providers fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Numbering providers fetched successfully"
+                    },
+                    "numberingProviders": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No numbering providers configured",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No numbering providers configured"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/searchAccounts": {
       "get": {
         "tags": [
@@ -5107,7 +6139,7 @@
                     "example": "Test Organization"
                   },
                   "smsEnabled": {
-                    "description": "Enable SMS Capabilities on the agent. Requires smsBrandId and smsCampaignId be sent too",
+                    "description": "Enable SMS Capabilities on the agent.",
                     "type": "boolean",
                     "example": true
                   },
@@ -5135,6 +6167,235 @@
                     "description": "External Id to match with your internal billing system. Set to null to remove it.",
                     "type": "string",
                     "example": "somebillingId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/numberingProvider": {
+      "post": {
+        "tags": [
+          "Phone Numbers"
+        ],
+        "summary": "Add a numbering provider to an organization",
+        "description": "Create a new numbering provider configuration for an organization – Reseller/Partner only.",
+        "parameters": [
+          {
+            "name": "targetOrganizationId",
+            "in": "query",
+            "description": "Target Organization Id to update settings for",
+            "required": true,
+            "example": "XXXXXXX",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Numbering provider added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Numbering provider added"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation or duplication error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Numbering provider already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "providerId",
+                  "config"
+                ],
+                "properties": {
+                  "providerId": {
+                    "type": "string",
+                    "example": "Twilio"
+                  },
+                  "default": {
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "config": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "example": {
+                      "twilioAccountSid": "ACxxxx",
+                      "twilioAuthToken": "tokenxxxx"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Phone Numbers"
+        ],
+        "summary": "Update an existing numbering provider",
+        "description": "Modify an existing numbering provider configuration, set default, or disable it – Reseller/Partner only.",
+        "parameters": [
+          {
+            "name": "targetOrganizationId",
+            "in": "query",
+            "description": "Target Organization Id to update settings for",
+            "required": true,
+            "example": "XXXXXXX",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Numbering provider updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Numbering provider updated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Only one numbering provider can be set as default"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Specified provider not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Numbering provider not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "providerId"
+                ],
+                "properties": {
+                  "providerId": {
+                    "type": "string",
+                    "example": "Twilio"
+                  },
+                  "default": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "config": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    },
+                    "example": {
+                      "accountSid": "ACxxxx",
+                      "authToken": "tokenxxxx"
+                    }
                   }
                 }
               }
@@ -6462,16 +7723,16 @@
         ]
       }
     },
-    "/api/v2/agent/outboundCall": {
+    "/api/v2/agent/outboundSms": {
       "post": {
         "tags": [
           "Agents"
         ],
-        "summary": "Outbound Call from Agent",
-        "description": "Use this endpoint to initiate an outbound call from your Vida agent to a destination number or user. Your agent will handle the call.",
+        "summary": "Queue outbound SMS text message(s) from your Agent",
+        "description": "Backwards compatible with the previous endpoint. You can pass a single \"target\" and required \"content\", or provide \"targets\" to enqueue multiple messages. This queues jobs instead of sending immediately.",
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Queued successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -6483,12 +7744,31 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Outbound call initiated."
+                      "example": "Outbound SMS initiated."
+                    },
+                    "inserted": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "jobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
                     }
                   }
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error"
           }
         },
         "security": [
@@ -6501,20 +7781,181 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "target"
-                ],
-                "properties": {
-                  "context": {
-                    "description": "Additional context you want your Agent to be aware of when handling the call.",
-                    "type": "string",
-                    "example": "Name: Lyle Pratt. Interest: Completed a call back form on our website for more information about our products."
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "target",
+                      "content"
+                    ],
+                    "properties": {
+                      "target": {
+                        "type": "string",
+                        "description": "Phone in E.164 or VIDA username",
+                        "example": "+1234567890"
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Message body",
+                        "example": "Hello from Acme. Your appointment is tomorrow at 10am."
+                      },
+                      "context": {
+                        "type": "string",
+                        "description": "Optional context for the agent handling the conversation"
+                      },
+                      "jobContext": {
+                        "type": "string",
+                        "description": "Job-specific context for this message"
+                      },
+                      "agentId": {
+                        "type": "integer",
+                        "description": "Optional campaign id override"
+                      },
+                      "scheduledFor": {
+                        "type": "integer",
+                        "description": "Unix seconds to schedule delivery"
+                      },
+                      "meta": {
+                        "type": "object",
+                        "description": "Optional metadata"
+                      },
+                      "externalJobId": {
+                        "type": "string",
+                        "description": "Optional customer-provided identifier applied to created job(s)"
+                      }
+                    }
                   },
-                  "target": {
-                    "description": "Phone number in E.164 format or VIDA username of the user",
-                    "type": "string",
-                    "example": "+1234567890 or john_doe"
+                  {
+                    "type": "object",
+                    "required": [
+                      "targets"
+                    ],
+                    "properties": {
+                      "targets": {
+                        "description": "Array of destinations or objects with per-item options",
+                        "oneOf": [
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "example": "+1234567890"
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "target"
+                              ],
+                              "properties": {
+                                "target": {
+                                  "type": "string",
+                                  "example": "+1234567890"
+                                },
+                                "content": {
+                                  "type": "string",
+                                  "description": "Per-item message body"
+                                },
+                                "context": {
+                                  "type": "string"
+                                },
+                                "jobContext": {
+                                  "type": "string"
+                                },
+                                "agentId": {
+                                  "type": "integer"
+                                },
+                                "scheduledFor": {
+                                  "type": "integer"
+                                },
+                                "meta": {
+                                  "type": "object"
+                                },
+                                "externalJobId": {
+                                  "type": "string",
+                                  "description": "Identifier applied to this job"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Message applied to all when targets is an array of strings"
+                      },
+                      "context": {
+                        "type": "string",
+                        "description": "Context applied to all items when not provided per item"
+                      },
+                      "jobContext": {
+                        "type": "string",
+                        "description": "Job-specific context applied to all items when not provided per item"
+                      },
+                      "agentId": {
+                        "type": "integer",
+                        "description": "Agent id applied to all items"
+                      },
+                      "scheduledFor": {
+                        "type": "integer",
+                        "description": "Schedule applied to all items"
+                      },
+                      "scheduleSpacingSec": {
+                        "type": "integer",
+                        "description": "If provided, stagger scheduledFor by this many seconds per index",
+                        "example": 15
+                      },
+                      "meta": {
+                        "type": "object",
+                        "description": "Metadata applied to all items"
+                      },
+                      "externalJobId": {
+                        "type": "string",
+                        "description": "Optional customer-provided identifier applied to all created jobs"
+                      }
+                    }
+                  }
+                ]
+              },
+              "examples": {
+                "single": {
+                  "summary": "Single target, backwards compatible",
+                  "value": {
+                    "target": "+15551234567",
+                    "content": "Hi, quick reminder for tomorrow at 10am.",
+                    "context": "Reminder campaign"
+                  }
+                },
+                "batchStrings": {
+                  "summary": "Multiple string targets with shared content",
+                  "value": {
+                    "targets": [
+                      "+15551230001",
+                      "+15551230002",
+                      "+15551230003"
+                    ],
+                    "content": "Thanks for signing up. Reply YES to confirm.",
+                    "context": "Onboarding nudge",
+                    "scheduleSpacingSec": 10
+                  }
+                },
+                "batchObjects": {
+                  "summary": "Multiple object targets with per-item overrides",
+                  "value": {
+                    "targets": [
+                      {
+                        "target": "+15551230001",
+                        "content": "VIP reminder 9am",
+                        "context": "VIP",
+                        "scheduledFor": 1730000000
+                      },
+                      {
+                        "target": "+15551230002",
+                        "content": "Standard reminder 10am"
+                      }
+                    ],
+                    "agentId": 1234
                   }
                 }
               }
@@ -6523,16 +7964,40 @@
         }
       }
     },
-    "/api/v2/agent/outboundSms": {
-      "post": {
+    "/api/v2/kb/knowledgebase/{kbId}/documents": {
+      "get": {
         "tags": [
-          "Agents"
+          "KnowledgeBase"
         ],
-        "summary": "Outbound SMS from Agent",
-        "description": "Use this endpoint to initiate an outbound SMS text message from your Vida agent to a destination number or user. Your agent will handle the conversation. Note: You must have an active SMS Brand and Campaign on your account for this endpoint to work.",
+        "summary": "Delete multiple documents",
+        "description": "Deletes multiple documents from a knowledge base by their IDs, accessible to the authenticated user.",
+        "parameters": [
+          {
+            "name": "kbId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "kb-id-xxxx"
+                }
+              }
+            },
+            "description": "The ID of the knowledge base"
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "Success",
+          "204": {
+            "description": "Successfully deleted"
+          },
+          "401": {
+            "description": "Unauthorized access",
             "content": {
               "application/json": {
                 "schema": {
@@ -6540,11 +8005,38 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "example": true
+                      "example": false
                     },
                     "message": {
                       "type": "string",
-                      "example": "Outbound sms initiated."
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "One or more documents not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Some documents not found"
+                    },
+                    "notFoundDocumentIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "doc-id-54321"
+                      }
                     }
                   }
                 }
@@ -6563,27 +8055,19 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "target",
-                  "content"
-                ],
                 "properties": {
-                  "context": {
-                    "description": "Additional context you want your Agent to be aware of when handling the conversation.",
-                    "type": "string",
-                    "example": "Name: Lyle Pratt. Interest: Completed a call back form on our website for more information about our products."
-                  },
-                  "target": {
-                    "description": "Phone number in E.164 format or VIDA username of the user",
-                    "type": "string",
-                    "example": "+1234567890 or john_doe"
-                  },
-                  "content": {
-                    "description": "The content of the outbound message.",
-                    "type": "string",
-                    "example": "Hello this is Alice reaching out from Acme Inc with an appointment reminder. You have a scheduled appointment for tomorrow at 10AM."
+                  "documentIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "example": "doc-id-12345"
+                    },
+                    "description": "An array of document IDs to delete"
                   }
-                }
+                },
+                "required": [
+                  "documentIds"
+                ]
               }
             }
           }
