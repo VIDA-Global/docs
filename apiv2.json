@@ -2496,7 +2496,198 @@
             "apiKeyAuth": []
           }
         ],
-        "requestBody": {}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "target"
+                    ],
+                    "properties": {
+                      "target": {
+                        "type": "string",
+                        "description": "Phone in E.164 or VIDA username",
+                        "example": "+1234567890"
+                      },
+                      "context": {
+                        "type": "string",
+                        "description": "Context for the agent to use during the call",
+                        "example": "Name: Lyle Pratt. Interested in product demo."
+                      },
+                      "jobContext": {
+                        "type": "string",
+                        "description": "Job-specific context injected only for this call"
+                      },
+                      "greeting": {
+                        "type": "string",
+                        "description": "Custom greeting to use at call start"
+                      },
+                      "waitToGreet": {
+                        "type": "boolean",
+                        "description": "Delay greeting until caller speaks"
+                      },
+                      "agentId": {
+                        "type": "integer",
+                        "description": "Optional campaign id override for the call"
+                      },
+                      "scheduledFor": {
+                        "type": "integer",
+                        "description": "Unix seconds in the future to schedule the call"
+                      },
+                      "meta": {
+                        "type": "object",
+                        "description": "Optional metadata"
+                      },
+                      "externalJobId": {
+                        "type": "string",
+                        "description": "Optional customer-provided identifier applied to created job(s)"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "targets"
+                    ],
+                    "properties": {
+                      "targets": {
+                        "description": "Array of destinations or objects with per-item options",
+                        "oneOf": [
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "example": "+1234567890"
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "target"
+                              ],
+                              "properties": {
+                                "target": {
+                                  "type": "string",
+                                  "example": "+1234567890"
+                                },
+                                "context": {
+                                  "type": "string"
+                                },
+                                "jobContext": {
+                                  "type": "string"
+                                },
+                                "agentId": {
+                                  "type": "integer"
+                                },
+                                "scheduledFor": {
+                                  "type": "integer"
+                                },
+                                "greeting": {
+                                  "type": "string"
+                                },
+                                "waitToGreet": {
+                                  "type": "boolean"
+                                },
+                                "meta": {
+                                  "type": "object"
+                                },
+                                "externalJobId": {
+                                  "type": "string",
+                                  "description": "Identifier applied to this job"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "context": {
+                        "type": "string",
+                        "description": "Context applied to all items when targets is an array of strings"
+                      },
+                      "jobContext": {
+                        "type": "string",
+                        "description": "Job-specific context applied to all items when targets is an array of strings"
+                      },
+                      "greeting": {
+                        "type": "string",
+                        "description": "Greeting applied to all items when targets is an array of strings"
+                      },
+                      "waitToGreet": {
+                        "type": "boolean",
+                        "description": "Delay greeting until caller speaks for all items when targets is an array of strings"
+                      },
+                      "agentId": {
+                        "type": "integer",
+                        "description": "Agent id applied to all items when not provided per item"
+                      },
+                      "scheduledFor": {
+                        "type": "integer",
+                        "description": "Schedule applied to all items when not provided per item"
+                      },
+                      "scheduleSpacingSec": {
+                        "type": "integer",
+                        "description": "If provided, stagger scheduledFor by this many seconds per index",
+                        "example": 30
+                      },
+                      "meta": {
+                        "type": "object",
+                        "description": "Metadata applied to all items when not provided per item"
+                      },
+                      "externalJobId": {
+                        "type": "string",
+                        "description": "Identifier applied to all created jobs"
+                      }
+                    }
+                  }
+                ]
+              },
+              "examples": {
+                "single": {
+                  "summary": "Single target, backwards compatible",
+                  "value": {
+                    "target": "+15551234567",
+                    "context": "Call back about pricing"
+                  }
+                },
+                "batchStrings": {
+                  "summary": "Multiple string targets with shared context",
+                  "value": {
+                    "targets": [
+                      "+15551230001",
+                      "+15551230002",
+                      "+15551230003"
+                    ],
+                    "context": "Follow up on demo request",
+                    "scheduleSpacingSec": 15
+                  }
+                },
+                "batchObjects": {
+                  "summary": "Multiple object targets with per-item overrides",
+                  "value": {
+                    "targets": [
+                      {
+                        "target": "+15551230001",
+                        "context": "VIP",
+                        "scheduledFor": 1730000000
+                      },
+                      {
+                        "target": "+15551230002"
+                      }
+                    ],
+                    "agentId": 1234
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v2/webhooks": {
