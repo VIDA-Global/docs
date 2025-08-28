@@ -186,12 +186,12 @@
         "api-reference/agents/replace-stored-version",
         "api-reference/agents/restore-version-to-agent",
         "api-reference/agents/rename-stored-version",
+        "api-reference/agents/queue-outbound-calls-from-your-agent",
         "api-reference/agents/update-agent",
         "api-reference/agents/fetch-staging-agent",
         "api-reference/agents/fetch-live-agent",
         "api-reference/agents/get-agent",
-        "api-reference/agents/outbound-call-from-agent",
-        "api-reference/agents/outbound-sms-from-agent"
+        "api-reference/agents/queue-outbound-sms-text-messages-from-your-agent"
       ]
     },
     {
@@ -202,7 +202,10 @@
         "api-reference/phone-numbers/return-unassign-phone-number",
         "api-reference/phone-numbers/search-for-local-numbers-by-locality",
         "api-reference/phone-numbers/search-for-local-numbers-by-prefix",
-        "api-reference/phone-numbers/search-for-local-numbers-by-phrase"
+        "api-reference/phone-numbers/search-for-local-numbers-by-phrase",
+        "api-reference/phone-numbers/list-supported-numbering-providers",
+        "api-reference/phone-numbers/update-an-existing-numbering-provider",
+        "api-reference/phone-numbers/add-a-numbering-provider-to-an-organization"
       ]
     },
     {
@@ -262,6 +265,8 @@
         "api-reference/accounts/create-a-new-organization",
         "api-reference/accounts/delete-an-organization",
         "api-reference/accounts/list-organizations",
+        "api-reference/accounts/get-account-details",
+        "api-reference/accounts/update-account-details",
         "api-reference/accounts/list-agent-accounts",
         "api-reference/accounts/create-a-new-account",
         "api-reference/accounts/delete-an-account",
@@ -282,6 +287,7 @@
         "api-reference/billing/view-available-product-plans",
         "api-reference/billing/provision-billing-system-configuration",
         "api-reference/billing/subscribe-to-product-plan",
+        "api-reference/billing/cancel-product-subscription",
         "api-reference/billing/view-available-add-ons",
         "api-reference/billing/view-product-catalog",
         "api-reference/billing/fetch-a-product-plan-details",
@@ -295,6 +301,27 @@
         "api-reference/post-apiv2sipregistration",
         "api-reference/delete-apiv2sipregistration",
         "api-reference/post-apiv2agentzapierresponse"
+      ]
+    },
+    {
+      "group": "Jobs",
+      "pages": [
+        "api-reference/jobs/fetch-all-jobs",
+        "api-reference/jobs/create-a-new-job",
+        "api-reference/jobs/create-multiple-jobs-via-csv-upload",
+        "api-reference/jobs/fetch-a-specific-job",
+        "api-reference/jobs/update-a-job",
+        "api-reference/jobs/delete-a-job",
+        "api-reference/jobs/job-statistics",
+        "api-reference/jobs/daily-counts",
+        "api-reference/jobs/fetch-job-limits",
+        "api-reference/jobs/update-job-limits"
+      ]
+    },
+    {
+      "group": "KnowledgeBase",
+      "pages": [
+        "api-reference/knowledgebase/delete-multiple-documents"
       ]
     }
   ],
