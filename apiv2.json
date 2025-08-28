@@ -3306,17 +3306,6 @@
         ],
         "summary": "Create multiple jobs via CSV upload",
         "description": "Upload a CSV file to create multiple jobs. The CSV must include a header row. Recognized columns include type, target, context, jobContext, greeting, waitToGreet, agentId, scheduledFor, message, and externalJobId. Any additional columns will be placed under meta.",
-        "parameters": [
-          {
-            "name": "csv",
-            "in": "formData",
-            "required": true,
-            "description": "CSV file",
-            "schema": {
-              "type": "file"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Jobs queued"
@@ -3329,6 +3318,35 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "csv"
+                ],
+                "properties": {
+                  "csv": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "CSV file"
+                  },
+                  "dryRun": {
+                    "type": "boolean",
+                    "description": "Validate only; do not enqueue jobs"
+                  }
+                }
+              },
+              "encoding": {
+                "csv": {
+                  "contentType": "text/csv"
+                }
+              }
+            }
           }
         }
       }
