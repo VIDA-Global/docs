@@ -2449,7 +2449,7 @@
           "Agents"
         ],
         "summary": "Queue outbound call(s) from your Agent",
-        "description": "Backwards compatible with the previous endpoint. You can pass a single \"target\" and optional \"context\" (old behavior), or provide \"targets\" to enqueue multiple calls. This endpoint queues jobs instead of dialing immediately.",
+        "description": "Backwards compatible with the previous endpoint. You can pass a single \"target\" and optional \"context\" (old behavior), or provide \"targets\" to enqueue multiple calls. This endpoint queues tasks instead of dialing immediately.",
         "responses": {
           "200": {
             "description": "Queued successfully",
@@ -2470,7 +2470,7 @@
                       "type": "integer",
                       "example": 3
                     },
-                    "jobs": {
+                    "tasks": {
                       "type": "array",
                       "items": {
                         "type": "object"
@@ -2519,9 +2519,9 @@
                         "description": "Context for the agent to use during the call",
                         "example": "Name: Lyle Pratt. Interested in product demo."
                       },
-                      "jobContext": {
+                      "taskContext": {
                         "type": "string",
-                        "description": "Job-specific context injected only for this call"
+                        "description": "Task-specific context injected only for this call"
                       },
                       "greeting": {
                         "type": "string",
@@ -2543,9 +2543,9 @@
                         "type": "object",
                         "description": "Optional metadata"
                       },
-                      "externalJobId": {
+                      "externalTaskId": {
                         "type": "string",
-                        "description": "Optional customer-provided identifier applied to created job(s)"
+                        "description": "Optional customer-provided identifier applied to created task(s)"
                       }
                     }
                   },
@@ -2580,7 +2580,7 @@
                                 "context": {
                                   "type": "string"
                                 },
-                                "jobContext": {
+                                "taskContext": {
                                   "type": "string"
                                 },
                                 "agentId": {
@@ -2598,9 +2598,9 @@
                                 "meta": {
                                   "type": "object"
                                 },
-                                "externalJobId": {
+                                "externalTaskId": {
                                   "type": "string",
-                                  "description": "Identifier applied to this job"
+                                  "description": "Identifier applied to this task"
                                 }
                               }
                             }
@@ -2611,9 +2611,9 @@
                         "type": "string",
                         "description": "Context applied to all items when targets is an array of strings"
                       },
-                      "jobContext": {
+                      "taskContext": {
                         "type": "string",
-                        "description": "Job-specific context applied to all items when targets is an array of strings"
+                        "description": "Task-specific context applied to all items when targets is an array of strings"
                       },
                       "greeting": {
                         "type": "string",
@@ -2640,9 +2640,9 @@
                         "type": "object",
                         "description": "Metadata applied to all items when not provided per item"
                       },
-                      "externalJobId": {
+                      "externalTaskId": {
                         "type": "string",
-                        "description": "Identifier applied to all created jobs"
+                        "description": "Identifier applied to all created tasks"
                       }
                     }
                   }
@@ -3069,17 +3069,17 @@
         }
       }
     },
-    "/api/v2/jobs": {
+    "/api/v2/tasks": {
       "get": {
         "tags": [
-          "Jobs"
+          "Tasks"
         ],
-        "summary": "Fetch all jobs",
-        "description": "Retrieve all jobs for the current org. Supports filtering, sorting, and pagination.",
+        "summary": "Fetch all tasks",
+        "description": "Retrieve all tasks for the current org. Supports filtering, sorting, and pagination.",
         "parameters": [
           {
             "name": "limit",
-            "description": "Max number of jobs to return",
+            "description": "Max number of tasks to return",
             "example": 100,
             "in": "query",
             "schema": {
@@ -3134,7 +3134,7 @@
         ],
         "responses": {
           "200": {
-            "description": "List of jobs",
+            "description": "List of tasks",
             "content": {
               "application/json": {
                 "schema": {
@@ -3148,14 +3148,14 @@
                       "type": "number",
                       "example": 123
                     },
-                    "jobs": {
+                    "tasks": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
                           "id": {
                             "type": "string",
-                            "example": "job1"
+                            "example": "task1"
                           },
                           "type": {
                             "type": "string",
@@ -3194,14 +3194,14 @@
                       "type": "number",
                       "example": 123
                     },
-                    "jobs": {
+                    "tasks": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
                           "id": {
                             "type": "string",
-                            "example": "job1"
+                            "example": "task1"
                           },
                           "type": {
                             "type": "string",
@@ -3240,13 +3240,13 @@
       },
       "post": {
         "tags": [
-          "Jobs"
+          "Tasks"
         ],
-        "summary": "Create a new job",
-        "description": "Submit a new job (call, text, ping). For calls/texts, target is required.",
+        "summary": "Create a new task",
+        "description": "Submit a new task (call, text, ping). For calls/texts, target is required.",
         "responses": {
           "201": {
-            "description": "Job created successfully"
+            "description": "Task created successfully"
           },
           "400": {
             "description": "Missing required fields"
@@ -3282,7 +3282,7 @@
                   },
                   "greeting": {
                     "type": "string",
-                    "example": "Hello from a job"
+                    "example": "Hello from a task"
                   },
                   "waitToGreet": {
                     "type": "boolean",
@@ -3299,22 +3299,36 @@
         }
       }
     },
-    "/api/v2/jobs/csv": {
+    "/api/v2/tasks/csv": {
       "post": {
         "tags": [
-          "Jobs"
+          "Tasks"
         ],
-        "summary": "Create multiple jobs via CSV upload",
-        "description": "Upload a CSV file to create multiple jobs. The CSV must include a header row. Recognized columns include type, target, context, jobContext, greeting, waitToGreet, agentId, scheduledFor, message, and externalJobId. Any additional columns will be placed under meta.",
+        "summary": "Create multiple tasks via CSV upload",
+        "description": "Upload a CSV file to create multiple tasks. The CSV must include a header row. Recognized columns include type, target, context, taskContext, greeting, waitToGreet, accountId, scheduledFor, message, and externalTaskId.",
+        "parameters": [
+          {
+            "name": "csv",
+            "in": "formData",
+            "required": true,
+            "description": "CSV file",
+            "schema": {
+              "type": "file"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Jobs queued"
+            "description": "Tasks queued"
           },
           "400": {
             "description": "Invalid CSV or missing required fields"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal Server Error"
@@ -3351,201 +3365,13 @@
         }
       }
     },
-    "/api/v2/jobs/{jobId}": {
+    "/api/v2/tasks/stats": {
       "get": {
         "tags": [
-          "Jobs"
+          "Tasks"
         ],
-        "summary": "Fetch a specific job",
-        "description": "Retrieve details for a single job by ID.",
-        "parameters": [
-          {
-            "name": "jobId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Job ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Job found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "job": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "example": "job1"
-                        },
-                        "type": {
-                          "type": "string",
-                          "example": "call"
-                        },
-                        "state": {
-                          "type": "string",
-                          "example": "pending"
-                        }
-                      }
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "job": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "example": "job1"
-                        },
-                        "type": {
-                          "type": "string",
-                          "example": "call"
-                        },
-                        "state": {
-                          "type": "string",
-                          "example": "pending"
-                        }
-                      }
-                    }
-                  },
-                  "xml": {
-                    "name": "main"
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Job not found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Jobs"
-        ],
-        "summary": "Update a job",
-        "description": "Update fields on an existing job by ID.",
-        "parameters": [
-          {
-            "name": "jobId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Job ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Job updated successfully"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Job not found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "state": {
-                    "type": "string",
-                    "example": "canceled"
-                  },
-                  "context": {
-                    "type": "string",
-                    "example": "New context"
-                  },
-                  "waitToGreet": {
-                    "type": "boolean",
-                    "example": true
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Jobs"
-        ],
-        "summary": "Delete a job",
-        "description": "Remove a job by ID.",
-        "parameters": [
-          {
-            "name": "jobId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Job ID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Job deleted successfully"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Job not found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/api/v2/jobs/stats": {
-      "get": {
-        "tags": [
-          "Jobs"
-        ],
-        "summary": "Job statistics",
-        "description": "Get counts of jobs grouped by state (pending, running, finished, errored).",
+        "summary": "Task statistics",
+        "description": "Get counts of tasks grouped by state (pending, running, finished, errored).",
         "responses": {
           "200": {
             "description": "Stats",
@@ -3631,13 +3457,13 @@
         }
       }
     },
-    "/api/v2/jobs/dailyCounts": {
+    "/api/v2/tasks/dailyCounts": {
       "get": {
         "tags": [
-          "Jobs"
+          "Tasks"
         ],
         "summary": "Daily counts",
-        "description": "Get current daily usage counts (calls, texts, jobs) for rate limiting.",
+        "description": "Get current daily usage counts (calls, texts, tasks) for rate limiting.",
         "responses": {
           "200": {
             "description": "Daily counts",
@@ -3661,7 +3487,7 @@
                           "type": "number",
                           "example": 12
                         },
-                        "jobs": {
+                        "tasks": {
                           "type": "number",
                           "example": 17
                         },
@@ -3696,7 +3522,7 @@
                           "type": "number",
                           "example": 12
                         },
-                        "jobs": {
+                        "tasks": {
                           "type": "number",
                           "example": 17
                         },
@@ -3723,13 +3549,13 @@
         }
       }
     },
-    "/api/v2/jobs/limits": {
+    "/api/v2/tasks/limits": {
       "get": {
         "tags": [
-          "Jobs"
+          "Tasks"
         ],
-        "summary": "Fetch job limits",
-        "description": "Retrieve the org’s current job limits configuration.",
+        "summary": "Fetch task limits",
+        "description": "Retrieve the org’s current task limits configuration.",
         "responses": {
           "200": {
             "description": "Limits",
@@ -3786,7 +3612,7 @@
                               "type": "number",
                               "example": 200
                             },
-                            "jobs": {
+                            "tasks": {
                               "type": "number",
                               "example": 300
                             }
@@ -3869,7 +3695,7 @@
                               "type": "number",
                               "example": 200
                             },
-                            "jobs": {
+                            "tasks": {
                               "type": "number",
                               "example": 300
                             }
@@ -3912,10 +3738,10 @@
       },
       "post": {
         "tags": [
-          "Jobs"
+          "Tasks"
         ],
-        "summary": "Update job limits",
-        "description": "Update job limit settings. Non-superAdmins cannot edit daily or concurrencyPerRun.",
+        "summary": "Update task limits",
+        "description": "Update task limit settings. Non-superAdmins cannot edit daily or concurrencyPerRun.",
         "responses": {
           "200": {
             "description": "Limits updated successfully"
@@ -3951,6 +3777,194 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/v2/tasks/{taskId}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Fetch a specific task",
+        "description": "Retrieve details for a single task by ID.",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Task ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "task": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "task1"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "call"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "pending"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "task": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "task1"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "call"
+                        },
+                        "state": {
+                          "type": "string",
+                          "example": "pending"
+                        }
+                      }
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Task not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Update a task",
+        "description": "Update fields on an existing task by ID.",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Task ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Task not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "example": "canceled"
+                  },
+                  "context": {
+                    "type": "string",
+                    "example": "New context"
+                  },
+                  "waitToGreet": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Delete a task",
+        "description": "Remove a task by ID.",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Task ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Task not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -8187,7 +8201,7 @@
           "Agents"
         ],
         "summary": "Queue outbound SMS text message(s) from your Agent",
-        "description": "Backwards compatible with the previous endpoint. You can pass a single \"target\" and required \"content\", or provide \"targets\" to enqueue multiple messages. This queues jobs instead of sending immediately.",
+        "description": "Backwards compatible with the previous endpoint. You can pass a single \"target\" and required \"content\", or provide \"targets\" to enqueue multiple messages. This queues tasks instead of sending immediately.",
         "responses": {
           "200": {
             "description": "Queued successfully",
@@ -8208,7 +8222,7 @@
                       "type": "integer",
                       "example": 3
                     },
-                    "jobs": {
+                    "tasks": {
                       "type": "array",
                       "items": {
                         "type": "object"
@@ -8262,9 +8276,9 @@
                         "type": "string",
                         "description": "Optional context for the agent handling the conversation"
                       },
-                      "jobContext": {
+                      "taskContext": {
                         "type": "string",
-                        "description": "Job-specific context for this message"
+                        "description": "Task-specific context for this message"
                       },
                       "agentId": {
                         "type": "integer",
@@ -8278,9 +8292,9 @@
                         "type": "object",
                         "description": "Optional metadata"
                       },
-                      "externalJobId": {
+                      "externalTaskId": {
                         "type": "string",
-                        "description": "Optional customer-provided identifier applied to created job(s)"
+                        "description": "Optional customer-provided identifier applied to created task(s)"
                       }
                     }
                   },
@@ -8319,7 +8333,7 @@
                                 "context": {
                                   "type": "string"
                                 },
-                                "jobContext": {
+                                "taskContext": {
                                   "type": "string"
                                 },
                                 "agentId": {
@@ -8331,9 +8345,9 @@
                                 "meta": {
                                   "type": "object"
                                 },
-                                "externalJobId": {
+                                "externalTaskId": {
                                   "type": "string",
-                                  "description": "Identifier applied to this job"
+                                  "description": "Identifier applied to this task"
                                 }
                               }
                             }
@@ -8348,9 +8362,9 @@
                         "type": "string",
                         "description": "Context applied to all items when not provided per item"
                       },
-                      "jobContext": {
+                      "taskContext": {
                         "type": "string",
-                        "description": "Job-specific context applied to all items when not provided per item"
+                        "description": "Task-specific context applied to all items when not provided per item"
                       },
                       "agentId": {
                         "type": "integer",
@@ -8369,9 +8383,9 @@
                         "type": "object",
                         "description": "Metadata applied to all items"
                       },
-                      "externalJobId": {
+                      "externalTaskId": {
                         "type": "string",
-                        "description": "Optional customer-provided identifier applied to all created jobs"
+                        "description": "Optional customer-provided identifier applied to all created tasks"
                       }
                     }
                   }
