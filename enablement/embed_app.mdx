@@ -39,6 +39,34 @@ With the iframe embed you can:
 
 Any combination of optional parameters may be included after the required `authToken` and `email`.
 
+# Reseller Prefill via /app/embed
+
+Resellers can prefill onboarding template fields and optionally skip steps by passing query parameters to `/app/embed`.
+
+- All onboarding-related parameters must be prefixed with `onboarding_` to avoid collisions.
+- Template fields: prefix with `onboarding_tf_` where suffix is the field key (e.g., `onboarding_tf_businessName`).
+- Multi-select fields: pass repeated params or a comma-separated list.
+- Validation: values are coerced to the correct type and validated against available options.
+- Step skips: add separate boolean flags to skip steps without or alongside prefills:
+  - `onboarding_skipTimezone=true`
+  - `onboarding_skipAgentVoice=true`
+  - `onboarding_skip_tf_<fieldKey>=true` to skip individual template fields
+  - `onboarding_skip_ti_<integrationKey>=true` to skip individual template integrations
+
+Examples
+- `/app/embed?onboarding_tf_businessName=Acme%20Roofing`
+- `/app/embed?onboarding_tf_industry=homeServices`
+- `/app/embed?onboarding_tf_services=roofing&onboarding_tf_services=gutters`
+- `/app/embed?onboarding_tf_services=roofing,gutters`
+- `/app/embed?onboarding_timezone=America/New_York&onboarding_skipTimezone=true&onboarding_agentVoice=j5lwMohPvHJrfAM74bfG&onboarding_skipAgentVoice=true`
+- `/app/embed?onboarding_skip_tf_businessName=true`
+- `/app/embed?onboarding_skip_ti_googleCalendar=true`
+
+Notes
+- Prefills apply immediately if a template is already selected and persist through selecting a template.
+- Skipped fields or steps require boolean flags; providing values alone does not skip.
+- Unknown or invalid option values are ignored; valid values are applied.
+
 ## Summary
 
 This guide explains how partners can embed the VIDA application on their own sites using a simple `<iframe>` integration. It covers the two required query parameters—authToken and email—for automatic user authentication and outlines several optional parameters to customize signup flows and pre-populate user data.
