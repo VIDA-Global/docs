@@ -3327,17 +3327,6 @@
         ],
         "summary": "Create multiple tasks via CSV upload",
         "description": "Upload a CSV file to create multiple tasks. The CSV must include a header row. Recognized columns include type, target, context, taskContext, greeting, waitToGreet, accountId, scheduledFor, message, and externalTaskId.",
-        "parameters": [
-          {
-            "name": "csv",
-            "in": "formData",
-            "required": true,
-            "description": "CSV file",
-            "schema": {
-              "type": "file"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Tasks queued"
