@@ -304,24 +304,24 @@
       ]
     },
     {
-      "group": "Jobs",
-      "pages": [
-        "api-reference/jobs/fetch-all-jobs",
-        "api-reference/jobs/create-a-new-job",
-        "api-reference/jobs/create-multiple-jobs-via-csv-upload",
-        "api-reference/jobs/fetch-a-specific-job",
-        "api-reference/jobs/update-a-job",
-        "api-reference/jobs/delete-a-job",
-        "api-reference/jobs/job-statistics",
-        "api-reference/jobs/daily-counts",
-        "api-reference/jobs/fetch-job-limits",
-        "api-reference/jobs/update-job-limits"
-      ]
-    },
-    {
       "group": "KnowledgeBase",
       "pages": [
         "api-reference/knowledgebase/delete-multiple-documents"
+      ]
+    },
+    {
+      "group": "Tasks",
+      "pages": [
+        "api-reference/tasks/fetch-all-tasks",
+        "api-reference/tasks/create-a-new-task",
+        "api-reference/tasks/create-multiple-tasks-via-csv-upload",
+        "api-reference/tasks/task-statistics",
+        "api-reference/tasks/daily-counts",
+        "api-reference/tasks/fetch-task-limits",
+        "api-reference/tasks/update-task-limits",
+        "api-reference/tasks/fetch-a-specific-task",
+        "api-reference/tasks/update-a-task",
+        "api-reference/tasks/delete-a-task"
       ]
     }
   ],
