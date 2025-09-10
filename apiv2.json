@@ -1771,7 +1771,7 @@
                         "example": null
                       },
                       "callDialog": {
-                        "description": "Array of dialog entries with roles and contents",
+                        "description": "Array of dialog entries with roles and contents for Calls",
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -1786,6 +1786,28 @@
                             }
                           }
                         }
+                      },
+                      "chatDialog": {
+                        "description": "Array of dialog entries with roles and contents for Chats",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "role": {
+                              "type": "string",
+                              "example": "assistant"
+                            },
+                            "content": {
+                              "type": "string",
+                              "example": "Hello! This is the answering assistant. How can I help you?"
+                            }
+                          }
+                        }
+                      },
+                      "agentReplyCount": {
+                        "description": "The number of agent responses in the conversation. Useful for billing.",
+                        "type": "number",
+                        "example": 10
                       },
                       "campaign": {
                         "description": "Campaign status",
@@ -2741,7 +2763,7 @@
                           "type": {
                             "description": "Webhook type",
                             "type": "string",
-                            "example": "call"
+                            "example": "conversation"
                           }
                         }
                       }
@@ -2864,8 +2886,7 @@
                     "enum": [
                       "conversation",
                       "incoming",
-                      "contact",
-                      "agent"
+                      "contact"
                     ],
                     "example": "conversation"
                   }
