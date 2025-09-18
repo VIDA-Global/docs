@@ -226,6 +226,7 @@
         "api-reference/messaging/list-junk-inbox",
         "api-reference/messaging/fetch-recent-messages",
         "api-reference/messaging/fetch-room-messages",
+        "api-reference/messaging/send-message-to-an-agent-from-your-own-platform",
         "api-reference/messaging/fetch-conversation"
       ]
     },
@@ -275,7 +276,8 @@
         "api-reference/accounts/invite-admin-user",
         "api-reference/accounts/search-accounts",
         "api-reference/accounts/fetch-account-by-externalaccountid",
-        "api-reference/accounts/update-organization-settings"
+        "api-reference/accounts/update-organization-settings",
+        "api-reference/accounts/update-account-settings"
       ]
     },
     {
