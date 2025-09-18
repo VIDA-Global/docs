@@ -1966,6 +1966,134 @@
         ]
       }
     },
+    "/api/v2/agent/receiveMessage": {
+      "post": {
+        "tags": [
+          "Messaging"
+        ],
+        "summary": "Send message to an agent from your own platform",
+        "description": "Send a message from your platform to an agent. Must pass outboundMessageWebhookUrl or configure on the organization to receive agent responses. Reseller or partners only. ",
+        "responses": {
+          "200": {
+            "description": "Message queued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "messageUuid": {
+                      "type": "string",
+                      "example": "uuid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to queue message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Vida user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "targetAgent",
+                  "sourceAddress",
+                  "message"
+                ],
+                "properties": {
+                  "targetAgent": {
+                    "description": "Agent account ID, phone number, or username",
+                    "type": "string",
+                    "example": "agent123"
+                  },
+                  "sourceAddress": {
+                    "description": "Sender phone number or address",
+                    "type": "string",
+                    "example": "+15551231234"
+                  },
+                  "message": {
+                    "description": "Message text",
+                    "type": "string",
+                    "example": "Hello there"
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "type": "image",
+                        "url": "https://example.com/image.png"
+                      }
+                    ]
+                  },
+                  "context": {
+                    "type": "object",
+                    "example": {
+                      "threadId": "abc123"
+                    }
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "example": {
+                      "key": "value"
+                    }
+                  },
+                  "outboundMessageWebhookUrl": {
+                    "description": "Webhook URL (POST) to deliver agent responses to. If not specified will look for default outboundMessageWebhookUrl webhook settings.",
+                    "type": "string",
+                    "example": "https://example.com/hook"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/agent/publish": {
       "post": {
         "tags": [
@@ -4160,9 +4288,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "201": {
             "description": "Organization successfully created",
             "content": {
@@ -4186,9 +4311,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request"
           }
         },
         "security": [
@@ -4226,6 +4348,11 @@
                     "type": "string",
                     "example": "external-org-12345"
                   },
+                  "externalBillingId": {
+                    "description": "External Id to match with your internal billing system",
+                    "type": "string",
+                    "example": "billing-id-12345"
+                  },
                   "numberingProviders": {
                     "description": "Array of numbering provider configurations",
                     "type": "array",
@@ -4256,6 +4383,11 @@
                         }
                       }
                     }
+                  },
+                  "vidaPremium": {
+                    "description": "Mark this account as an actively paying account",
+                    "type": "boolean",
+                    "example": true
                   },
                   "smsEnabled": {
                     "description": "Enable SMS Capabilities on the agent",
@@ -4723,9 +4855,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "201": {
             "description": "Account created",
             "content": {
@@ -4749,9 +4878,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request"
           }
         },
         "security": [
@@ -4770,6 +4896,16 @@
                     "description": "Account Name",
                     "type": "string",
                     "example": "Acme Solar Bay Area Support Agent"
+                  },
+                  "externalAccountId": {
+                    "description": "External Account Id to match with your internal system account Id",
+                    "type": "string",
+                    "example": "AC_12345"
+                  },
+                  "externalBillingId": {
+                    "description": "External Id to match with your internal billing system",
+                    "type": "string",
+                    "example": "billing-id-6789"
                   },
                   "integrations": {
                     "description": "Optional list of third-party app integrations to set up at org creation",
@@ -6600,6 +6736,11 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "active": {
+                    "description": "Account status - if set to false calls and messages for all agents in this org will no longer be answered",
+                    "type": "boolean",
+                    "example": true
+                  },
                   "productPlanId": {
                     "description": "Change Product Plan Id on the Organization. Note: if the target product plan is tied to a Stripe or Chargebee product and the customer has not yet subscribed - this will not work. Give the customer an offered product plan first. Otherwise - this will update the product plan on Vida and in the configured billing system.",
                     "type": "string",
@@ -6639,6 +6780,135 @@
                     "description": "Indicates whether the account is in an unlocked (paid) state.",
                     "type": "boolean",
                     "example": true
+                  },
+                  "externalAccountId": {
+                    "description": "External Account Id to match with your internal system account Id. Set to null to remove it.",
+                    "type": "string",
+                    "example": "AC_XXXXXXX"
+                  },
+                  "externalBillingId": {
+                    "description": "External Id to match with your internal billing system. Set to null to remove it.",
+                    "type": "string",
+                    "example": "somebillingId"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/updateAccount": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Update Account Settings",
+        "description": "Update certain settings for an account – Reseller/Partner only.",
+        "parameters": [
+          {
+            "name": "targetAccountId",
+            "in": "query",
+            "description": "Target Account Id to update settings for",
+            "required": true,
+            "example": "XXXXXXX",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "At least one setting was successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Account settings updated"
+                    },
+                    "updatedSettings": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "accountName"
+                      ]
+                    },
+                    "failedSettings": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "nullable": true,
+                      "example": [
+                        "externalBillingId"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request – nothing updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No settings updated"
+                    },
+                    "failedSettings": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "nullable": true,
+                      "example": [
+                        "externalBillingId"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "description": "Account status - if set to false calls and messages will not be answered",
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "accountName": {
+                    "description": "Change Account Name",
+                    "type": "string",
+                    "example": "Support Team"
                   },
                   "externalAccountId": {
                     "description": "External Account Id to match with your internal system account Id. Set to null to remove it.",
