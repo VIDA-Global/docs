@@ -246,6 +246,79 @@
         }
       }
     },
+    "/api/v2/sipCaptures": {
+      "get": {
+        "tags": [
+          "SIP"
+        ],
+        "summary": "Fetch SIP Captures by SIP Call-ID",
+        "description": "Search Vida SIP Captures by SIP Call-ID and export PCAP, JSON, or text transcript.",
+        "parameters": [
+          {
+            "name": "sipCallId",
+            "in": "query",
+            "description": "SIP Call-ID header value",
+            "required": true,
+            "example": "abc123@pbx.example.com",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Epoch millis start of search window",
+            "required": false,
+            "example": 1727395200000,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "Epoch millis end of search window",
+            "required": false,
+            "example": 1727481600000,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "text | pcap | json | transaction",
+            "required": false,
+            "example": "text",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized Request"
+          },
+          "404": {
+            "description": "No results found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/sip/ipWhitelist": {
       "get": {
         "tags": [
