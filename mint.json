@@ -211,6 +211,7 @@
     {
       "group": "SIP",
       "pages": [
+        "api-reference/sip/fetch-sip-captures-by-sip-call-id",
         "api-reference/sip/list-sip-ip-whitelist",
         "api-reference/sip/add-ip-to-sip-ip-whitelist",
         "api-reference/sip/remove-ip-from-sip-ip-whitelist",
