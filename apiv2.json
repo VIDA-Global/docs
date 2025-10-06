@@ -8042,7 +8042,224 @@
             "apiKeyAuth": []
           }
         ],
-        "requestBody": {}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "title",
+                  "description"
+                ],
+                "properties": {
+                  "type": {
+                    "description": "Type for this agent",
+                    "type": "string",
+                    "enum": [
+                      "chatAgent"
+                    ]
+                  },
+                  "title": {
+                    "description": "Title for Agent",
+                    "type": "string",
+                    "example": "Call Screener"
+                  },
+                  "description": {
+                    "description": "Some description",
+                    "type": "string",
+                    "example": "Description"
+                  },
+                  "welcomeMessage": {
+                    "description": "Message users see when initially visiting a agent",
+                    "type": "string",
+                    "example": "This brought to you by Wolf Cola"
+                  },
+                  "links": {
+                    "description": "Array of any http links to reference for external knowledge for your agent",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "https://vida.io/faq"
+                    ]
+                  },
+                  "actions": {
+                    "description": "Actions that your agent can take including instructions and settings",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "transfer"
+                    ]
+                  },
+                  "timezone": {
+                    "description": "The IANA (Internet Assigned Numbers Authority) formatted timezone your AI agent operates in.",
+                    "type": "string",
+                    "example": "America/Chicago, America/New_York, Europe/London, etc"
+                  },
+                  "agentVoice": {
+                    "description": "Agent voice model to use",
+                    "type": "string",
+                    "example": "en-US Female"
+                  },
+                  "agentLang": {
+                    "description": "Agent language to be used for voice and transcriptions",
+                    "type": "string",
+                    "enum": [
+                      "en-US",
+                      "multi",
+                      "es-MX",
+                      "es-ES",
+                      "es-US"
+                    ],
+                    "default": "en-US"
+                  },
+                  "agentInstructions": {
+                    "description": "Agent instructions for user interaction. This is for chatAgents only",
+                    "type": "string",
+                    "example": "I want you to payout rewards for users that answer a few questions about this promotional video."
+                  },
+                  "agentModel": {
+                    "description": "Agent LLM model to use for its intelligence",
+                    "type": "string",
+                    "example": "gpt-4o-2024-08-06"
+                  },
+                  "agentS2SEngine": {
+                    "description": "(Requires Specific Paid Plan) The Speech-to-Speech Voice engine to use for voice, AI, and transcriptions",
+                    "type": "string",
+                    "enum": [
+                      null,
+                      "openai",
+                      "deepgram"
+                    ],
+                    "default": null
+                  },
+                  "agentSttEngine": {
+                    "description": "Speech to text engine for this agent",
+                    "type": "string",
+                    "enum": [
+                      "google",
+                      "deepgram"
+                    ],
+                    "default": "deepgram"
+                  },
+                  "postAnswerDtmf": {
+                    "description": "DTMF your agent will send upon answering a call. Useful if you are forwarding calls to your agent from a platform that requires a DTMF verification before the call is connected.",
+                    "type": "string"
+                  },
+                  "waitOnAnswer": {
+                    "description": "The amount of time in milliseconds your Agent will wait before speaking the greeting (welcomeMessage).",
+                    "type": "integer"
+                  },
+                  "interruptionWordCount": {
+                    "description": "how many words a caller needs to speak before it is treated as an interruption",
+                    "type": "integer",
+                    "default": 3
+                  },
+                  "interruptionMinimumSpeakingTime": {
+                    "description": "(in seconds) How long the agent needs to be speaking before it can be interrupted",
+                    "type": "integer",
+                    "default": 3
+                  },
+                  "speakingTimeout": {
+                    "description": "(in milliseconds) the default amount of time between words before we consider caller speaking to be finished. Increasing this can help prevent unintentional interruptions for slow talkers. ",
+                    "type": "integer",
+                    "default": 1200
+                  },
+                  "speechProcessingDelay": {
+                    "description": "(in milliseconds) the default amount of delay before processed speech is sent to the LLM for a response. Increasing this can help prevent unintentional interruptions for slow talkers. Note that this delay automatically increases and decreases depending on the number of interruptions over a period of time.",
+                    "type": "integer",
+                    "default": 500
+                  },
+                  "speechProcessingDelayInterruptionStep": {
+                    "description": "(in milliseconds) how much speech processing delay is added per interruption.",
+                    "type": "integer",
+                    "default": 500
+                  },
+                  "speechProcessingDelayMaxMultiplier": {
+                    "description": "the maximum number of interruptions that will influence the speech processing delay.",
+                    "type": "integer",
+                    "default": 4
+                  },
+                  "callerResponseTimeout": {
+                    "description": "(in seconds) how much silence (nothing said by the caller) before the agent asks _are you still there?_.",
+                    "type": "integer",
+                    "default": 13
+                  },
+                  "callerResponseTimeoutHangupCounter": {
+                    "description": "the maximum number of times your agent can ask _are you there_ (callerResponseTimeout) before hanging up the call.",
+                    "type": "integer",
+                    "default": 3
+                  },
+                  "noContactInjection": {
+                    "description": "Whether the contact card for the caller should be injected into the agent context",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "noConvoHistory": {
+                    "description": "Whether the call summary history for the caller should be injected into the agent context",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "autoRecordingNotification": {
+                    "description": "Whether to automatically notify callers that recording is happening: _true (string)_ means notify callers from area codes where it is legally required. _false (string)_ means never notify callers. _always (string)_ means notify every caller whether legally required or not that recording is in progress.",
+                    "type": "string",
+                    "default": "true"
+                  },
+                  "recordingNotificationPhrase": {
+                    "description": "The phrase that will be spoken to the caller notifying them that recording is in progress: _This call is being recorded_ is the default.",
+                    "type": "string",
+                    "default": "This call is being recorded."
+                  },
+                  "preAnswerRingTime": {
+                    "description": "In seconds. How many seconds should the caller experience ringing before the agent answers. Valid value range is 1-60",
+                    "type": "integer",
+                    "default": null
+                  },
+                  "confirmTransfers": {
+                    "description": "Require callee to press 1 before a transfer is completed",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "apps": {
+                    "description": "Array of apps to enable for this given agent",
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "appId",
+                        "version",
+                        "instructions"
+                      ],
+                      "properties": {
+                        "appId": {
+                          "type": "string",
+                          "example": "squareUp",
+                          "description": "The identifier for the integrated app."
+                        },
+                        "version": {
+                          "type": "string",
+                          "example": "v1",
+                          "description": "The version of the app integration."
+                        },
+                        "instructions": {
+                          "type": "string",
+                          "example": "Use this app to book appointments from the user.",
+                          "description": "Instructions for how to use the app."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v2/agentEventRules/staging": {
