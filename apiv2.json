@@ -744,11 +744,34 @@
           "401": {
             "description": "Unauthorized"
           },
+          "409": {
+            "description": "Conflict"
+          },
           "500": {
             "description": "Internal Server Error"
           },
           "502": {
             "description": "Bad Gateway"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aor": {
+                    "example": "any"
+                  },
+                  "username": {
+                    "example": "any"
+                  },
+                  "sipRealm": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       },
