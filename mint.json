@@ -326,6 +326,12 @@
         "api-reference/tasks/update-a-task",
         "api-reference/tasks/delete-a-task"
       ]
+    },
+    {
+      "group": "Logs",
+      "pages": [
+        "api-reference/logs/query-conversation-logs"
+      ]
     }
   ],
   "footerSocials": {
