@@ -5921,6 +5921,418 @@
         ]
       }
     },
+    "/api/v2/logs": {
+      "get": {
+        "tags": [
+          "Logs"
+        ],
+        "summary": "Query conversation logs",
+        "description": "  Retrieves conversation logs from Postgres for the authenticated caller.   Scoping by accountType:  - account: filters to account_id = req.user.id and removes fields resellerId, partnerId, organizationId  - organization: filters to org_id = req.user.id and removes fields resellerId, partnerId, organizationId  - reseller: filters to reseller_id = req.user.id and removes fields resellerId, partnerId  - partner: filters to partner_id = req.user.id and removes field partnerId   Dynamic filters:  Any extra query parameter is treated as a filter. Values are parsed to boolean, number, JSON, string, or null. Force a type with a suffix type hint using \"||\".  Examples:  - status=active  - score=4  - exactMatch=true  - payload=%7B%22a%22%3A1%7D||json  - archived=false||bool   CSV behavior:  If format=csv and no rows are found, a 404 JSON response is returned instead of an empty file.  ",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "description": "Start time as Unix seconds. Defaults to 7 days ago.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "example": {
+                  "type": "number",
+                  "example": 1727481600
+                }
+              }
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "description": "End time as Unix seconds. Defaults to current time.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "example": {
+                  "type": "number",
+                  "example": 1728086400
+                }
+              }
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "required": false,
+            "description": "Comma separated list of fields to include. Restricted fields are always removed.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "id,timestamp,account_id,org_id,eventType"
+                }
+              }
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "required": false,
+            "description": "Response format. json returns a JSON envelope. csv streams a CSV file.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "enum": {
+                  "type": "array",
+                  "example": [
+                    "json",
+                    "csv"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "default": {
+                  "type": "string",
+                  "example": "json"
+                }
+              }
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "description": "Page size for pagination. Max 10000. Defaults to 20.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "minimum": {
+                  "type": "number",
+                  "example": 1
+                },
+                "maximum": {
+                  "type": "number",
+                  "example": 10000
+                },
+                "example": {
+                  "type": "number",
+                  "example": 500
+                }
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number starting at 1. Defaults to 1.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "minimum": {
+                  "type": "number",
+                  "example": 1
+                },
+                "example": {
+                  "type": "number",
+                  "example": 1
+                }
+              }
+            }
+          },
+          {
+            "name": "includeFields",
+            "in": "query",
+            "required": false,
+            "description": "When truthy, include an inferred schema array in the JSON response.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "example": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "required": false,
+            "description": "Opaque pagination or access token if supported by upstream systems.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "eyJhbGciOi..."
+                }
+              }
+            }
+          },
+          {
+            "name": "targetAccountId",
+            "in": "query",
+            "required": false,
+            "description": "Optional target account context. May be ignored based on caller scope.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "acct_123"
+                }
+              }
+            }
+          },
+          {
+            "name": "...additional filters...",
+            "in": "query",
+            "required": false,
+            "description": "Any other query parameters are treated as filters. Supports explicit type hints with ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "object"
+                },
+                "additionalProperties": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful JSON response. When format=csv, a CSV file is streamed with status 200.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "logs": {
+                      "type": "array",
+                      "description": "Array of log entries with restricted fields removed based on caller scope.",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "example": {
+                          "id": "log_001",
+                          "timestamp": "2025-09-30T12:34:56.789Z",
+                          "account_id": "acct_123",
+                          "org_id": "org_456",
+                          "eventType": "message.created",
+                          "metadata": {
+                            "convoId": "c_abc",
+                            "tokens": 1234
+                          }
+                        }
+                      }
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 20
+                    },
+                    "totalCount": {
+                      "type": "integer",
+                      "example": 5231
+                    },
+                    "pagination": {
+                      "type": "object",
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "pageSize": {
+                          "type": "integer",
+                          "example": 20
+                        },
+                        "totalPages": {
+                          "type": "integer",
+                          "example": 262
+                        },
+                        "totalCount": {
+                          "type": "integer",
+                          "example": 5231
+                        },
+                        "hasMore": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "pageCount": {
+                          "type": "integer",
+                          "example": 262
+                        }
+                      }
+                    },
+                    "schema": {
+                      "type": "array",
+                      "description": "Returned only when includeFields is truthy. The inferred list of available fields.",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "id",
+                        "timestamp",
+                        "account_id",
+                        "org_id",
+                        "eventType",
+                        "metadata"
+                      ]
+                    }
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "CSV export of logs when format=csv"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. req.user missing or invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No logs available for CSV export when format=csv",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No logs found for CSV export"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unhandled server error while fetching logs or generating CSV",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "An error occurred while fetching conversation logs."
+                    },
+                    "error": {
+                      "type": "string",
+                      "example": "Detailed error message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Conversation logs service not available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Conversation logs service not available"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/api/v2/searchAccounts": {
       "get": {
         "tags": [
