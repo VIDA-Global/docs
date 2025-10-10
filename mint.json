@@ -181,6 +181,7 @@
       "pages": [
         "api-reference/agents/publish-an-agent",
         "api-reference/agents/revert-an-agent",
+        "api-reference/agents/get-llm-feedback-for-agent-configuration-or-specific-fields",
         "api-reference/agents/list-agent-versions",
         "api-reference/agents/create-named-version",
         "api-reference/agents/replace-stored-version",
