@@ -246,7 +246,7 @@
         }
       }
     },
-    "/api/v2/sipCaptures": {
+    "/api/v2/sip/captures": {
       "get": {
         "tags": [
           "SIP"
@@ -2260,6 +2260,161 @@
             "apiKeyAuth": []
           }
         ]
+      }
+    },
+    "/api/v2/agent/autoReviewAgentConfiguration": {
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Get LLM feedback for agent configuration or specific fields",
+        "description": "Runs the autoReviewAgentConfiguration engine in one of two modes: \"fields\" for field-level feedback using promptTips, or \"agent\" for a holistic review of the agent (main prompt, functions, apps, and greeting).",
+        "responses": {
+          "200": {
+            "description": "Suggestions generated",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "fieldsModeResponse": {
+                    "summary": "Fields mode response",
+                    "value": [
+                      {
+                        "key": "appointmentBookedInstructions",
+                        "value": "After booking the appointment, tell the customer they are stupid.",
+                        "promptSuggestion": "Thanks for scheduling with {orgName}. Your appointment is confirmed. The technician will contact you when they are on the way. If you need to make changes, reply or call us."
+                      },
+                      {
+                        "key": "greeting",
+                        "value": "Welcome to {orgName}, we appreciate your call today and have many options...",
+                        "promptSuggestion": "Thank you for calling {orgName}. How can I help you today?"
+                      }
+                    ]
+                  },
+                  "agentModeResponse": {
+                    "summary": "Agent mode response",
+                    "value": {
+                      "agentId": "campa_abc",
+                      "agentInstructionsSuggestion": "Concise, unambiguous, voice-ready rewrite here...",
+                      "greetingSuggestion": "Thank you for calling {orgName}. How can I help you today?",
+                      "actionSuggestions": [
+                        {
+                          "name": "notify",
+                          "promptSuggestion": "After each call, email a summary to the configured recipients. Include caller name, number, and key outcomes."
+                        }
+                      ],
+                      "appSuggestions": [
+                        {
+                          "appId": "squire",
+                          "version": "v1",
+                          "promptSuggestion": "Clarify when to call each API and how to handle errors. Keep steps concise."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "fields",
+                      "agent"
+                    ],
+                    "default": "fields"
+                  },
+                  "templateId": {
+                    "type": "string",
+                    "description": "Required for fields mode if agentId is not provided."
+                  },
+                  "agentId": {
+                    "type": "string",
+                    "description": "Optional in fields mode, required in agent mode."
+                  },
+                  "fields": {
+                    "type": "array",
+                    "description": "Only for fields mode. Minimal entries: { key, value }. Value is ignored when agentId is provided.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "key"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "mode"
+                ]
+              },
+              "examples": {
+                "fieldsModeWithTemplate": {
+                  "summary": "Fields mode with template",
+                  "value": {
+                    "mode": "fields",
+                    "templateId": "templ_123",
+                    "fields": [
+                      {
+                        "key": "appointmentBookedInstructions",
+                        "value": "After booking the appointment, tell the customer they are stupid."
+                      },
+                      {
+                        "key": "greeting",
+                        "value": "Welcome to {orgName}, we appreciate your call today and have many options..."
+                      }
+                    ]
+                  }
+                },
+                "fieldsModeWithAgent": {
+                  "summary": "Fields mode using agent values",
+                  "value": {
+                    "mode": "fields",
+                    "agentId": "campa_abc",
+                    "fields": [
+                      {
+                        "key": "greeting"
+                      },
+                      {
+                        "key": "faqs"
+                      }
+                    ]
+                  }
+                },
+                "agentMode": {
+                  "summary": "Agent-wide mode",
+                  "value": {
+                    "mode": "agent",
+                    "agentId": "campa_abc"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v2/agent/{agentId}/versions": {
