@@ -1,0 +1,55 @@
+---
+title: 'Post Conversation'
+description: 'How to configure and use the Post Convo function in Vida agents.'
+---
+
+The **Post Convo** function lets your Vida AI agent run actions after a call or text conversation ends. Use it to finish tasks that should not interrupt the live experience, like syncing data to a CRM, triggering a webhook, sending a follow up SMS, or logging analytics.
+
+This is useful when you want the agent to run a consistent end of conversation workflow, for example to store captured data in your CRM.
+
+## When to use Post Convo
+
+Use Post Convo to:
+- Send conversation summaries or transcripts to external systems
+- Create or update CRM contacts, leads, and activities
+- Trigger ticket creation or task follow ups
+- Send a thank you or next steps message
+- Record analytics, tags, outcomes, and duration
+
+## Add the Post Convo function
+
+1. Log in and open the agent editor.
+2. In the **Functions** section, click **(+)** and select **Post Convo**.
+
+## Configure the Post Convo function
+
+Write clear instructions that describe what the agent should do after every conversation ends. There are no runtime settings. The agent runs the instructions you provide.
+
+Common actions:
+- **Webhooks** Call your backend with conversation metadata, summary, and transcript links
+- **CRM updates** Upsert contacts and attach the conversation summary or recording
+- **Messaging** Send a follow up SMS or email with next steps or a scheduling link
+- **Tasks** Create follow up tasks for callbacks or internal handoffs
+- **Analytics** Log outcome, tags, duration, and other metrics
+
+### Example configuration
+
+```plaintext
+Trigger: When any call or text conversation ends
+
+Actions:
+1. Run "Post Convo Webhook" with:
+   - conversationId, startedAt, endedAt, channel
+   - outcome, summary, tags
+   - transcriptUrl and recordingUrl if available
+   - metadata collected during the conversation
+
+2. Upsert the caller in the CRM. Attach summary, outcome, and transcriptUrl.
+
+3. If the caller requested a callback, create a follow up task with preferred times.
+
+4. Send a follow up SMS:
+   - Thank the caller
+   - Include a scheduling link if relevant
+   - Provide next steps or a resource link
+```

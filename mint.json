@@ -98,6 +98,7 @@
         "functions/schedule",
         "functions/payments",
         "functions/pre-answer",
+        "functions/post-convo",
         "functions/reporting",
         "functions/zapier",
         "functions/start-stop-recording"
