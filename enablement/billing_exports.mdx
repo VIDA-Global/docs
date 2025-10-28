@@ -7,7 +7,7 @@ The Vida platform supports exporting daily agent detail records to your external
 
 ## Configuration
 
-To configure ADR exports, speak with your Vida representative to configure this (configuration in your Partner or Reseller portal coming soon\!).\
+To configure ADR exports, speak with your Vida representative to configure this (configuration in your Partner or Reseller portal coming soon!).\
 \
 Configuration requires the following specifications:
 
@@ -49,24 +49,26 @@ ADR Exports can be configured at the Partner, Reseller, or Organization level. T
 | **destAddress**       | _text_              | \+14405559999            | Destination phone number or email address that interacted with the AI Agent. Depending on which channel was used for communication (voice, sms, or email). This could be the AI Agent's address or remote address depending on the direction specified in the product item. |
 | **externalAccountId** | _text_              | acct-A1B2C3              | Arbitrary identifier you supplied on the AI Agent. This may map to your internal CRM or other external system for account reconciliation.                                                                                                                                   |
 | **externalBillingId** | _text_              | cust_ddk77d              | Arbitrary billing identifier you supplied on the AI Agent. This is useful for mapping AI Agents to accounts or sub accounts in your billing system. This may also match the Stripe or Chargbee Id if connected.                                                             |
+| **direction**         | text                | inbound                  | The direction of the AI agent conversation that produced this billing event. For example, if the agent received a call, this field would show as "inbound".  Valid values: <br /><br />"inbound" or "outbound"                                                              |
+| **billedAddress**     | text                | \+14405559999            | Similar to a Billing Telephone Number (BTN), this field indicates which src or dest address was the billed party address.                                                                                                                                                   |
 
 **<u>Example Partner Level Export Record:</u>**\
-"1750168869810","2025-06-17T14:01:09.810Z","444444","5555555","5555555","sms-inbound-message","1","32","true","\+12165551234","\+14405559999","",""\
+"1750168869810","2025-06-17T14:01:09.810Z","444444","5555555","5555555","sms-inbound-message","1","32","true","+12165551234","+14405559999","","", "inbound", "+14405559999"\
 \
 Explanation:
 
-Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 32 seconds. The source number (PSTN side) was \+12165551234 and the AI Agent number was \+14405559999. This record also indicates the child reseller Id that owns this agent (444444). This was a self testing event. \
+Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 32 seconds. The source number (PSTN side) was +12165551234 and the AI Agent number was +14405559999. This record also indicates the child reseller Id that owns this agent (444444). This was a self testing event. \
 \
 **<u>Example Reseller Level Export Record:</u>**\
-"1750168869810","2025-06-17T14:01:09.810Z","5555555","5555555","pstn-inbound-voice","1","45","false","\+12165551234","\+14405559999","",""\
+"1750168869810","2025-06-17T14:01:09.810Z","5555555","5555555","pstn-inbound-voice","1","45","false","+12165551234","+14405559999","","", "inbound", "+14405559999"\
 \
 Explanation:
 
-Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 45 seconds. The source number (PSTN side) was \+12165551234 and the AI Agent number was \+14405559999. This was not a self testing event. \
+Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 45 seconds. The source number (PSTN side) was +12165551234 and the AI Agent number was +14405559999. This was not a self testing event. \
 \
 **<u>Example Organization Level Export Record:</u>**\
-"1750168869810","2025-06-17T14:01:09.810Z","5555555","pstn-inbound-voice","1","45","false","\+12165551234","\+14405559999","",""\
+"1750168869810","2025-06-17T14:01:09.810Z","5555555","pstn-inbound-voice","1","45","false","+12165551234","+14405559999","","", "inbound", "+14405559999"\
 \
 Explanation:
 
-Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 45 seconds. The source number (PSTN side) was \+12165551234 and the AI Agent number was \+14405559999. This was not a self testing event.
+Above record indicates an inbound PSTN voice call to the AI Agent Id 5555555 that lasted 45 seconds. The source number (PSTN side) was +12165551234 and the AI Agent number was +14405559999. This was not a self testing event.
