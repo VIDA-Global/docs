@@ -93,6 +93,7 @@
         "functions/call-transfer",
         "functions/take-message",
         "functions/notify",
+        "functions/validate-address",
         "functions/send-email",
         "functions/send-sms",
         "functions/schedule",

@@ -1,0 +1,71 @@
+---
+title: 'Validate Address'
+description: 'How to configure and use the Validate Address function in Vida agents.'
+---
+
+The **Validate Address** function lets your Vida AI agent confirm, normalize, and complete postal addresses provided by callers or texters. It ensures that every collected address is accurate, deliverable, and ready for downstream systems like CRMs, booking tools, or fulfillment services.
+
+When an address cannot be fully validated, the function returns detailed context and clear guidance so the agent knows exactly what to ask the user next (for example, a missing apartment or suite number).
+
+## When to use Validate Address
+
+Use Validate Address to:
+- Verify and standardize user-provided postal addresses
+- Detect missing or invalid components (like postal codes or unit numbers)
+- Suggest next steps when validation is incomplete
+- Prevent invalid data from being saved to CRMs or delivery systems
+- Improve accuracy of scheduling, logistics, and analytics workflows
+
+## Add the Validate Address function
+
+1. Log in and open the agent editor.
+2. In the **Functions** section, click **(+)** and select **Validate Address**.
+
+## Configure the Validate Address function
+
+Write clear instructions describing when and how your agent should validate addresses during a conversation. The function runs in real time and returns structured results that the agent can use to respond intelligently.
+
+Common actions:
+- **Address confirmation** before creating or updating a contact in your CRM
+- **Delivery validation** before scheduling a shipment or appointment
+- **Data cleaning** when users provide freeform text with partial or ambiguous details
+
+### What the function does
+
+When the agent calls **Validate Address**, it sends the collected address to the validation service and receives a structured result indicating whether the address is valid. If not valid, the result includes:
+- Which components are missing or unconfirmed
+- The reason validation failed
+- Suggested next actions for the agent (for example: “Ask for apartment or suite number”)
+
+### Example configuration
+
+Trigger: When a user provides or confirms an address
+
+Actions:
+1. Run **Validate Address** with:
+   - The full address text as collected by the agent
+
+2. If the result indicates the address is valid:
+   - Save the normalized address to your CRM or linked system
+   - Proceed with booking, scheduling, or data sync
+
+3. If the result indicates the address is not valid:
+   - Review the guidance in `aiAgentMessage`
+   - Ask the user for the missing details (for example, apartment number or postal code)
+   - Retry validation once the information is provided
+
+4. Log the outcome for analytics or QA tracking.
+
+### Example scenario
+
+User: “My address is 600 East Howell Street, Seattle, WA 98122.”  
+Agent: “I found 600 East Howell Street, Seattle, WA 98122, USA, but it looks like there are multiple units there. Could you tell me your apartment or suite number?”
+
+After the user responds with “Apartment 204,” the agent can run **Validate Address** again and confirm the complete address before saving it.
+
+## Best practices
+
+- Always validate before saving or using addresses in external systems.
+- When validation fails, use the provided `aiAgentMessage` to guide the user interaction.
+- Keep both the **original** and **normalized** address for auditing or future improvements.
+- Chain **Validate Address** with **Post Convo** to sync validated data after the conversation ends.
