@@ -3,7 +3,7 @@ title: "Embedding the VIDA App via Iframe"
 description: "Guide for resellers to integrate the VIDA application into their websites using an iframe."
 ---
 
-Resellers can surface the full VIDA app inside their own domain with a single `<iframe>`. This allows the VIDA experience to be seamlessly integrated into existing applications. The process below explains how to map your internal customers to VIDA organization accounts and then log  users into the VIDA application. via an iframe.\
+Resellers can surface the full VIDA app inside their own domain with a single `<iframe>`. This allows the VIDA experience to be seamlessly integrated into existing applications. The process below explains how to map your internal customers to VIDA organization accounts and then log  users into the VIDA application via an iframe. \
 \
 Your app is responsible for:
 
@@ -174,6 +174,8 @@ export default function VidaEmbed({ user }) {
 }
 ```
 
+For an end to end example, check out https://github.com/VIDA-Global/vida-app-embed-demo
+
 ### 5. Render the iframe
 
 At this point, the iframe URL should look like:
@@ -219,17 +221,15 @@ The VIDA embed URL **must** include:
 The VIDA embed URL **may** include:
 
 - `redirectUrl`\
-  This is used to redirect users to converstaions in the inbox from notification emails. By default, notification emails will link to conversations on your custom domain. If you want notification emails to link to the page your iframe is hosted, follow the steps below:
+  This is used to redirect users to conversations in the inbox from notification emails. By default, notification emails will link to conversations on your custom domain. If you want notification emails to link to the page your iframe is hosted, follow the steps below:
   1. Visit your reseller dashboard on [vida.io](http://vida.io)
-  2. Navigate to the Eettings Tab
+  2. Navigate to the Settings Tab
   3. Navigate to the Embed Tab on Setttings
   4. Enter the url of the page that will host your iframe
-  5. Add the query string value for "redirectUrl" to the iframe embed
+  5. Use the query string parameter value for "redirectUrl" in the iframe url
 
   \
-  When the redirectUrl query string parameter is used in the iframe url, the iframe will automatically redirect the user.\
-  \
-  For example, if your iframe is hosted at myappdomain.com, notification emails should link to myappdomain.com?redirectUrl=yourreseller.automatedphone.ai/app/org/etc..\
+  When the redirectUrl query string parameter is used in the iframe url, the iframe will automatically redirect the user. For example, if your iframe is hosted at myappdomain.com, notification emails will link to myappdomain.com?redirectUrl=yourreseller.automatedphone.ai/app/org/etc..\
   \
   When the value of redirectUrl is passed into the iframe url, the iframe should succesfully redirect to that correct conversation page.
 
