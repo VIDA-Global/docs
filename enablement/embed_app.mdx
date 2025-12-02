@@ -1,72 +1,340 @@
 ---
 title: "Embedding the VIDA App via Iframe"
-description: "Guide for partners to integrate the VIDA application into their websites using an iframe."
+description: "Guide for resellers to integrate the VIDA application into their websites using an iframe."
 ---
 
-Partners can surface the full VIDA app inside their own domain with a single `<iframe>`. This enables secure auto-login, identity verification, and flexible signup flows without any custom backend work.
+Resellers can surface the full VIDA app inside their own domain with a single `<iframe>`. This allows the VIDA experience to be seamlessly integrated into existing applications. The process below explains how to map your internal customers to VIDA organization accounts and then log  users into the VIDA application. via an iframe.\
+\
+Your app is responsible for:
 
-## Embedding Overview
+- Deciding which VIDA **organization** the user belongs to
+- Generating a **one‑time auth token** for that user/org
+- Passing that token (plus the user's email) to the embedded VIDA app via the iframe URL
 
-With the iframe embed you can:
+Once embedded, VIDA handles login, onboarding, and the main app experience inside the iframe.
 
-1. [Auto-login users via a one-time ](https://vida.io/docs/api-reference/authorization/generate-one-time-auth-token)`authToken`.
-2. Verify user identity with the `email` parameter.
-3. Redirect unauthenticated visitors into signup.
-4. Pre-fill signup fields (business name, full name, contact number).
-5. Customize messaging via the `custom` flag.
+---
 
-### Example Embed Code
+## Get Started
+
+This section walks through the full integration flow:
+
+1. **Create or look up the VIDA organization**
+2. **Generate a one‑time auth token for the user**
+3. **Expose a backend endpoint that returns the token**
+4. **Construct the iframe URL on the frontend**
+5. **Render the VIDA iframe**
+
+### 1. Create or look up the VIDA organization
+
+In your own data model, each of your customers (accounts) should be linked to a **VIDA organization**.
+
+On your backend, use the \*\*Create a new organization \*\*OR \*\*Fetch Account by externalAccountId \*\* endpoint:
+
+- When a new customer signs up in _your_ system:
+  - **Create** a corresponding VIDA org via the VIDA reseller APIs, and store its `id` alongside your own account ID. Using this endpoint, you should pass in your customer's account id as externalAccountId, along with optional parameters for syncing billing. Use the docs link below to learn how to create organizations that map to your internal account IDs.
+    - Docs: https://vida.io/docs/api-reference/accounts/create-a-new-organization
+- When an existing customer visits your app:
+  - **Fetch** the existing `organizationId` for that customer by passing in your customer's account id as externalAccountId. Use the docs link below to learn how to look up an organization that maps to your internal account IDs.
+    - Docs: https://vida.io/docs/api-reference/accounts/fetch-account-by-externalaccountid
+
+### 2. Generate a one‑time auth token
+
+Once you've verified that the user belongs to a Vida organization, it's time to fetch a one-time auth token that will autenticate the user into the iframe. \
+\
+On your backend, use the **Generate One-Time Auth Token** endpoint:
+
+- Docs: https://vida.io/docs/api-reference/authorization/generate-one-time-auth-token
+
+The response will include a **`short‑lived one‑time authToken`** which you'll pass into the iframe.
+
+Your backend then returns something like:
+
+```json
+{
+  "success": true,
+  "message": "Success",
+  "authToken": "token_here"
+}
+```
+
+### 3. Expose a backend endpoint for the frontend
+
+Create an internal endpoint, e.g. `GET /api/vida`, that:
+
+1. Reads the current authenticated user from your session.
+2. Looks up or creates the corresponding VIDA org.
+3. Calls VIDA to generate a one‑time auth token.
+4. Returns the token (and any other info you care about) to the frontend.
+
+Example response body:
+
+```json
+{
+  "oneTimeAuthToken": "otat_123...",
+  "orgName": "Acme Roofing",
+  "notifyEmail": "owner@acmeroofing.com"
+}
+```
+
+> Important: This endpoint should only be callable by authenticated users in _your_ app. Never expose your VIDA API credentials in the browser.
+
+### 4. Build the iframe URL on the frontend
+
+On the client, you:
+
+1. Fetch `/api/vida` when the component mounts.
+2. Build the VIDA embed URL using the returned `oneTimeAuthToken`, your logged‑in user's email, and a redirectUrl if present.
+3. Optionally add `onboarding_` query parameters to prefill VIDA onboarding (see [`Onboarding Prefill via /app/embed`](#onboarding-prefill-via-appembed)).
+
+Example (React / Next.js):
+
+```tsx
+"use client";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter} from "next/router";
+
+export default function VidaEmbed({ user }) {
+  const router = useRouter();
+
+  const [vida, setVida] = useState<null | { oneTimeAuthToken: string }>(null);
+  const [loading, setLoading] = useState(true);
+  const didFetch = useRef(false);
+
+  useEffect(() => {
+    if (didFetch.current) return;
+    didFetch.current = true;
+
+    const load = async () => {
+      try {
+        const res = await fetch("/api/vida");
+        if (!res.ok) throw new Error("Failed to load Vida data");
+        const data = await res.json();
+        setVida(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    load();
+  }, []);
+
+  const iframeSrc = useMemo(() => {
+    if (!vida?.oneTimeAuthToken || !user?.email) return null;
+
+    // NEXT_PUBLIC_VIDA_EMBED_BASE_URL should look like:
+    // https://yourreseller.automatedphone.ai/app/embed
+    const url = new URL(process.env.NEXT_PUBLIC_VIDA_EMBED_BASE_URL!);
+
+    // Optional url that forces the iframe to redirect
+    const redirectUrl = router.query.redirectUrl;
+
+    const params: Record<string, string> = {
+      authToken: vida.oneTimeAuthToken,
+      email: user.email,
+      redirectUrl,
+      // Optional onboarding examples:
+      // onboarding_tf_orgName: "Acme Roofing",
+      // onboarding_tf_notifyEmail: user.email,
+      // onboarding_timezone: "America/New_York",
+      // onboarding_skipTimezone: "true",
+      // onboarding_skip_ti_googleCalendar: "true",
+    };
+
+    url.search = Object.entries(params)
+      .filter(([_, value]) => value != null)
+      .map(([key, value]) => `${key}=${encodeURIComponent(String(value))}`)
+      .join("&");
+
+    return url.toString();
+  }, [vida?.oneTimeAuthToken, user?.email]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        Loading VIDA…
+      </div>
+    );
+  }
+
+  if (!iframeSrc) {
+    return <div>Unable to load VIDA embed.</div>;
+  }
+
+  return (
+    <iframe
+      src={iframeSrc}
+      className="w-full h-full border-0"
+      title="VIDA App"
+      allow="camera; microphone"
+    />
+  );
+}
+```
+
+### 5. Render the iframe
+
+At this point, the iframe URL should look like:
+
+```txt
+https://yourreseller.automatedphone.ai/app/embed?authToken=OTAT...&email=user@example.com&onboarding_tf_orgName=Acme%20Roofing
+```
+
+Embedding it in plain HTML:
 
 ```html
 <iframe
   src="https://yourreseller.automatedphone.ai/app/embed?authToken=YOUR_TOKEN&email=user@example.com"
-/>
+  style="width: 100%; height: 100vh; border: 0"
+  allow="camera; microphone"
+></iframe>
 ```
+
+VIDA will:
+
+- Verify the `authToken`
+- Verify the `email` matches the VIDA user
+- Take the user into their onboarding flow or the main app, depending on their status
+
+---
 
 ## Required parameters
 
-- `authToken` – one‑time authentication token used by the embed page to log the user in automatically. If omitted, the page logs the user out before rendering. [Read this page](https://vida.io/docs/api-reference/authorization/generate-one-time-auth-token) to learn how to get a one time authToken.
-- `email` – the email that must match the authenticated user. If it does not match, the user is logged out. When the email changes, the user will be automtically logged out.
+The VIDA embed URL **must** include:
+
+- `authToken`\
+  One‑time authentication token used by the embed page to log the user in automatically.
+  - If omitted or invalid, the embed will treat the user as logged‑out.
+  - You must generate this from your backend using the VIDA API.
+  - See: vida.io/docs/api-reference/authorization/generate-one-time-auth-token
+- `email`\
+  The email address that must match the authenticated VIDA user.
+  - If it does not match, the current VIDA session is invalidated.
+  - If the email changes (for example, you pass a different email for the same browser), the user will be automatically logged out and re‑authenticated based on the new email and token.
 
 ## Optional parameters
 
-- `signup` – when present and the user is not authenticated, the embed redirects to the sign‑up flow.
-- `customerId` – external customer identifier passed through to the sign‑up page.
-- `businessName` – pre‑fill the business name on sign up.
-- `fullName` – pre‑fill the user's name on sign up.
-- `contactNumber` – pre‑fill the phone number on sign up.
-- `custom` – allows alternate sign‑up messaging such as `answeringservice` or `createagent`.
+The VIDA embed URL **may** include:
 
-Any combination of optional parameters may be included after the required `authToken` and `email`.
+- `redirectUrl`\
+  This is used to redirect users to converstaions in the inbox from notification emails. By default, notification emails will link to conversations on your custom domain. If you want notification emails to link to the page your iframe is hosted, follow the steps below:
+  1. Visit your reseller dashboard on [vida.io](http://vida.io)
+  2. Navigate to the Eettings Tab
+  3. Navigate to the Embed Tab on Setttings
+  4. Enter the url of the page that will host your iframe
+  5. Add the query string value for "redirectUrl" to the iframe embed
 
-# Reseller Prefill via /app/embed
+  \
+  When the redirectUrl query string parameter is used in the iframe url, the iframe will automatically redirect the user.\
+  \
+  For example, if your iframe is hosted at myappdomain.com, notification emails should link to myappdomain.com?redirectUrl=yourreseller.automatedphone.ai/app/org/etc..\
+  \
+  When the value of redirectUrl is passed into the iframe url, the iframe should succesfully redirect to that correct conversation page.
 
-Resellers can prefill onboarding template fields and optionally skip steps by passing query parameters to `/app/embed`.
+---
+
+## Onboarding Prefill
+
+Resellers can prefill onboarding template fields and optionally skip steps by passing **query parameters**.
+
+These parameters are **optional** but are useful to smooth the onboarding experience for new orgs.
+
+### Naming rules
 
 - All onboarding-related parameters must be prefixed with `onboarding_` to avoid collisions.
-- Template fields: prefix with `onboarding_tf_` where suffix is the field key (e.g., `onboarding_tf_businessName`).
-- Multi-select fields: pass repeated params or a comma-separated list.
-- Validation: values are coerced to the correct type and validated against available options.
-- Step skips: add separate boolean flags to skip steps without or alongside prefills:
+- Template fields: prefix with `onboarding_tf_` where the suffix is the field key (e.g. `onboarding_tf_businessName`).
+- Timezone / voice / other non‑template fields may have their own keys (e.g. `onboarding_timezone`, `onboarding_agentVoice`).
+
+### Multi‑select fields
+
+For multi‑select template fields you can:
+
+- Pass repeated params:
+
+  ```txt
+  onboarding_tf_services=roofing&onboarding_tf_services=gutters
+  ```
+- **or** a comma‑separated list:
+
+  ```txt
+  onboarding_tf_services=roofing,gutters
+  ```
+
+VIDA will coerce values to the correct type and validate them against available options.\
+Unknown or invalid values are ignored; valid values are applied.
+
+### Skipping steps
+
+You can skip steps or fields in the onboarding flow with boolean flags:
+
+- Skip whole steps:
   - `onboarding_skipTimezone=true`
   - `onboarding_skipAgentVoice=true`
-  - `onboarding_skip_tf_<fieldKey>=true` to skip individual template fields
-  - `onboarding_skip_ti_<integrationKey>=true` to skip individual template integrations
+- Skip individual template fields:
+  - `onboarding_skip_tf_<fieldKey>=true`
+- Skip individual template integrations:
+  - `onboarding_skip_ti_<integrationKey>=true`
 
-Examples
-- `/app/embed?onboarding_tf_businessName=Acme%20Roofing`
-- `/app/embed?onboarding_tf_industry=homeServices`
-- `/app/embed?onboarding_tf_services=roofing&onboarding_tf_services=gutters`
-- `/app/embed?onboarding_tf_services=roofing,gutters`
-- `/app/embed?onboarding_timezone=America/New_York&onboarding_skipTimezone=true&onboarding_agentVoice=j5lwMohPvHJrfAM74bfG&onboarding_skipAgentVoice=true`
-- `/app/embed?onboarding_skip_tf_businessName=true`
-- `/app/embed?onboarding_skip_ti_googleCalendar=true`
+> Skipping is **not** implied by providing a value. You must explicitly set a `onboarding_skip_...=true` flag to skip a field or step.
 
-Notes
+### Examples
+
+- Prefill a business name:
+
+  ```txt
+  /app/embed?authToken=...&email=...&onboarding_tf_businessName=Acme%20Roofing
+  ```
+- Prefill an industry:
+
+  ```txt
+  /app/embed?authToken=...&email=...&onboarding_tf_industry=homeServices
+  ```
+- Prefill multi‑select services:
+
+  ```txt
+  /app/embed?authToken=...&email=...&onboarding_tf_services=roofing&onboarding_tf_services=gutters
+  ```
+
+  or
+
+  ```txt
+  /app/embed?authToken=...&email=...&onboarding_tf_services=roofing,gutters
+  ```
+- Prefill timezone and voice, then skip both steps:
+
+  ```txt
+  /app/embed?authToken=...&email=...&onboarding_timezone=America/New_York&onboarding_skipTimezone=true&onboarding_agentVoice=j5lwMohPvHJrfAM74bfG&onboarding_skipAgentVoice=true
+  ```
+- Skip a specific template field:
+
+  ```txt
+  /app/embed?authToken=...&email=...&onboarding_skip_tf_businessName=true
+  ```
+- Skip a specific integration:
+
+  ```txt
+  /app/embed?authToken=...&email=...&onboarding_skip_ti_googleCalendar=true
+  ```
+
+### Notes
+
 - Prefills apply immediately if a template is already selected and persist through selecting a template.
-- Skipped fields or steps require boolean flags; providing values alone does not skip.
+- Skipped fields or steps require explicit boolean flags.
 - Unknown or invalid option values are ignored; valid values are applied.
+
+---
 
 ## Summary
 
-This guide explains how partners can embed the VIDA application on their own sites using a simple `<iframe>` integration. It covers the two required query parameters—authToken and email—for automatic user authentication and outlines several optional parameters to customize signup flows and pre-populate user data.
+- Embedding VIDA is done with a **single iframe** pointing to `/app/embed` on your reseller subdomain.
+- Your backend is responsible for:
+  - Creating/looking up the **VIDA organization**
+  - Generating a **`one‑time authToken`** for the current user
+  - Providing that token to your frontend (e.g. via `/api/vida`)
+- Your frontend:
+  - Fetches the auth token
+  - Builds the iframe URL with `authToken` and `email`
+  - Optionally passes `onboarding_` parameters to prefill and streamline onboarding
+- VIDA handles login, user verification, onboarding, and the full app experience inside the iframe—no separate signup flow parameters are required in the embed URL.
