@@ -1,0 +1,356 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "AI Phone Agent Docs",
+  "colors": {
+    "primary": "#0075FF",
+    "light": "#0075FF",
+    "dark": "#0075FF"
+  },
+  "favicon": "logos/favicon.png",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "welcome",
+              "realtime"
+            ]
+          },
+          {
+            "group": "Agent Setup",
+            "pages": [
+              "agents/intro",
+              "agents/instructions",
+              "agents/functions",
+              "agents/links",
+              "agents/voice",
+              "agents/greeting",
+              "agents/language",
+              "agents/contacts",
+              "agents/enable-sms"
+            ]
+          },
+          {
+            "group": "Agent Functions",
+            "pages": [
+              "functions/webhooks",
+              "functions/call-transfer",
+              "functions/take-message",
+              "functions/notify",
+              "functions/validate-address",
+              "functions/send-email",
+              "functions/send-sms",
+              "functions/schedule",
+              "functions/payments",
+              "functions/pre-answer",
+              "functions/post-convo",
+              "functions/reporting",
+              "functions/zapier",
+              "functions/start-stop-recording"
+            ]
+          },
+          {
+            "group": "Agent Examples",
+            "pages": [
+              "examples/restaurants",
+              "examples/retail",
+              "examples/home-services",
+              "examples/professional-services",
+              "examples/salon",
+              "examples/logistics"
+            ]
+          },
+          {
+            "group": "Enablement",
+            "pages": [
+              "enablement/embed",
+              "enablement/billing",
+              "billing/chargebee",
+              "billing/stripe",
+              "enablement/usage",
+              "enablement/whitelabel",
+              "enablement/api",
+              "enablement/sip",
+              "enablement/billing_exports",
+              "enablement/product_items",
+              "enablement/embed_app",
+              "enablement/telemetry"
+            ]
+          },
+          {
+            "group": "SIP",
+            "pages": [
+              "sip/sip-registration",
+              "sip/sip-inbound",
+              "sip/sip-outbound"
+            ]
+          },
+          {
+            "group": "Sharing and Publishing",
+            "pages": [
+              "sharing/forward",
+              "sharing/publish",
+              "sharing/profile",
+              "sharing/embed",
+              "sharing/port-number"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/intro",
+              "integrations/zapier",
+              "integrations/athena",
+              "integrations/coxauto",
+              "integrations/google-calendar"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/overview",
+              "api-reference/getting-started",
+              "api-reference/authentication"
+            ]
+          },
+          {
+            "group": "Authorization",
+            "pages": [
+              "api-reference/authorization/list-tokens",
+              "api-reference/authorization/create-a-token",
+              "api-reference/authorization/delete-a-token",
+              "api-reference/authorization/generate-one-time-auth-token"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "api-reference/agents/publish-an-agent",
+              "api-reference/agents/revert-an-agent",
+              "api-reference/agents/get-llm-feedback-for-agent-configuration-or-specific-fields",
+              "api-reference/agents/list-agent-versions",
+              "api-reference/agents/create-named-version",
+              "api-reference/agents/replace-stored-version",
+              "api-reference/agents/restore-version-to-agent",
+              "api-reference/agents/rename-stored-version",
+              "api-reference/agents/queue-outbound-calls-from-your-agent",
+              "api-reference/agents/update-agent",
+              "api-reference/agents/fetch-staging-agent",
+              "api-reference/agents/fetch-live-agent",
+              "api-reference/agents/get-agent",
+              "api-reference/agents/queue-outbound-sms-text-messages-from-your-agent"
+            ]
+          },
+          {
+            "group": "Phone Numbers",
+            "pages": [
+              "api-reference/phone-numbers/assign-phone-number-to-your-account",
+              "api-reference/phone-numbers/assign-a-byo-phone-number",
+              "api-reference/phone-numbers/return-unassign-phone-number",
+              "api-reference/phone-numbers/search-for-local-numbers-by-locality",
+              "api-reference/phone-numbers/search-for-local-numbers-by-prefix",
+              "api-reference/phone-numbers/search-for-local-numbers-by-phrase",
+              "api-reference/phone-numbers/list-supported-numbering-providers",
+              "api-reference/phone-numbers/update-an-existing-numbering-provider",
+              "api-reference/phone-numbers/add-a-numbering-provider-to-an-organization"
+            ]
+          },
+          {
+            "group": "SIP",
+            "pages": [
+              "api-reference/sip/fetch-sip-captures-by-sip-call-id",
+              "api-reference/sip/list-sip-ip-whitelist",
+              "api-reference/sip/add-ip-to-sip-ip-whitelist",
+              "api-reference/sip/remove-ip-from-sip-ip-whitelist",
+              "api-reference/sip/list-sip-outbound-routes",
+              "api-reference/sip/add-sip-outbound-route",
+              "api-reference/sip/remove-sip-outbound-route"
+            ]
+          },
+          {
+            "group": "Messaging",
+            "pages": [
+              "api-reference/messaging/list-priority-inbox",
+              "api-reference/messaging/list-junk-inbox",
+              "api-reference/messaging/fetch-recent-messages",
+              "api-reference/messaging/fetch-room-messages",
+              "api-reference/messaging/send-message-to-an-agent-from-your-own-platform",
+              "api-reference/messaging/fetch-conversation"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "pages": [
+              "api-reference/webhooks/list-webhooks",
+              "api-reference/webhooks/add-webhook",
+              "api-reference/webhooks/remove-webhook",
+              "api-reference/webhooks/list-supported-webhook-relay-types",
+              "api-reference/webhooks/get-a-webhook-relay-configuration",
+              "api-reference/webhooks/create-or-update-a-webhook-relay",
+              "api-reference/webhooks/delete-a-webhook-relay-configuration",
+              "api-reference/webhooks/list-all-webhook-relay-configurations"
+            ]
+          },
+          {
+            "group": "Knowledge",
+            "pages": [
+              "api-reference/knowledge/fetch-context",
+              "api-reference/knowledge/add-context"
+            ]
+          },
+          {
+            "group": "Agent URLs",
+            "pages": [
+              "api-reference/agent-urls/check-agent-url-availability",
+              "api-reference/agent-urls/fetch-existing-agent-url",
+              "api-reference/agent-urls/create-agent-url"
+            ]
+          },
+          {
+            "group": "Accounts",
+            "pages": [
+              "api-reference/accounts/create-a-new-reseller",
+              "api-reference/accounts/list-resellers",
+              "api-reference/accounts/create-a-new-organization",
+              "api-reference/accounts/delete-an-organization",
+              "api-reference/accounts/list-organizations",
+              "api-reference/accounts/get-account-details",
+              "api-reference/accounts/update-account-details",
+              "api-reference/accounts/list-agent-accounts",
+              "api-reference/accounts/create-a-new-account",
+              "api-reference/accounts/delete-an-account",
+              "api-reference/accounts/list-admin-users",
+              "api-reference/accounts/delete-admin-user",
+              "api-reference/accounts/invite-admin-user",
+              "api-reference/accounts/search-accounts",
+              "api-reference/accounts/fetch-account-by-externalaccountid",
+              "api-reference/accounts/update-organization-settings",
+              "api-reference/accounts/update-account-settings"
+            ]
+          },
+          {
+            "group": "Billing",
+            "pages": [
+              "api-reference/billing/view-usage",
+              "api-reference/billing/view-offered-product-plan",
+              "api-reference/billing/view-current-product-plan",
+              "api-reference/billing/view-available-product-plans",
+              "api-reference/billing/provision-billing-system-configuration",
+              "api-reference/billing/subscribe-to-product-plan",
+              "api-reference/billing/cancel-product-subscription",
+              "api-reference/billing/view-available-add-ons",
+              "api-reference/billing/view-product-catalog",
+              "api-reference/billing/fetch-a-product-plan-details",
+              "api-reference/billing/configure-adr-export-settings"
+            ]
+          },
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/get-apiv2sipregistration",
+              "api-reference/post-apiv2sipregistration",
+              "api-reference/delete-apiv2sipregistration",
+              "api-reference/post-apiv2agentzapierresponse"
+            ]
+          },
+          {
+            "group": "KnowledgeBase",
+            "pages": [
+              "api-reference/knowledgebase/delete-multiple-documents"
+            ]
+          },
+          {
+            "group": "Tasks",
+            "pages": [
+              "api-reference/tasks/fetch-all-tasks",
+              "api-reference/tasks/create-a-new-task",
+              "api-reference/tasks/create-multiple-tasks-via-csv-upload",
+              "api-reference/tasks/task-statistics",
+              "api-reference/tasks/daily-counts",
+              "api-reference/tasks/fetch-task-limits",
+              "api-reference/tasks/update-task-limits",
+              "api-reference/tasks/fetch-a-specific-task",
+              "api-reference/tasks/update-a-task",
+              "api-reference/tasks/delete-a-task"
+            ]
+          },
+          {
+            "group": "Logs",
+            "pages": [
+              "api-reference/logs/query-conversation-logs"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "logos/blank.svg",
+    "dark": "logos/blank.svg",
+    "href": "https://vida.io"
+  },
+  "api": {
+    "openapi": [
+      "apiv2.json"
+    ]
+  },
+  "appearance": {
+    "default": "light",
+    "strict": true
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "OpenAPI Definition",
+        "href": "https://raw.githubusercontent.com/VIDA-Global/docs/main/apiv2.json"
+      },
+      {
+        "label": "Examples",
+        "href": "https://vida.io/examples"
+      },
+      {
+        "label": "Pricing",
+        "href": "https://vida.io/pricing"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Login",
+      "href": "https://vida.io/?login=true"
+    }
+  },
+  "seo": {
+    "metatags": {
+      "description": "The AI phone agent for small business. Answer calls and texts with an AI phone agent that always works and is never busy.",
+      "og:title": "Docs - AI phone agents for SMB",
+      "og:description": "The AI phone agent for small business. Answer calls and texts with an AI phone agent that always works and is never busy.",
+      "og:image": "https://vida.io/images/openGraphImage-noBrand.png",
+      "og:image:width": "3600",
+      "og:image:height": "1881",
+      "og:site_name": "Docs - AI phone agents for SMB",
+      "twitter:title": "Docs - AI phone agents for SMB",
+      "twitter:description": "The AI phone agent for small business. Answer calls and texts with an AI phone agent that always works and is never busy.",
+      "twitter:image": "https://vida.io/images/openGraphImage-noBrand.png",
+      "twitter:site:": "@VIDAisAI",
+      "twitter:creator": "@VIDAisAI",
+      "twitter:card": "summary_large_image"
+    },
+    "indexing": "navigable"
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/VIDAisAI",
+      "github": "https://github.com/VIDA-Global",
+      "linkedin": "https://www.linkedin.com/company/86956543"
+    }
+  }
+}
