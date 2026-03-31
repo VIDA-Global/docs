@@ -19,6 +19,18 @@ const domainConfig = [
     logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/automated-phone-dark.png",
   },
   {
+    match: /^aiagent\.myvrv\.com$/,
+    brandName: "Verve",
+    faviconUrl: "https://vervecloud.com/wp-content/uploads/2023/06/cropped-Verve_Favicon-32x32.png",
+    replacements: [
+      { from: /help@vida\.inc/gi, to: "support@vervecloud.com" },
+      { from: /api\.vida\.dev/gi, to: "api.vida.dev" },
+      { from: /Vida(\.io)?/gi, to: "Verve" },
+    ],
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_acct1731609817328.jpg?ts=1742493231",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_acct1731609817328.jpg?ts=1742493231",
+  },
+  {
     match: /^voice\.shure\.ai$/,
     brandName: "Shure AI",
     replacements: [
