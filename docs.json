@@ -108,6 +108,18 @@
               "integrations/coxauto",
               "integrations/google-calendar"
             ]
+          },
+          {
+            "group": "What's New",
+            "hidden": true,
+            "pages": [
+              {
+                "group": "Resellers",
+                "pages": [
+                  "apr-2-2026"
+                ]
+              }
+            ]
           }
         ]
       },
