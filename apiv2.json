@@ -5518,7 +5518,7 @@
                   },
                   "resellerStatus": {
                     "description": "Reseller status. Defaults to enabled.",
-                    "type": "enum",
+                    "type": "string",
                     "enum": [
                       "enabled",
                       "disabled"
@@ -5678,7 +5678,7 @@
                   },
                   "orgAccountType": {
                     "description": "Organization account type. Internal orgs are billed through reseller usage; customer orgs are eligible for full subscriptions. Defaults to customer.",
-                    "type": "enum",
+                    "type": "string",
                     "enum": [
                       "internal",
                       "customer"
@@ -5707,7 +5707,7 @@
                   },
                   "hipaaSetting": {
                     "description": "HIPAA setting for this organization. on|off|inherit (inherit from reseller)",
-                    "type": "enum",
+                    "type": "string",
                     "enum": [
                       "on",
                       "off",
@@ -6699,43 +6699,24 @@
             "name": "giveCosts",
             "in": "query",
             "description": "Returns values for keys with cost: prefix.",
+            "example": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "boolean"
-                },
-                "default": {
-                  "type": "boolean",
-                  "example": false
-                }
-              }
+              "type": "boolean"
             }
           },
           {
             "name": "combineCosts",
             "in": "query",
             "description": "Returns cost values and usage values in the same response.",
+            "example": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "boolean"
-                },
-                "default": {
-                  "type": "boolean",
-                  "example": false
-                }
-              }
+              "type": "boolean"
             }
           },
           {
             "name": "billingPeriod",
             "in": "query",
             "description": "Accepts previous or current for previous and current billing periods.",
-            "default": null,
             "example": "current",
             "schema": {
               "type": "string"
@@ -6745,105 +6726,45 @@
             "name": "timeseries",
             "in": "query",
             "description": "Returns data as a timeseries.",
+            "example": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "boolean"
-                },
-                "default": {
-                  "type": "boolean",
-                  "example": false
-                }
-              }
+              "type": "boolean"
             }
           },
           {
             "name": "startDate",
             "in": "query",
-            "description": "ISO date string, defaults to billing period start date.",
+            "description": "ISO date-time string, defaults to billing period start date.",
+            "example": "2026-04-01T00:00:00.000Z",
             "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date-time"
-                }
-              }
+              "type": "string"
             }
           },
           {
             "name": "endDate",
             "in": "query",
-            "description": "ISO date string, optional, defaults to today.",
+            "description": "ISO date-time string, optional, defaults to today.",
+            "example": "2026-04-30T23:59:59.999Z",
             "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date-time"
-                },
-                "default": {
-                  "type": "string",
-                  "example": "today"
-                }
-              }
+              "type": "string"
             }
           },
           {
             "name": "frequency",
             "in": "query",
-            "description": "Frequency: day, month, year. Defaults to day.",
+            "description": "Frequency value. Allowed: day, month, year. Defaults to day.",
+            "example": "day",
             "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "enum": {
-                  "type": "array",
-                  "example": [
-                    "day",
-                    "month",
-                    "year"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "default": {
-                  "type": "string",
-                  "example": "day"
-                }
-              }
+              "type": "string"
             }
           },
           {
             "name": "allItems",
             "in": "query",
             "description": "Show all product items and not just the current plan.",
+            "example": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "boolean"
-                },
-                "default": {
-                  "type": "boolean",
-                  "example": false
-                }
-              }
+              "type": "boolean"
             }
           }
         ],
@@ -9419,7 +9340,7 @@
                   },
                   "hipaaSetting": {
                     "description": "HIPAA setting for this organization. on|off|inherit (inherit from reseller)",
-                    "type": "enum",
+                    "type": "string",
                     "enum": [
                       "on",
                       "off",
@@ -9429,7 +9350,7 @@
                   },
                   "orgAccountType": {
                     "description": "Organization account type (internal vs customer). Internal orgs are billed through reseller usage; customer orgs are eligible for full subscriptions. Defaults to customer.",
-                    "type": "enum",
+                    "type": "string",
                     "enum": [
                       "internal",
                       "customer"

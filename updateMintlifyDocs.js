@@ -1,26 +1,28 @@
 const fs = require('fs');
 const { exec } = require('child_process');
 
-// Load the existing mint.json file
+// Load the existing docs.json file
+const configPath = './docs.json';
 let config;
 
 try {
-  config = require('./mint.json');
+  const rawConfig = fs.readFileSync(configPath, 'utf8');
+  config = JSON.parse(rawConfig);
 } catch (error) {
-  console.error('Error loading mint.json:', error);
+  console.error('Error loading docs.json:', error);
   process.exit(1);
 }
 
 // Helper function to update the navigation groups
-function updateNavigation(oldNavigation, newNavigation) {
-  const updatedNavigation = [...oldNavigation];
+function updateNavigation(oldGroups, newGroups) {
+  const updatedGroups = [...oldGroups];
 
   // Track existing groups for removal check
-  const existingGroups = new Set(newNavigation.map(newGroup => newGroup.group));
+  const existingGroups = new Set(newGroups.map(newGroup => newGroup.group));
 
   // Update existing groups
-  newNavigation.forEach(newGroup => {
-    const groupIndex = oldNavigation.findIndex(
+  newGroups.forEach(newGroup => {
+    const groupIndex = oldGroups.findIndex(
       oldGroup => 
         oldGroup.group === newGroup.group && 
         oldGroup.pages.length > 0 && 
@@ -28,14 +30,14 @@ function updateNavigation(oldNavigation, newNavigation) {
     );
 
     if (groupIndex !== -1) {
-      updatedNavigation[groupIndex] = newGroup;
+      updatedGroups[groupIndex] = newGroup;
     } else {
-      updatedNavigation.push(newGroup);
+      updatedGroups.push(newGroup);
     }
   });
 
   // Remove groups not present in new navigation
-  return updatedNavigation.filter(
+  return updatedGroups.filter(
     oldGroup => 
       !oldGroup.pages.length || 
       !oldGroup.pages[0].startsWith("api-reference/") ||
@@ -51,6 +53,12 @@ exec('npx @mintlify/scraping@latest openapi-file apiv2.json -o api-reference', (
     return;
   }
 
+  if (stderr && stderr.includes('Failed to validate OpenAPI schema')) {
+    console.error('Mintlify scraping failed because apiv2.json did not pass OpenAPI validation.');
+    console.error(stderr);
+    return;
+  }
+
   const navigationMatch = stdout.match(/navigation object suggestion:\s*\n(\[.*\n*\s*.*\])/s);
 
   if (!navigationMatch) {
@@ -63,15 +71,25 @@ exec('npx @mintlify/scraping@latest openapi-file apiv2.json -o api-reference', (
   try {
     const newNavigationString = navigationMatch[1].replace(/\\n/g, '').replace(/\s+/g, ' ');
     const newNavigation = JSON.parse(newNavigationString);
+    if (!config.navigation || !Array.isArray(config.navigation.tabs)) {
+      console.error('docs.json navigation.tabs not found or invalid');
+      return;
+    }
 
-    const updatedNavigation = updateNavigation(config.navigation, newNavigation);
-    config.navigation = updatedNavigation;
+    const apiReferenceTab = config.navigation.tabs.find(tab => tab.tab === 'API Reference');
+    if (!apiReferenceTab) {
+      console.error('API Reference tab not found in docs.json navigation');
+      return;
+    }
 
-    fs.writeFile('./mint.json', JSON.stringify(config, null, 2), (err) => {
+    const existingGroups = apiReferenceTab.groups || [];
+    apiReferenceTab.groups = updateNavigation(existingGroups, newNavigation);
+
+    fs.writeFile(configPath, JSON.stringify(config, null, 2), (err) => {
       if (err) {
-        console.error('Error writing to mint.json:', err);
+        console.error('Error writing to docs.json:', err);
       } else {
-        console.log('mint.json updated successfully');
+        console.log('docs.json updated successfully');
       }
     });
   } catch (parseError) {

@@ -146,18 +146,18 @@
             "pages": [
               "api-reference/agents/publish-an-agent",
               "api-reference/agents/revert-an-agent",
+              "api-reference/agents/update-agent",
               "api-reference/agents/get-llm-feedback-for-agent-configuration-or-specific-fields",
               "api-reference/agents/list-agent-versions",
               "api-reference/agents/create-named-version",
               "api-reference/agents/replace-stored-version",
               "api-reference/agents/restore-version-to-agent",
               "api-reference/agents/rename-stored-version",
-              "api-reference/agents/queue-outbound-calls-from-your-agent",
-              "api-reference/agents/update-agent",
-              "api-reference/agents/fetch-staging-agent",
-              "api-reference/agents/fetch-live-agent",
               "api-reference/agents/get-agent",
-              "api-reference/agents/queue-outbound-sms-text-messages-from-your-agent"
+              "api-reference/agents/queue-outbound-calls-from-your-agent",
+              "api-reference/agents/queue-outbound-sms-text-messages-from-your-agent",
+              "api-reference/agents/fetch-staging-agent",
+              "api-reference/agents/fetch-live-agent"
             ]
           },
           {
@@ -183,7 +183,11 @@
               "api-reference/sip/remove-ip-from-sip-ip-whitelist",
               "api-reference/sip/list-sip-outbound-routes",
               "api-reference/sip/add-sip-outbound-route",
-              "api-reference/sip/remove-sip-outbound-route"
+              "api-reference/sip/remove-sip-outbound-route",
+              "api-reference/sip/check-sip-registration-aor-availability",
+              "api-reference/sip/get-sip-registration",
+              "api-reference/sip/create-or-update-sip-registration",
+              "api-reference/sip/delete-sip-registration"
             ]
           },
           {
@@ -194,7 +198,7 @@
               "api-reference/messaging/fetch-recent-messages",
               "api-reference/messaging/fetch-room-messages",
               "api-reference/messaging/send-message-to-an-agent-from-your-own-platform",
-              "api-reference/messaging/fetch-conversation"
+              "api-reference/messaging/fetch-multiple-conversations"
             ]
           },
           {
@@ -238,9 +242,11 @@
               "api-reference/accounts/list-agent-accounts",
               "api-reference/accounts/create-a-new-account",
               "api-reference/accounts/delete-an-account",
-              "api-reference/accounts/list-admin-users",
-              "api-reference/accounts/delete-admin-user",
-              "api-reference/accounts/invite-admin-user",
+              "api-reference/accounts/list-members",
+              "api-reference/accounts/fetch-member",
+              "api-reference/accounts/update-member",
+              "api-reference/accounts/invite-member",
+              "api-reference/accounts/delete-member",
               "api-reference/accounts/search-accounts",
               "api-reference/accounts/fetch-account-by-externalaccountid",
               "api-reference/accounts/update-organization-settings",
@@ -260,6 +266,7 @@
               "api-reference/billing/view-available-add-ons",
               "api-reference/billing/view-product-catalog",
               "api-reference/billing/fetch-a-product-plan-details",
+              "api-reference/billing/start-a-new-billing-period-for-an-organization",
               "api-reference/billing/configure-adr-export-settings"
             ]
           },
@@ -297,6 +304,20 @@
             "group": "Logs",
             "pages": [
               "api-reference/logs/query-conversation-logs"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "api-reference/integrations/set-zapier-response-payload",
+              "api-reference/integrations/update-integration-data",
+              "api-reference/integrations/update-integration-data-1"
+            ]
+          },
+          {
+            "group": "Models",
+            "pages": [
+              "api-reference/models/list-supported-ai-models"
             ]
           }
         ]
