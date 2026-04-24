@@ -271,15 +271,6 @@
             ]
           },
           {
-            "group": "API Reference",
-            "pages": [
-              "api-reference/get-apiv2sipregistration",
-              "api-reference/post-apiv2sipregistration",
-              "api-reference/delete-apiv2sipregistration",
-              "api-reference/post-apiv2agentzapierresponse"
-            ]
-          },
-          {
             "group": "Tasks",
             "pages": [
               "api-reference/tasks/fetch-all-tasks",
@@ -303,7 +294,6 @@
           {
             "group": "Integrations",
             "pages": [
-              "api-reference/integrations/set-zapier-response-payload",
               "api-reference/integrations/update-integration-data",
               "api-reference/integrations/update-integration-data-1"
             ]

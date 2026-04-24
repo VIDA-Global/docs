@@ -16,6 +16,11 @@ try {
 // Helper function to update the navigation groups
 function updateNavigation(oldGroups, newGroups) {
   const updatedGroups = [...oldGroups];
+  const preservedRootLevelPages = new Set([
+    'api-reference/overview',
+    'api-reference/getting-started',
+    'api-reference/authentication'
+  ]);
 
   // Track existing groups for removal check
   const existingGroups = new Set(newGroups.map(newGroup => newGroup.group));
@@ -41,7 +46,7 @@ function updateNavigation(oldGroups, newGroups) {
     oldGroup => 
       !oldGroup.pages.length || 
       !oldGroup.pages[0].startsWith("api-reference/") ||
-      !oldGroup.pages[0].slice("api-reference/".length).includes('/') || //Don't include any groups that have pages direct in api-reference folder, like overviews,etc
+      oldGroup.pages.every(page => preservedRootLevelPages.has(page)) ||
       existingGroups.has(oldGroup.group)
   );
 }

@@ -3389,54 +3389,6 @@
         }
       }
     },
-    "/api/v2/agent/zapier/response": {
-      "post": {
-        "tags": [
-          "Integrations"
-        ],
-        "summary": "Set Zapier response payload",
-        "description": "Stores response data for a pending Zapier action request.",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "requestId": {
-                    "example": "any"
-                  },
-                  "responseData": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v2/checkAgentUrl": {
       "get": {
         "tags": [
