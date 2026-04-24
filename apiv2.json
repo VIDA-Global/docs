@@ -7664,7 +7664,7 @@
           "Logs"
         ],
         "summary": "Query conversation logs",
-        "description": "  Retrieves conversation logs from Postgres for the authenticated caller.   Scoping by accountType:  - account: filters to account_id = req.user.id and removes fields resellerId, partnerId, organizationId  - organization: filters to org_id = req.user.id and removes fields resellerId, partnerId, organizationId  - reseller: filters to reseller_id = req.user.id and removes fields resellerId, partnerId  - partner: filters to partner_id = req.user.id and removes field partnerId   Dynamic filters:  Any extra query parameter is treated as a filter. Values are parsed to boolean, number, JSON, string, or null. Force a type with a suffix type hint using \"||\".  Examples:  - status=active  - score=4  - exactMatch=true  - payload=%7B%22a%22%3A1%7D||json  - archived=false||bool   CSV behavior:  If format=csv and no rows are found, a 404 JSON response is returned instead of an empty file.  ",
+        "description": "Query conversation logs with flexible filters and optional CSV export",
         "parameters": [
           {
             "name": "start",
@@ -10653,116 +10653,6 @@
             "apiKeyAuth": []
           }
         ]
-      }
-    },
-    "/api/v2/kb/knowledgebase/{kbId}/documents": {
-      "get": {
-        "tags": [
-          "KnowledgeBase"
-        ],
-        "summary": "Delete multiple documents",
-        "description": "Deletes multiple documents from a knowledge base by their IDs, accessible to the authenticated user.",
-        "parameters": [
-          {
-            "name": "kbId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "kb-id-xxxx"
-                }
-              }
-            },
-            "description": "The ID of the knowledge base"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Successfully deleted"
-          },
-          "401": {
-            "description": "Unauthorized access",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": false
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Unauthorized"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "One or more documents not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": false
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Some documents not found"
-                    },
-                    "notFoundDocumentIds": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "example": "doc-id-54321"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "documentIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string",
-                      "example": "doc-id-12345"
-                    },
-                    "description": "An array of document IDs to delete"
-                  }
-                },
-                "required": [
-                  "documentIds"
-                ]
-              }
-            }
-          }
-        }
       }
     }
   },

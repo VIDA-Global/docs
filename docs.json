@@ -280,12 +280,6 @@
             ]
           },
           {
-            "group": "KnowledgeBase",
-            "pages": [
-              "api-reference/knowledgebase/delete-multiple-documents"
-            ]
-          },
-          {
             "group": "Tasks",
             "pages": [
               "api-reference/tasks/fetch-all-tasks",
