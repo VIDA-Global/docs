@@ -8,4 +8,9 @@ To use the Vida API you need an API token. Get your token by going to Settings -
 
 Once you have a paid account you can use the API page in Settings to create and manage your API tokens. You can also manage your SIP IP access lists. Remember, your token should be placed in the URL like this `?token={your token}`, not in Bearer, Headers, etc.
 
+All API endpoints accept an optional targetAccountId query parameter for delegated scope.
+When provided by a higher-level account token (for example, Partner or Reseller), the request is executed in the context of a child account in that caller’s hierarchy.
+
+Example: a Reseller token can call an endpoint with `targetAccountId=<organizationId-or-agentId>` to act on that Organization or Agent, as long as it belongs to that Reseller.
+
 For additional help, email [help@vida.inc](mailto:help@vida.inc).
