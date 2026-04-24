@@ -719,55 +719,202 @@
         }
       }
     },
-    "/api/v2/sip/registration": {
+    "/api/v2/sip/registration/available": {
       "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            }
-          }
+        "tags": [
+          "SIP"
         ],
+        "summary": "Check SIP registration AOR availability",
+        "description": "Validate whether an Address of Record (AOR) is free for the authenticated account.",
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "201": {
-            "description": "Created"
+            "description": "Availability response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "AOR is available"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Missing AOR details"
           },
           "401": {
-            "description": "Unauthorized"
-          },
-          "409": {
-            "description": "Conflict"
+            "description": "Unauthorized Request"
           },
           "500": {
-            "description": "Internal Server Error"
-          },
-          "502": {
-            "description": "Bad Gateway"
+            "description": "Server error while checking availability"
           }
         },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
                   "aor": {
-                    "example": "any"
+                    "description": "Full SIP AOR to validate",
+                    "type": "string",
+                    "example": "1001@sip.example.com"
                   },
                   "username": {
-                    "example": "any"
+                    "description": "Username portion used to build the AOR when aor is omitted",
+                    "type": "string",
+                    "example": "1001"
                   },
                   "sipRealm": {
-                    "example": "any"
+                    "description": "SIP realm combined with username to build the AOR",
+                    "type": "string",
+                    "example": "sip.example.com"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/sip/registration": {
+      "post": {
+        "tags": [
+          "SIP"
+        ],
+        "summary": "Create or update SIP registration",
+        "description": "Create a new SIP registration or update the existing registration for the authenticated account.",
+        "responses": {
+          "200": {
+            "description": "Registration updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Registration updated successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Registration created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Registration created successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid registration payload"
+          },
+          "401": {
+            "description": "Unauthorized Request"
+          },
+          "409": {
+            "description": "Duplicate AOR"
+          },
+          "500": {
+            "description": "Failed to add/update registration"
+          },
+          "502": {
+            "description": "Bad Gateway"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "aor": {
+                    "description": "Full SIP Address of Record",
+                    "type": "string",
+                    "example": "1001@sip.example.com"
+                  },
+                  "username": {
+                    "description": "SIP username",
+                    "type": "string",
+                    "example": "1001"
+                  },
+                  "authUsername": {
+                    "description": "SIP auth username (Authorization header)",
+                    "type": "string",
+                    "example": "auth-1001"
+                  },
+                  "password": {
+                    "description": "SIP password",
+                    "type": "string",
+                    "example": "supersecret"
+                  },
+                  "sipRealm": {
+                    "description": "SIP realm / domain",
+                    "type": "string",
+                    "example": "sip.example.com"
+                  },
+                  "proxy": {
+                    "description": "Outbound proxy",
+                    "type": "string",
+                    "example": "sip.example.com:5061"
+                  },
+                  "port": {
+                    "description": "Registration port",
+                    "type": "number",
+                    "example": 5060
+                  },
+                  "transport": {
+                    "description": "Transport protocol",
+                    "type": "string",
+                    "example": "TLS"
+                  },
+                  "subscribe": {
+                    "description": "Whether to subscribe for presence",
+                    "type": "boolean",
+                    "example": false
                   }
                 }
               }
@@ -776,38 +923,108 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": [
+          "SIP"
+        ],
+        "summary": "Get SIP registration",
+        "description": "Retrieve the SIP registration associated with the authenticated account.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Registration found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "registration": {
+                      "type": "object",
+                      "description": "Registration details",
+                      "properties": {
+                        "aor": {
+                          "type": "string",
+                          "example": "1001@sip.example.com"
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "1001"
+                        },
+                        "proxy": {
+                          "type": "string",
+                          "example": "sip.example.com:5061"
+                        },
+                        "transport": {
+                          "type": "string",
+                          "example": "TLS"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized Request"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Registration not found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Failed to retrieve registration"
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "SIP"
+        ],
+        "summary": "Delete SIP registration",
+        "description": "Remove the SIP registration for the authenticated account.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Registration deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Registration deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized Request"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Registration not found"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Failed to delete registration"
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/api/v2/phoneNumber/assign": {
@@ -2262,6 +2479,373 @@
         ]
       }
     },
+    "/api/v2/agent": {
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Update Agent",
+        "description": "Update an agent",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Agent created."
+                    },
+                    "campaignId": {
+                      "type": "string",
+                      "example": "camp931829b5857f...."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type",
+                  "title",
+                  "description"
+                ],
+                "properties": {
+                  "type": {
+                    "description": "Type for this agent",
+                    "type": "string",
+                    "enum": [
+                      "chatAgent"
+                    ]
+                  },
+                  "title": {
+                    "description": "Title for Agent",
+                    "type": "string",
+                    "example": "Call Screener"
+                  },
+                  "description": {
+                    "description": "Some description",
+                    "type": "string",
+                    "example": "Description"
+                  },
+                  "welcomeMessage": {
+                    "description": "Message users see when initially visiting a agent",
+                    "type": "string",
+                    "example": "This brought to you by Wolf Cola"
+                  },
+                  "links": {
+                    "description": "Array of any http links to reference for external knowledge for your agent",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "https://vida.io/faq"
+                    ]
+                  },
+                  "actions": {
+                    "description": "Actions that your agent can take including instructions and settings",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "transfer"
+                    ]
+                  },
+                  "timezone": {
+                    "description": "The IANA (Internet Assigned Numbers Authority) formatted timezone your AI agent operates in.",
+                    "type": "string",
+                    "example": "America/Chicago, America/New_York, Europe/London, etc"
+                  },
+                  "agentVoice": {
+                    "description": "Agent voice model to use",
+                    "type": "string",
+                    "example": "en-US Female"
+                  },
+                  "agentLang": {
+                    "description": "Agent language to be used for voice and transcriptions",
+                    "type": "string",
+                    "enum": [
+                      "en-US",
+                      "multi",
+                      "es-MX",
+                      "es-ES",
+                      "es-US"
+                    ],
+                    "default": "en-US"
+                  },
+                  "agentInstructions": {
+                    "description": "Agent instructions for user interaction. This is for chatAgents only",
+                    "type": "string",
+                    "example": "I want you to payout rewards for users that answer a few questions about this promotional video."
+                  },
+                  "agentModel": {
+                    "description": "Agent LLM model to use for its intelligence",
+                    "type": "string",
+                    "example": "gpt-4o-2024-08-06"
+                  },
+                  "agentThinking": {
+                    "description": "Optional reasoning budget for models that support thinking. Use null to disable or low for short thinking.",
+                    "type": "string",
+                    "enum": [
+                      "low"
+                    ],
+                    "nullable": true
+                  },
+                  "agentThinkingModel": {
+                    "description": "Model to use for pauseAndThink function reasoning. Defaults to gpt-5.2.",
+                    "type": "string",
+                    "example": "gpt-5.2"
+                  },
+                  "postConvoForceThinking": {
+                    "description": "Force post-conversation summary/reporting/spam detection to use a thinking-capable model when agentThinking is off and the selected model does not support thinking. Uses agentThinkingModel (default gpt-5.2).",
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "agentS2SEngine": {
+                    "description": "(Requires Specific Paid Plan) The Speech-to-Speech Voice engine to use for voice, AI, and transcriptions",
+                    "type": "string",
+                    "enum": [
+                      null,
+                      "openai",
+                      "gemini"
+                    ],
+                    "default": null
+                  },
+                  "agentSttEngine": {
+                    "description": "Speech to text engine for this agent",
+                    "type": "string",
+                    "enum": [
+                      "google",
+                      "deepgram",
+                      "deepgramflux",
+                      "openai"
+                    ],
+                    "default": "deepgram"
+                  },
+                  "agentSttSmartFormatting": {
+                    "description": "Enable Deepgram smart formatting for speech-to-text (punctuation + numerals stay enabled regardless). Default true.",
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "postAnswerDtmf": {
+                    "description": "DTMF your agent will send upon answering a call. Useful if you are forwarding calls to your agent from a platform that requires a DTMF verification before the call is connected.",
+                    "type": "string"
+                  },
+                  "waitOnAnswer": {
+                    "description": "The amount of time in milliseconds your Agent will wait before speaking the greeting (welcomeMessage).",
+                    "type": "integer"
+                  },
+                  "backgroundAudio": {
+                    "description": "Optional background audio to play on calls. Accepts a URL string or an object with url, loop (true or false), gain, and startAfterGreeting fields. Only HTTP(S) URLs are supported.",
+                    "oneOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string"
+                          },
+                          "loop": {
+                            "type": "boolean",
+                            "default": true
+                          },
+                          "gain": {
+                            "type": "integer",
+                            "default": 0
+                          },
+                          "startAfterGreeting": {
+                            "type": "boolean",
+                            "default": true
+                          },
+                          "track": {
+                            "type": "string",
+                            "enum": [
+                              "bg",
+                              "fx"
+                            ],
+                            "description": "Advanced: choose track name; bg = ambient, fx = foreground."
+                          }
+                        },
+                        "required": [
+                          "url"
+                        ]
+                      }
+                    ]
+                  },
+                  "interruptionWordCount": {
+                    "description": "how many words a caller needs to speak before it is treated as an interruption",
+                    "type": "integer",
+                    "default": 3
+                  },
+                  "interruptionMinimumSpeakingTime": {
+                    "description": "(in seconds) How long the agent needs to be speaking before it can be interrupted",
+                    "type": "integer",
+                    "default": 3
+                  },
+                  "speakingTimeout": {
+                    "description": "(in milliseconds) the default amount of time between words before we consider caller speaking to be finished. Increasing this can help prevent unintentional interruptions for slow talkers. ",
+                    "type": "integer",
+                    "default": 1200
+                  },
+                  "speechProcessingDelay": {
+                    "description": "(in milliseconds) the default amount of delay before processed speech is sent to the LLM for a response. Increasing this can help prevent unintentional interruptions for slow talkers. Note that this delay automatically increases and decreases depending on the number of interruptions over a period of time.",
+                    "type": "integer",
+                    "default": 500
+                  },
+                  "speechProcessingDelayInterruptionStep": {
+                    "description": "(in milliseconds) how much speech processing delay is added per interruption.",
+                    "type": "integer",
+                    "default": 500
+                  },
+                  "speechProcessingDelayMaxMultiplier": {
+                    "description": "the maximum number of interruptions that will influence the speech processing delay.",
+                    "type": "integer",
+                    "default": 4
+                  },
+                  "callerResponseTimeout": {
+                    "description": "(in seconds) how much silence (nothing said by the caller) before the agent asks _are you still there?_.",
+                    "type": "integer",
+                    "default": 13
+                  },
+                  "callerResponseTimeoutHangupCounter": {
+                    "description": "the maximum number of times your agent can ask _are you there_ (callerResponseTimeout) before hanging up the call.",
+                    "type": "integer",
+                    "default": 3
+                  },
+                  "noContactInjection": {
+                    "description": "Whether the contact card for the caller should be injected into the agent context",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "noConvoHistory": {
+                    "description": "Whether the call summary history for the caller should be injected into the agent context",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "autoRecordingNotification": {
+                    "description": "Whether to automatically notify callers that recording is happening: _true (string)_ means notify callers from area codes where it is legally required. _false (string)_ means never notify callers. _always (string)_ means notify every caller whether legally required or not that recording is in progress.",
+                    "type": "string",
+                    "default": "true"
+                  },
+                  "recordingNotificationPhrase": {
+                    "description": "The phrase that will be spoken to the caller notifying them that recording is in progress: _This call is being recorded_ is the default.",
+                    "type": "string",
+                    "default": "This call is being recorded."
+                  },
+                  "preAnswerRingTime": {
+                    "description": "In seconds. How many seconds should the caller experience ringing before the agent answers. Valid value range is 1-60",
+                    "type": "integer",
+                    "default": null
+                  },
+                  "preAnswerSkipProcessingResults": {
+                    "description": "When true, pre-answer functions return their raw results directly to agent context instead of sending those results back to the LLM for another processing step.",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "cnamAutoRejectRegex": {
+                    "description": "Optional JavaScript regex string. On inbound voice calls, if the inbound SIP CNAM matches this pattern, the call is immediately rejected before answer. Reject wins if both reject and transfer match.",
+                    "type": "string",
+                    "default": null
+                  },
+                  "cnamAutoRejectCode": {
+                    "description": "Optional SIP reject code to use when cnamAutoRejectRegex matches. Defaults to 603 when omitted.",
+                    "type": "integer",
+                    "default": 603
+                  },
+                  "cnamAutoTransferRegex": {
+                    "description": "Optional JavaScript regex string. On inbound voice calls, if the inbound SIP CNAM matches this pattern and reject did not match, the call is immediately transferred silently.",
+                    "type": "string",
+                    "default": null
+                  },
+                  "cnamAutoTransferDestination": {
+                    "description": "Destination used when cnamAutoTransferRegex matches. Accepts E.164 phone numbers or PBX/extension targets like ext:1234 or pbx:1234.",
+                    "type": "string",
+                    "default": null
+                  },
+                  "confirmTransfers": {
+                    "description": "Require callee to press 1 before a transfer is completed",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "monitorTransfers": {
+                    "description": "Continue to monitor and transcribe transferred calls.",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "attendedTransfers": {
+                    "description": "Your agent will stay on the line with the caller while transfer attempts are made. Those answering the transfer attempts will need to say Yes to accept the call. This will override the confirmTransfers option.",
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "attendedTransferBridgeTrigger": {
+                    "description": "What is required to be spoken by the transferee in order for the call to be bridged. Values can be null (defaults to Yes), any, or a regex.",
+                    "type": "string",
+                    "default": null
+                  },
+                  "transferConfirmTimeout": {
+                    "description": "The length of time in seconds we will wait for confirmation after a transferred call with confirmTransfers or attendedTransfers is answered.",
+                    "type": "integer",
+                    "default": 30
+                  },
+                  "apps": {
+                    "description": "Array of apps to enable for this given agent",
+                    "type": "array",
+                    "default": [],
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "appId",
+                        "version",
+                        "instructions"
+                      ],
+                      "properties": {
+                        "appId": {
+                          "type": "string",
+                          "example": "squareUp",
+                          "description": "The identifier for the integrated app."
+                        },
+                        "version": {
+                          "type": "string",
+                          "example": "v1",
+                          "description": "The version of the app integration."
+                        },
+                        "instructions": {
+                          "type": "string",
+                          "example": "Use this app to book appointments from the user.",
+                          "description": "Instructions for how to use the app."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/agent/autoReviewAgentConfiguration": {
       "post": {
         "tags": [
@@ -2807,7 +3391,11 @@
     },
     "/api/v2/agent/zapier/response": {
       "post": {
-        "description": "",
+        "tags": [
+          "Integrations"
+        ],
+        "summary": "Set Zapier response payload",
+        "description": "Stores response data for a pending Zapier action request.",
         "responses": {
           "200": {
             "description": "OK"
@@ -2825,6 +3413,11 @@
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2842,6 +3435,233 @@
             }
           }
         }
+      }
+    },
+    "/api/v2/checkAgentUrl": {
+      "get": {
+        "tags": [
+          "Agent URLs"
+        ],
+        "summary": "Check agent url availability",
+        "description": "Check if an agent url is available for use",
+        "parameters": [
+          {
+            "name": "targetUsername",
+            "in": "query",
+            "description": "Target username",
+            "required": true,
+            "example": "brandon",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "query",
+            "description": "Desired slug name",
+            "required": true,
+            "example": "weloveVida",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Slug created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "slug": {
+                      "type": "string",
+                      "example": "welovevida"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/api/v2/agentUrl": {
+      "get": {
+        "tags": [
+          "Agent URLs"
+        ],
+        "summary": "Fetch existing agent url",
+        "description": "Check if existing agent url exists for a user or create new one",
+        "parameters": [
+          {
+            "name": "targetUsername",
+            "in": "query",
+            "description": "Target username",
+            "required": true,
+            "example": "brandon",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Slug retrieved/fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "slug": {
+                      "type": "string",
+                      "example": "welovevida"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Agent URLs"
+        ],
+        "summary": "Create agent url",
+        "description": "Create a new url for an agent and replace existing one if exists",
+        "responses": {
+          "200": {
+            "description": "Referral Slug Created Successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "slug": {
+                      "type": "string",
+                      "example": "welovevida"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "targetUsername",
+                  "slug"
+                ],
+                "properties": {
+                  "targetUsername": {
+                    "description": "Target Username you are creating a referral slug for",
+                    "type": "string",
+                    "example": "brandon"
+                  },
+                  "slug": {
+                    "description": "Desired slug name",
+                    "type": "string",
+                    "example": "welovevida"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/agent/{agentId}": {
+      "get": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Get Agent",
+        "description": "Fetch an agent details",
+        "parameters": [
+          {
+            "name": "agentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent Id",
+            "example": "campa931829b5857f...."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "sponsorship": {
+                      "properties": {
+                        "id": {
+                          "description": "Agent Id",
+                          "type": "string",
+                          "example": "campa931829b5857f...."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/api/v2/agent/outboundCall": {
@@ -2932,9 +3752,9 @@
                         "type": "boolean",
                         "description": "Delay greeting until caller speaks"
                       },
-                      "agentId": {
+                      "accountId": {
                         "type": "integer",
-                        "description": "Optional campaign id override for the call"
+                        "description": "Optional agent account id override for the call"
                       },
                       "scheduledFor": {
                         "type": "integer",
@@ -3024,9 +3844,9 @@
                         "type": "boolean",
                         "description": "Delay greeting until caller speaks for all items when targets is an array of strings"
                       },
-                      "agentId": {
+                      "accountId": {
                         "type": "integer",
-                        "description": "Agent id applied to all items when not provided per item"
+                        "description": "Account id applied to all items when not provided per item"
                       },
                       "scheduledFor": {
                         "type": "integer",
@@ -3080,6 +3900,248 @@
                       },
                       {
                         "target": "+15551230002"
+                      }
+                    ],
+                    "accountId": 1234
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/agent/outboundSms": {
+      "post": {
+        "tags": [
+          "Agents"
+        ],
+        "summary": "Queue outbound SMS text message(s) from your Agent",
+        "description": "Backwards compatible with the previous endpoint. You can pass a single \"target\" and required \"content\", or provide \"targets\" to enqueue multiple messages. This queues tasks instead of sending immediately.",
+        "responses": {
+          "200": {
+            "description": "Queued successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Outbound SMS initiated."
+                    },
+                    "inserted": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "tasks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "target",
+                      "content"
+                    ],
+                    "properties": {
+                      "target": {
+                        "type": "string",
+                        "description": "Phone in E.164 or VIDA username",
+                        "example": "+1234567890"
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Message body",
+                        "example": "Hello from Acme. Your appointment is tomorrow at 10am."
+                      },
+                      "context": {
+                        "type": "string",
+                        "description": "Optional context for the agent handling the conversation"
+                      },
+                      "taskContext": {
+                        "type": "string",
+                        "description": "Task-specific context for this message"
+                      },
+                      "agentId": {
+                        "type": "integer",
+                        "description": "Optional campaign id override"
+                      },
+                      "scheduledFor": {
+                        "type": "integer",
+                        "description": "Unix seconds to schedule delivery"
+                      },
+                      "meta": {
+                        "type": "object",
+                        "description": "Optional metadata"
+                      },
+                      "externalTaskId": {
+                        "type": "string",
+                        "description": "Optional customer-provided identifier applied to created task(s)"
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "targets"
+                    ],
+                    "properties": {
+                      "targets": {
+                        "description": "Array of destinations or objects with per-item options",
+                        "oneOf": [
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "example": "+1234567890"
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "target"
+                              ],
+                              "properties": {
+                                "target": {
+                                  "type": "string",
+                                  "example": "+1234567890"
+                                },
+                                "content": {
+                                  "type": "string",
+                                  "description": "Per-item message body"
+                                },
+                                "context": {
+                                  "type": "string"
+                                },
+                                "taskContext": {
+                                  "type": "string"
+                                },
+                                "agentId": {
+                                  "type": "integer"
+                                },
+                                "scheduledFor": {
+                                  "type": "integer"
+                                },
+                                "meta": {
+                                  "type": "object"
+                                },
+                                "externalTaskId": {
+                                  "type": "string",
+                                  "description": "Identifier applied to this task"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "Message applied to all when targets is an array of strings"
+                      },
+                      "context": {
+                        "type": "string",
+                        "description": "Context applied to all items when not provided per item"
+                      },
+                      "taskContext": {
+                        "type": "string",
+                        "description": "Task-specific context applied to all items when not provided per item"
+                      },
+                      "agentId": {
+                        "type": "integer",
+                        "description": "Agent id applied to all items"
+                      },
+                      "scheduledFor": {
+                        "type": "integer",
+                        "description": "Schedule applied to all items"
+                      },
+                      "scheduleSpacingSec": {
+                        "type": "integer",
+                        "description": "If provided, stagger scheduledFor by this many seconds per index",
+                        "example": 15
+                      },
+                      "meta": {
+                        "type": "object",
+                        "description": "Metadata applied to all items"
+                      },
+                      "externalTaskId": {
+                        "type": "string",
+                        "description": "Optional customer-provided identifier applied to all created tasks"
+                      }
+                    }
+                  }
+                ]
+              },
+              "examples": {
+                "single": {
+                  "summary": "Single target, backwards compatible",
+                  "value": {
+                    "target": "+15551234567",
+                    "content": "Hi, quick reminder for tomorrow at 10am.",
+                    "context": "Reminder campaign"
+                  }
+                },
+                "batchStrings": {
+                  "summary": "Multiple string targets with shared content",
+                  "value": {
+                    "targets": [
+                      "+15551230001",
+                      "+15551230002",
+                      "+15551230003"
+                    ],
+                    "content": "Thanks for signing up. Reply YES to confirm.",
+                    "context": "Onboarding nudge",
+                    "scheduleSpacingSec": 10
+                  }
+                },
+                "batchObjects": {
+                  "summary": "Multiple object targets with per-item overrides",
+                  "value": {
+                    "targets": [
+                      {
+                        "target": "+15551230001",
+                        "content": "VIP reminder 9am",
+                        "context": "VIP",
+                        "scheduledFor": 1730000000
+                      },
+                      {
+                        "target": "+15551230002",
+                        "content": "Standard reminder 10am"
                       }
                     ],
                     "agentId": 1234
@@ -3265,7 +4327,9 @@
                     "enum": [
                       "conversation",
                       "incoming",
-                      "contact"
+                      "contact",
+                      "agent",
+                      "onboarding"
                     ],
                     "example": "conversation"
                   }
@@ -3643,7 +4707,7 @@
           "Tasks"
         ],
         "summary": "Create a new task",
-        "description": "Submit a new task (call, text, ping). For calls/texts, target is required.",
+        "description": "Submit a new task (call, text). For calls/texts, target is required.",
         "responses": {
           "201": {
             "description": "Task created successfully"
@@ -3687,6 +4751,10 @@
                   "waitToGreet": {
                     "type": "boolean",
                     "example": true
+                  },
+                  "accountId": {
+                    "type": "integer",
+                    "example": 1234
                   },
                   "scheduledFor": {
                     "type": "integer",
@@ -4442,6 +5510,20 @@
                     "description": "Product Plan to set on the account. Otherwise default sell plan is used",
                     "type": "string",
                     "example": "base-plan-1"
+                  },
+                  "hipaaEnabledDefault": {
+                    "description": "Default HipaaEnabled settings for organizations under the reseller",
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "resellerStatus": {
+                    "description": "Reseller status. Defaults to enabled.",
+                    "type": "enum",
+                    "enum": [
+                      "enabled",
+                      "disabled"
+                    ],
+                    "example": "enabled"
                   }
                 }
               }
@@ -4589,8 +5671,27 @@
                     "type": "string",
                     "example": "Acme Solar"
                   },
+                  "accountName": {
+                    "description": "Default agent name for the organization",
+                    "type": "string",
+                    "example": "Acme Support"
+                  },
+                  "orgAccountType": {
+                    "description": "Organization account type. Internal orgs are billed through reseller usage; customer orgs are eligible for full subscriptions. Defaults to customer.",
+                    "type": "enum",
+                    "enum": [
+                      "internal",
+                      "customer"
+                    ],
+                    "example": "customer"
+                  },
                   "productPlanId": {
                     "description": "Product-plan ID. If omitted, defaults to your reseller sell-plan.",
+                    "type": "string",
+                    "example": "pplan-basic-monthly"
+                  },
+                  "offeredProductPlanId": {
+                    "description": "Give an offered product plan to the organization (same behavior as updateOrganization)",
                     "type": "string",
                     "example": "pplan-basic-monthly"
                   },
@@ -4603,6 +5704,16 @@
                     "description": "External Id to match with your internal billing system",
                     "type": "string",
                     "example": "billing-id-12345"
+                  },
+                  "hipaaSetting": {
+                    "description": "HIPAA setting for this organization. on|off|inherit (inherit from reseller)",
+                    "type": "enum",
+                    "enum": [
+                      "on",
+                      "off",
+                      "inherit"
+                    ],
+                    "default": "inherit"
                   },
                   "numberingProviders": {
                     "description": "Array of numbering provider configurations",
@@ -5288,13 +6399,13 @@
         }
       }
     },
-    "/api/v2/listAdminUsers": {
+    "/api/v2/members": {
       "get": {
         "tags": [
           "Accounts"
         ],
-        "summary": "List admin users",
-        "description": "List all admin users of your organization",
+        "summary": "List members",
+        "description": "List all members of your organization",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -5311,12 +6422,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         },
         "security": [
@@ -5326,19 +6431,28 @@
         ]
       }
     },
-    "/api/v2/deleteAdminUser": {
-      "delete": {
+    "/api/v2/member": {
+      "get": {
         "tags": [
           "Accounts"
         ],
-        "summary": "Delete admin user",
-        "description": "Delete a user from your organization",
+        "summary": "Fetch member",
+        "description": "Fetch details for a single member of your organization",
+        "parameters": [
+          {
+            "name": "targetMemberId",
+            "in": "query",
+            "description": "Id of the member to fetch",
+            "required": true,
+            "example": 3,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "201": {
-            "description": "Invitation sent",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
@@ -5348,57 +6462,28 @@
                       "type": "boolean",
                       "example": true
                     },
-                    "message": {
-                      "type": "string",
-                      "example": "Admin user successfully removed from your organization"
+                    "member": {
+                      "type": "object"
                     }
                   }
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         },
         "security": [
           {
             "apiKeyAuth": []
           }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "targetUserId": {
-                    "description": "User Id of the user you are removing from your account",
-                    "type": "number",
-                    "example": 3
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v2/inviteAdminUser": {
+        ]
+      },
       "post": {
         "tags": [
           "Accounts"
         ],
-        "summary": "Invite admin user",
-        "description": "Invite a user to join your organization as an admin",
+        "summary": "Invite member",
+        "description": "Invite a user to join your account as a member",
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "201": {
             "description": "Invitation sent",
             "content": {
@@ -5418,12 +6503,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         },
         "security": [
@@ -5450,6 +6529,156 @@
                     "description": "URL to redirect user to after they accept invite",
                     "type": "string",
                     "example": "https://vida.io/welcome"
+                  },
+                  "role": {
+                    "description": "Role for the invited member. Defaults to admin when not specified.",
+                    "type": "string",
+                    "example": "admin"
+                  },
+                  "permittedAccountIds": {
+                    "description": "Account ids that this member can access",
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "example": [
+                      12345,
+                      67890
+                    ]
+                  },
+                  "sendWelcomeEmail": {
+                    "description": "Whether to send the default welcome email. Defaults to true.",
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Delete member",
+        "description": "Delete a member from your organization",
+        "responses": {
+          "201": {
+            "description": "Member deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Member successfully removed from your organization"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "targetMemberId"
+                ],
+                "properties": {
+                  "targetMemberId": {
+                    "description": "User Id of the member you are removing from your account",
+                    "type": "number",
+                    "example": 3
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "Update member",
+        "description": "Update member details for your organization",
+        "responses": {
+          "201": {
+            "description": "Member updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Member updated"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "targetMemberId"
+                ],
+                "properties": {
+                  "targetMemberId": {
+                    "description": "User Id of the member you are updating",
+                    "type": "number",
+                    "example": 3
+                  },
+                  "email": {
+                    "description": "New email for the member",
+                    "type": "string",
+                    "example": "member@acmesolar.com"
+                  },
+                  "role": {
+                    "description": "Role for the member",
+                    "type": "string",
+                    "example": "admin"
+                  },
+                  "permittedAccountIds": {
+                    "description": "Account ids that this member can access. Send empty array to remove all account restrictions",
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "example": [
+                      12345,
+                      67890
+                    ]
                   }
                 }
               }
@@ -5467,15 +6696,9 @@
         "description": "View statistics about account usage",
         "parameters": [
           {
-            "name": "billingPeriod",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "giveCosts",
             "in": "query",
+            "description": "Returns values for keys with cost: prefix.",
             "schema": {
               "type": "object",
               "properties": {
@@ -5488,8 +6711,140 @@
                   "example": false
                 }
               }
-            },
-            "description": "Returns values for keys with cost: prefix."
+            }
+          },
+          {
+            "name": "combineCosts",
+            "in": "query",
+            "description": "Returns cost values and usage values in the same response.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "default": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          },
+          {
+            "name": "billingPeriod",
+            "in": "query",
+            "description": "Accepts previous or current for previous and current billing periods.",
+            "default": null,
+            "example": "current",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "timeseries",
+            "in": "query",
+            "description": "Returns data as a timeseries.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "default": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "ISO date string, defaults to billing period start date.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "ISO date string, optional, defaults to today.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "date-time"
+                },
+                "default": {
+                  "type": "string",
+                  "example": "today"
+                }
+              }
+            }
+          },
+          {
+            "name": "frequency",
+            "in": "query",
+            "description": "Frequency: day, month, year. Defaults to day.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "enum": {
+                  "type": "array",
+                  "example": [
+                    "day",
+                    "month",
+                    "year"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "default": {
+                  "type": "string",
+                  "example": "day"
+                }
+              }
+            }
+          },
+          {
+            "name": "allItems",
+            "in": "query",
+            "description": "Show all product items and not just the current plan.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "default": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -6074,6 +7429,312 @@
             "apiKeyAuth": []
           }
         ]
+      }
+    },
+    "/api/v2/integration/{integrationSlug}/{integrationVersion}": {
+      "get": {
+        "tags": [
+          "Integrations"
+        ],
+        "summary": "Update integration data",
+        "description": "Update existing integration data for a specific integration slug and version",
+        "parameters": [
+          {
+            "name": "integrationSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Slug identifier for the integration",
+            "example": "acme"
+          },
+          {
+            "name": "integrationVersion",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Version of the integration (defaults to v1)",
+            "example": "v1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Integration data updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Integration data updated successfully"
+                    },
+                    "appId": {
+                      "type": "string",
+                      "example": "acme"
+                    },
+                    "appVersion": {
+                      "type": "string",
+                      "example": "v1"
+                    },
+                    "appData": {
+                      "type": "object",
+                      "example": {
+                        "key": "value"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "appData is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Integration data not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Integration data not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "appData"
+                ],
+                "properties": {
+                  "appData": {
+                    "type": "object",
+                    "description": "Integration specific data to update",
+                    "example": {
+                      "key": "value"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Integrations"
+        ],
+        "summary": "Update integration data",
+        "description": "Update existing integration data for a specific integration slug and version",
+        "parameters": [
+          {
+            "name": "integrationSlug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Slug identifier for the integration",
+            "example": "acme"
+          },
+          {
+            "name": "integrationVersion",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Version of the integration (defaults to v1)",
+            "example": "v1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Integration data updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Integration data updated successfully"
+                    },
+                    "appId": {
+                      "type": "string",
+                      "example": "acme"
+                    },
+                    "appVersion": {
+                      "type": "string",
+                      "example": "v1"
+                    },
+                    "appData": {
+                      "type": "object",
+                      "example": {
+                        "key": "value"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - missing or invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "appData is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Unauthorized Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Integration data not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Integration data not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "appData"
+                ],
+                "properties": {
+                  "appData": {
+                    "type": "object",
+                    "description": "Integration specific data to update",
+                    "example": {
+                      "key": "value"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v2/logs": {
@@ -6840,6 +8501,171 @@
         ]
       }
     },
+    "/api/v2/conversation/batch": {
+      "post": {
+        "tags": [
+          "Messaging"
+        ],
+        "summary": "Fetch multiple conversations",
+        "description": "Fetch multiple conversation transcripts in one request using roomId + uuid pairs. Intended for logs -> conversation workflows where each item comes from /api/v2/logs.",
+        "responses": {
+          "200": {
+            "description": "Batch lookup complete. Each item includes per-item success/failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "stats": {
+                      "type": "object",
+                      "properties": {
+                        "requested": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "ok": {
+                          "type": "number",
+                          "example": 2
+                        },
+                        "failed": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "success": {
+                            "type": "boolean",
+                            "example": true
+                          },
+                          "roomId": {
+                            "type": "string",
+                            "example": "2236859:2550714"
+                          },
+                          "uuid": {
+                            "type": "string",
+                            "example": "bf0011ed-8175-458a-8fba-1e62ddc77567:1770763782"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Success"
+                          },
+                          "conversation": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "additionalProperties": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body (e.g., missing items or too many items).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "items array is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "Unauthorized Request"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "items"
+                ],
+                "properties": {
+                  "items": {
+                    "description": "List of conversation lookup items (max 200).",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "roomId",
+                        "uuid"
+                      ],
+                      "properties": {
+                        "roomId": {
+                          "description": "Conversation room ID.",
+                          "type": "string",
+                          "example": "2236859:2550714"
+                        },
+                        "uuid": {
+                          "description": "Conversation UUID from logs. Supports call format {uuid}:{timestamp} or message format {uuid}:{openTimestamp}:{closeTimestamp}.",
+                          "type": "string",
+                          "example": "bf0011ed-8175-458a-8fba-1e62ddc77567:1770763782"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "example": {
+                "items": [
+                  {
+                    "roomId": "2236859:2550714",
+                    "uuid": "bf0011ed-8175-458a-8fba-1e62ddc77567:1770763782"
+                  },
+                  {
+                    "roomId": "2236859:2535655",
+                    "uuid": "edf65410-9f78-4d5e-82d2-2ee773ad4a49:1770765260"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/auth/account/oneTimeAuthToken": {
       "get": {
         "tags": [
@@ -7134,6 +8960,143 @@
             "apiKeyAuth": []
           }
         ]
+      }
+    },
+    "/api/v2/billing/billingPeriod": {
+      "post": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Start a new billing period for an organization",
+        "description": "Start a new billing period for an organization. This must be set on the day the current billing period ends – Reseller/Partner only.",
+        "parameters": [
+          {
+            "name": "targetAccountId",
+            "in": "query",
+            "description": "Account ID to update billing period for",
+            "required": false,
+            "example": "123",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "externalAccountId",
+            "in": "query",
+            "description": "External account identifier mapped to the target account",
+            "required": false,
+            "example": "acct_123abc",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Billing period updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Billing period updated"
+                    },
+                    "billingPeriod": {
+                      "type": "object",
+                      "properties": {
+                        "startDateTimestamp": {
+                          "type": "integer",
+                          "example": 1735689600
+                        },
+                        "endDateTimestamp": {
+                          "type": "integer",
+                          "example": 1738281600
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "startDateTimestamp must not be greater than endDateTimestamp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Account not found or inaccessible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Account not found for provided identifier"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "startDateTimestamp",
+                  "endDateTimestamp"
+                ],
+                "properties": {
+                  "startDateTimestamp": {
+                    "type": "integer",
+                    "example": 1735689600,
+                    "description": "Billing period start timestamp (seconds since epoch)"
+                  },
+                  "endDateTimestamp": {
+                    "type": "integer",
+                    "example": 1738281600,
+                    "description": "Billing period end timestamp (seconds since epoch)"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v2/billing/adrExportConfig": {
@@ -7453,6 +9416,25 @@
                     "description": "External Id to match with your internal billing system. Set to null to remove it.",
                     "type": "string",
                     "example": "somebillingId"
+                  },
+                  "hipaaSetting": {
+                    "description": "HIPAA setting for this organization. on|off|inherit (inherit from reseller)",
+                    "type": "enum",
+                    "enum": [
+                      "on",
+                      "off",
+                      "inherit"
+                    ],
+                    "default": "inherit"
+                  },
+                  "orgAccountType": {
+                    "description": "Organization account type (internal vs customer). Internal orgs are billed through reseller usage; customer orgs are eligible for full subscriptions. Defaults to customer.",
+                    "type": "enum",
+                    "enum": [
+                      "internal",
+                      "customer"
+                    ],
+                    "example": "customer"
                   }
                 }
               }
@@ -8594,16 +10576,79 @@
         ]
       }
     },
-    "/api/v2/agent": {
-      "post": {
+    "/api/v2/models/supported": {
+      "get": {
         "tags": [
-          "Agents"
+          "Models"
         ],
-        "summary": "Update Agent",
-        "description": "Update an agent",
+        "summary": "List supported AI models",
+        "description": "Returns the supported AI model identifiers along with their provider metadata.",
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "List of supported model descriptors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "provider": {
+                        "type": "string",
+                        "description": "Provider of the model (e.g., openai, google, anthropic, groq)",
+                        "example": "openai"
+                      },
+                      "canReason": {
+                        "type": "boolean",
+                        "description": "Whether the model supports advanced reasoning",
+                        "example": true
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "claude-haiku-4-5-20251001": {
+                    "provider": "anthropic",
+                    "canReason": true
+                  },
+                  "claude-opus-4-5-20251101": {
+                    "provider": "anthropic",
+                    "canReason": true
+                  },
+                  "claude-sonnet-4-5-20250929": {
+                    "provider": "anthropic",
+                    "canReason": true
+                  },
+                  "gemini-3-pro-preview": {
+                    "provider": "google",
+                    "canReason": true
+                  },
+                  "gemini-2.5-flash": {
+                    "provider": "google",
+                    "canReason": true
+                  },
+                  "gemini-2.5-pro": {
+                    "provider": "google",
+                    "canReason": true
+                  },
+                  "openai/gpt-oss-120b": {
+                    "provider": "groq",
+                    "canReason": true
+                  },
+                  "gpt-5.1": {
+                    "provider": "openai",
+                    "canReason": true
+                  },
+                  "gpt-4.1": {
+                    "provider": "openai",
+                    "canReason": false
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -8611,238 +10656,11 @@
                   "properties": {
                     "success": {
                       "type": "boolean",
-                      "example": true
+                      "example": false
                     },
                     "message": {
                       "type": "string",
-                      "example": "Agent created."
-                    },
-                    "campaignId": {
-                      "type": "string",
-                      "example": "camp931829b5857f...."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "type",
-                  "title",
-                  "description"
-                ],
-                "properties": {
-                  "type": {
-                    "description": "Type for this agent",
-                    "type": "string",
-                    "enum": [
-                      "chatAgent"
-                    ]
-                  },
-                  "title": {
-                    "description": "Title for Agent",
-                    "type": "string",
-                    "example": "Call Screener"
-                  },
-                  "description": {
-                    "description": "Some description",
-                    "type": "string",
-                    "example": "Description"
-                  },
-                  "welcomeMessage": {
-                    "description": "Message users see when initially visiting a agent",
-                    "type": "string",
-                    "example": "This brought to you by Wolf Cola"
-                  },
-                  "links": {
-                    "description": "Array of any http links to reference for external knowledge for your agent",
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "example": [
-                      "https://vida.io/faq"
-                    ]
-                  },
-                  "actions": {
-                    "description": "Actions that your agent can take including instructions and settings",
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "example": [
-                      "transfer"
-                    ]
-                  },
-                  "timezone": {
-                    "description": "The IANA (Internet Assigned Numbers Authority) formatted timezone your AI agent operates in.",
-                    "type": "string",
-                    "example": "America/Chicago, America/New_York, Europe/London, etc"
-                  },
-                  "agentVoice": {
-                    "description": "Agent voice model to use",
-                    "type": "string",
-                    "example": "en-US Female"
-                  },
-                  "agentLang": {
-                    "description": "Agent language to be used for voice and transcriptions",
-                    "type": "string",
-                    "enum": [
-                      "en-US",
-                      "multi",
-                      "es-MX",
-                      "es-ES",
-                      "es-US"
-                    ],
-                    "default": "en-US"
-                  },
-                  "agentInstructions": {
-                    "description": "Agent instructions for user interaction. This is for chatAgents only",
-                    "type": "string",
-                    "example": "I want you to payout rewards for users that answer a few questions about this promotional video."
-                  },
-                  "agentModel": {
-                    "description": "Agent LLM model to use for its intelligence",
-                    "type": "string",
-                    "example": "gpt-4o-2024-08-06"
-                  },
-                  "agentS2SEngine": {
-                    "description": "(Requires Specific Paid Plan) The Speech-to-Speech Voice engine to use for voice, AI, and transcriptions",
-                    "type": "string",
-                    "enum": [
-                      null,
-                      "openai",
-                      "deepgram"
-                    ],
-                    "default": null
-                  },
-                  "agentSttEngine": {
-                    "description": "Speech to text engine for this agent",
-                    "type": "string",
-                    "enum": [
-                      "google",
-                      "deepgram"
-                    ],
-                    "default": "deepgram"
-                  },
-                  "postAnswerDtmf": {
-                    "description": "DTMF your agent will send upon answering a call. Useful if you are forwarding calls to your agent from a platform that requires a DTMF verification before the call is connected.",
-                    "type": "string"
-                  },
-                  "waitOnAnswer": {
-                    "description": "The amount of time in milliseconds your Agent will wait before speaking the greeting (welcomeMessage).",
-                    "type": "integer"
-                  },
-                  "interruptionWordCount": {
-                    "description": "how many words a caller needs to speak before it is treated as an interruption",
-                    "type": "integer",
-                    "default": 3
-                  },
-                  "interruptionMinimumSpeakingTime": {
-                    "description": "(in seconds) How long the agent needs to be speaking before it can be interrupted",
-                    "type": "integer",
-                    "default": 3
-                  },
-                  "speakingTimeout": {
-                    "description": "(in milliseconds) the default amount of time between words before we consider caller speaking to be finished. Increasing this can help prevent unintentional interruptions for slow talkers. ",
-                    "type": "integer",
-                    "default": 1200
-                  },
-                  "speechProcessingDelay": {
-                    "description": "(in milliseconds) the default amount of delay before processed speech is sent to the LLM for a response. Increasing this can help prevent unintentional interruptions for slow talkers. Note that this delay automatically increases and decreases depending on the number of interruptions over a period of time.",
-                    "type": "integer",
-                    "default": 500
-                  },
-                  "speechProcessingDelayInterruptionStep": {
-                    "description": "(in milliseconds) how much speech processing delay is added per interruption.",
-                    "type": "integer",
-                    "default": 500
-                  },
-                  "speechProcessingDelayMaxMultiplier": {
-                    "description": "the maximum number of interruptions that will influence the speech processing delay.",
-                    "type": "integer",
-                    "default": 4
-                  },
-                  "callerResponseTimeout": {
-                    "description": "(in seconds) how much silence (nothing said by the caller) before the agent asks _are you still there?_.",
-                    "type": "integer",
-                    "default": 13
-                  },
-                  "callerResponseTimeoutHangupCounter": {
-                    "description": "the maximum number of times your agent can ask _are you there_ (callerResponseTimeout) before hanging up the call.",
-                    "type": "integer",
-                    "default": 3
-                  },
-                  "noContactInjection": {
-                    "description": "Whether the contact card for the caller should be injected into the agent context",
-                    "type": "boolean",
-                    "default": false
-                  },
-                  "noConvoHistory": {
-                    "description": "Whether the call summary history for the caller should be injected into the agent context",
-                    "type": "boolean",
-                    "default": false
-                  },
-                  "autoRecordingNotification": {
-                    "description": "Whether to automatically notify callers that recording is happening: _true (string)_ means notify callers from area codes where it is legally required. _false (string)_ means never notify callers. _always (string)_ means notify every caller whether legally required or not that recording is in progress.",
-                    "type": "string",
-                    "default": "true"
-                  },
-                  "recordingNotificationPhrase": {
-                    "description": "The phrase that will be spoken to the caller notifying them that recording is in progress: _This call is being recorded_ is the default.",
-                    "type": "string",
-                    "default": "This call is being recorded."
-                  },
-                  "preAnswerRingTime": {
-                    "description": "In seconds. How many seconds should the caller experience ringing before the agent answers. Valid value range is 1-60",
-                    "type": "integer",
-                    "default": null
-                  },
-                  "confirmTransfers": {
-                    "description": "Require callee to press 1 before a transfer is completed",
-                    "type": "boolean",
-                    "default": false
-                  },
-                  "apps": {
-                    "description": "Array of apps to enable for this given agent",
-                    "type": "array",
-                    "default": [],
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "appId",
-                        "version",
-                        "instructions"
-                      ],
-                      "properties": {
-                        "appId": {
-                          "type": "string",
-                          "example": "squareUp",
-                          "description": "The identifier for the integrated app."
-                        },
-                        "version": {
-                          "type": "string",
-                          "example": "v1",
-                          "description": "The version of the app integration."
-                        },
-                        "instructions": {
-                          "type": "string",
-                          "example": "Use this app to book appointments from the user.",
-                          "description": "Instructions for how to use the app."
-                        }
-                      }
+                      "example": "Internal error"
                     }
                   }
                 }
@@ -8914,475 +10732,6 @@
             "apiKeyAuth": []
           }
         ]
-      }
-    },
-    "/api/v2/checkAgentUrl": {
-      "get": {
-        "tags": [
-          "Agent URLs"
-        ],
-        "summary": "Check agent url availability",
-        "description": "Check if an agent url is available for use",
-        "parameters": [
-          {
-            "name": "targetUsername",
-            "in": "query",
-            "description": "Target username",
-            "required": true,
-            "example": "brandon",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "slug",
-            "in": "query",
-            "description": "Desired slug name",
-            "required": true,
-            "example": "weloveVida",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Slug created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "available": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "slug": {
-                      "type": "string",
-                      "example": "welovevida"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v2/agentUrl": {
-      "get": {
-        "tags": [
-          "Agent URLs"
-        ],
-        "summary": "Fetch existing agent url",
-        "description": "Check if existing agent url exists for a user or create new one",
-        "parameters": [
-          {
-            "name": "targetUsername",
-            "in": "query",
-            "description": "Target username",
-            "required": true,
-            "example": "brandon",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Slug retrieved/fetched successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "slug": {
-                      "type": "string",
-                      "example": "welovevida"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "Agent URLs"
-        ],
-        "summary": "Create agent url",
-        "description": "Create a new url for an agent and replace existing one if exists",
-        "responses": {
-          "200": {
-            "description": "Referral Slug Created Successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "slug": {
-                      "type": "string",
-                      "example": "welovevida"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "targetUsername",
-                  "slug"
-                ],
-                "properties": {
-                  "targetUsername": {
-                    "description": "Target Username you are creating a referral slug for",
-                    "type": "string",
-                    "example": "brandon"
-                  },
-                  "slug": {
-                    "description": "Desired slug name",
-                    "type": "string",
-                    "example": "welovevida"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v2/agent/{agentId}": {
-      "get": {
-        "tags": [
-          "Agents"
-        ],
-        "summary": "Get Agent",
-        "description": "Fetch an agent details",
-        "parameters": [
-          {
-            "name": "agentId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Agent Id",
-            "example": "campa931829b5857f...."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Success"
-                    },
-                    "sponsorship": {
-                      "properties": {
-                        "id": {
-                          "description": "Agent Id",
-                          "type": "string",
-                          "example": "campa931829b5857f...."
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/api/v2/agent/outboundSms": {
-      "post": {
-        "tags": [
-          "Agents"
-        ],
-        "summary": "Queue outbound SMS text message(s) from your Agent",
-        "description": "Backwards compatible with the previous endpoint. You can pass a single \"target\" and required \"content\", or provide \"targets\" to enqueue multiple messages. This queues tasks instead of sending immediately.",
-        "responses": {
-          "200": {
-            "description": "Queued successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "success": {
-                      "type": "boolean",
-                      "example": true
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Outbound SMS initiated."
-                    },
-                    "inserted": {
-                      "type": "integer",
-                      "example": 3
-                    },
-                    "tasks": {
-                      "type": "array",
-                      "items": {
-                        "type": "object"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "oneOf": [
-                  {
-                    "type": "object",
-                    "required": [
-                      "target",
-                      "content"
-                    ],
-                    "properties": {
-                      "target": {
-                        "type": "string",
-                        "description": "Phone in E.164 or VIDA username",
-                        "example": "+1234567890"
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Message body",
-                        "example": "Hello from Acme. Your appointment is tomorrow at 10am."
-                      },
-                      "context": {
-                        "type": "string",
-                        "description": "Optional context for the agent handling the conversation"
-                      },
-                      "taskContext": {
-                        "type": "string",
-                        "description": "Task-specific context for this message"
-                      },
-                      "agentId": {
-                        "type": "integer",
-                        "description": "Optional campaign id override"
-                      },
-                      "scheduledFor": {
-                        "type": "integer",
-                        "description": "Unix seconds to schedule delivery"
-                      },
-                      "meta": {
-                        "type": "object",
-                        "description": "Optional metadata"
-                      },
-                      "externalTaskId": {
-                        "type": "string",
-                        "description": "Optional customer-provided identifier applied to created task(s)"
-                      }
-                    }
-                  },
-                  {
-                    "type": "object",
-                    "required": [
-                      "targets"
-                    ],
-                    "properties": {
-                      "targets": {
-                        "description": "Array of destinations or objects with per-item options",
-                        "oneOf": [
-                          {
-                            "type": "array",
-                            "items": {
-                              "type": "string",
-                              "example": "+1234567890"
-                            }
-                          },
-                          {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "required": [
-                                "target"
-                              ],
-                              "properties": {
-                                "target": {
-                                  "type": "string",
-                                  "example": "+1234567890"
-                                },
-                                "content": {
-                                  "type": "string",
-                                  "description": "Per-item message body"
-                                },
-                                "context": {
-                                  "type": "string"
-                                },
-                                "taskContext": {
-                                  "type": "string"
-                                },
-                                "agentId": {
-                                  "type": "integer"
-                                },
-                                "scheduledFor": {
-                                  "type": "integer"
-                                },
-                                "meta": {
-                                  "type": "object"
-                                },
-                                "externalTaskId": {
-                                  "type": "string",
-                                  "description": "Identifier applied to this task"
-                                }
-                              }
-                            }
-                          }
-                        ]
-                      },
-                      "content": {
-                        "type": "string",
-                        "description": "Message applied to all when targets is an array of strings"
-                      },
-                      "context": {
-                        "type": "string",
-                        "description": "Context applied to all items when not provided per item"
-                      },
-                      "taskContext": {
-                        "type": "string",
-                        "description": "Task-specific context applied to all items when not provided per item"
-                      },
-                      "agentId": {
-                        "type": "integer",
-                        "description": "Agent id applied to all items"
-                      },
-                      "scheduledFor": {
-                        "type": "integer",
-                        "description": "Schedule applied to all items"
-                      },
-                      "scheduleSpacingSec": {
-                        "type": "integer",
-                        "description": "If provided, stagger scheduledFor by this many seconds per index",
-                        "example": 15
-                      },
-                      "meta": {
-                        "type": "object",
-                        "description": "Metadata applied to all items"
-                      },
-                      "externalTaskId": {
-                        "type": "string",
-                        "description": "Optional customer-provided identifier applied to all created tasks"
-                      }
-                    }
-                  }
-                ]
-              },
-              "examples": {
-                "single": {
-                  "summary": "Single target, backwards compatible",
-                  "value": {
-                    "target": "+15551234567",
-                    "content": "Hi, quick reminder for tomorrow at 10am.",
-                    "context": "Reminder campaign"
-                  }
-                },
-                "batchStrings": {
-                  "summary": "Multiple string targets with shared content",
-                  "value": {
-                    "targets": [
-                      "+15551230001",
-                      "+15551230002",
-                      "+15551230003"
-                    ],
-                    "content": "Thanks for signing up. Reply YES to confirm.",
-                    "context": "Onboarding nudge",
-                    "scheduleSpacingSec": 10
-                  }
-                },
-                "batchObjects": {
-                  "summary": "Multiple object targets with per-item overrides",
-                  "value": {
-                    "targets": [
-                      {
-                        "target": "+15551230001",
-                        "content": "VIP reminder 9am",
-                        "context": "VIP",
-                        "scheduledFor": 1730000000
-                      },
-                      {
-                        "target": "+15551230002",
-                        "content": "Standard reminder 10am"
-                      }
-                    ],
-                    "agentId": 1234
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/api/v2/kb/knowledgebase/{kbId}/documents": {
@@ -9493,86 +10842,6 @@
             }
           }
         }
-      }
-    },
-    "/api/v2/conversation/{roomId}/{uuid}": {
-      "get": {
-        "tags": [
-          "Messaging"
-        ],
-        "summary": "Fetch Conversation",
-        "description": "Fetch specific conversation logs for a given room ID and UUID",
-        "parameters": [
-          {
-            "name": "roomId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Room Id of the conversation",
-            "example": "3:15"
-          },
-          {
-            "name": "uuid",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "UUID of the conversation",
-            "example": "uuid"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "success": {
-                        "description": "If request was successful",
-                        "type": "boolean",
-                        "example": "true"
-                      },
-                      "message": {
-                        "description": "Success or Error Message",
-                        "type": "string",
-                        "example": "Success"
-                      },
-                      "conversation": {
-                        "description": "Conversation logs",
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "message": {
-                              "type": "string",
-                              "example": "Hello World"
-                            },
-                            "timestamp": {
-                              "type": "number",
-                              "example": 1630480000
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
       }
     }
   },
