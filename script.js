@@ -97,7 +97,18 @@ const domainConfig = [
     ],
     logoLightUrl: "https://lirp.cdn-website.com/6c7f9e27/dms3rep/multi/opt/VoiceBot_Header_Logo2-243w.png",
     logoDarkUrl: "https://lirp.cdn-website.com/6c7f9e27/dms3rep/multi/opt/VoiceBot_Header_Logo2-243w.png",
-  }  
+  },
+  {
+    match: /^aistudio\.ipfone\.com$/,
+    brandName: "IPFone",
+    faviconUrl: "https://ipfone.com/wp-content/uploads/2025/02/Size128-png.avif",
+    replacements: [
+      { from: /help@vida\.inc/gi, to: "support@ipfone.com" },
+      { from: /Vida(\.io)?/gi, to: "IPFone" },
+    ],
+    logoLightUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_acct1772148308380.jpg",
+    logoDarkUrl: "https://vidapublic.s3.us-east-2.amazonaws.com/custom_profile_dp_acct1772148308380.jpg",
+  },
   // Removed generic fallback to avoid unintended replacements on vida.io
 ];
 
